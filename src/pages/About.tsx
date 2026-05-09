@@ -8,8 +8,8 @@ export const About = () => {
   const [campusFailed, setCampusFailed] = useState(false);
   const [principalFailed, setPrincipalFailed] = useState(false);
 
-  const campusImageUrl = '/assets/about/d8d53f724e0b195658e83c643a6b491e.png';
-  const principalImageUrl = './assets/Staff/principal.jpg';
+  const campusImageUrl = '/assets/about/campus.jpg';
+  const principalImageUrl = '/assets/about/principal.jpg';
 
   useEffect(() => {
     setData(getAbout());
@@ -93,7 +93,7 @@ export const About = () => {
               {/* Principal Photo Column */}
               <div className="flex flex-col items-center justify-center bg-[#7B1C2E] p-8 md:p-10">
                 {/* Photo frame */}
-                <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-[#7B1C2E] shadow-xl mb-5">
+                <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-[#C8A400] shadow-xl mb-5">
                   {!principalFailed ? (
                     <img
                       src={principalImageUrl}
@@ -112,7 +112,7 @@ export const About = () => {
                 <h3 className="text-lg font-bold text-white text-center leading-tight">
                   {data.principalName}
                 </h3>
-                <p className="text-[#7B1C2E] text-sm font-semibold mt-1 text-center">
+                <p className="text-[#C8A400] text-sm font-semibold mt-1 text-center">
                   {data.principalTitle}
                 </p>
 
