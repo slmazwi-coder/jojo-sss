@@ -24,7 +24,7 @@ export const Footer = () => {
             <div className="flex items-center gap-3 mb-3">
               <div className="h-12 w-12 shrink-0 rounded-xl overflow-hidden shadow-lg"
                 style={ { background: '#C8A400', border: '2px solid #C8A400' } }>
-                <img src="./assets/logo.jpg" alt="Ludidi SSS logo"
+                <img src="/logo.jpg" alt="Ludidi SSS logo"
                   className="h-full w-full object-cover" />
               </div>
               <div>

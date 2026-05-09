@@ -32,7 +32,7 @@ export const Navbar = () => {
             <Link to="/" className="flex items-center gap-3 min-w-0 flex-1">
               <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-md" style={ { border: '2px solid #7B1C2E' } }>
                 <img
-                  src="./assets/logo.jpg"
+                  src="/logo.jpg"
                   alt="Ludidi SSS logo"
                   className="h-full w-full object-cover"
                 />
