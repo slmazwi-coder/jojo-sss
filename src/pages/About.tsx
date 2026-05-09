@@ -27,10 +27,10 @@ export const About = () => {
 
           {/* Text */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            viewport={{ once: true }}
+            initial= opacity: 0, y: 24 
+            whileInView= opacity: 1, y: 0 
+            transition= duration: 0.35 
+            viewport= once: true 
             className="flex flex-col justify-center"
           >
             <div className="border-l-4 border-[#C8A400] pl-5 mb-6">
@@ -45,17 +45,18 @@ export const About = () => {
 
           {/* Campus Image */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.05 }}
-            viewport={{ once: true }}
-            className="rounded-2xl overflow-hidden shadow-2xl border-4 border-[#FDF9EC] h-[280px] sm:h-[360px]"
+            initial= opacity: 0, y: 24 
+            whileInView= opacity: 1, y: 0 
+            transition= duration: 0.35, delay: 0.05 
+            viewport= once: true 
+            className="rounded-2xl overflow-hidden shadow-2xl border-4 border-[#FDF9EC]"
+            style= aspectRatio: '4/3' 
           >
             {!campusFailed ? (
               <img
                 src={campusImageUrl}
                 alt="School campus"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
                 onError={() => setCampusFailed(true)}
               />
             ) : (
@@ -74,10 +75,10 @@ export const About = () => {
 
         {/* ── Section 2: Principal's Message ── */}
         <motion.section
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          viewport={{ once: true }}
+          initial= opacity: 0, y: 24 
+          whileInView= opacity: 1, y: 0 
+          transition= duration: 0.4 
+          viewport= once: true 
           className="mb-16 sm:mb-24"
         >
           {/* Section heading */}

@@ -21,30 +21,30 @@ export const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="w-full sticky top-0 z-50" style={{ background: '#C8A400', borderBottom: '3px solid #7B1C2E' }}>
+    <nav className="w-full sticky top-0 z-50" style= background: '#C8A400', borderBottom: '3px solid #7B1C2E' >
 
       {/* ── Top bar: Logo + School name + Student Portal ── */}
-      <div className="w-full" style={{ borderBottom: '1px solid rgba(123,28,46,0.3)' }}>
+      <div className="w-full" style= borderBottom: '1px solid rgba(123,28,46,0.3)' >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
 
             {/* Logo + Name */}
             <Link to="/" className="flex items-center gap-3 min-w-0 flex-1">
-              <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-md" style={{ border: '2px solid #7B1C2E' }}>
+              <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-md" style= border: '2px solid #7B1C2E' >
                 <img
-                  src="./assets/Copilot_20260418_114207.png"
+                  src="./assets/logo.jpg"
                   alt="Ludidi SSS logo"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div className="min-w-0">
-                <span className="md:hidden text-sm font-bold block leading-tight" style={{ color: '#7B1C2E' }}>
+                <span className="md:hidden text-sm font-bold block leading-tight" style= color: '#7B1C2E' >
                   Ludidi SSS
                 </span>
-                <span className="hidden md:block text-base font-bold leading-tight" style={{ color: '#7B1C2E' }}>
+                <span className="hidden md:block text-base font-bold leading-tight" style= color: '#7B1C2E' >
                   Ludidi Senior Secondary School
                 </span>
-                <span className="text-xs font-semibold tracking-wide uppercase" style={{ color: 'rgba(123,28,46,0.7)' }}>
+                <span className="text-xs font-semibold tracking-wide uppercase" style= color: 'rgba(123,28,46,0.7)' >
                   Amidst difficulties we rise
                 </span>
               </div>
@@ -70,7 +70,7 @@ export const Navbar = () => {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2"
-                style={{ color: '#7B1C2E' }}
+                style= color: '#7B1C2E' 
                 aria-label="Open menu"
               >
                 {isOpen ? <X size={26} /> : <Menu size={26} />}
@@ -81,7 +81,7 @@ export const Navbar = () => {
       </div>
 
       {/* ── Bottom bar: Nav links (desktop only) ── */}
-      <div className="hidden md:block w-full" style={{ background: '#C8A400' }}>
+      <div className="hidden md:block w-full" style= background: '#C8A400' >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center flex-wrap gap-x-1 gap-y-0 py-1">
             {navLinks.map((link) => (
@@ -114,7 +114,7 @@ export const Navbar = () => {
 
       {/* ── Mobile dropdown ── */}
       {isOpen && (
-        <div className="md:hidden shadow-lg" style={{ background: '#C8A400', borderTop: '1px solid rgba(123,28,46,0.3)' }}>
+        <div className="md:hidden shadow-lg" style= background: '#C8A400', borderTop: '1px solid rgba(123,28,46,0.3)' >
           <div className="px-3 pt-2 pb-4 space-y-1">
             {navLinks.map((link) => (
               <Link
@@ -132,7 +132,7 @@ export const Navbar = () => {
               </Link>
             ))}
 
-            <div className="pt-2" style={{ borderTop: '1px solid rgba(123,28,46,0.3)' }}>
+            <div className="pt-2" style= borderTop: '1px solid rgba(123,28,46,0.3)' >
               <Link
                 to="/student/login"
                 onClick={() => setIsOpen(false)}

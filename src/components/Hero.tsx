@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const slides = [
-  { url: '/assets/hero/images (2).jpeg', caption: 'Academic excellence' },
-  { url: '/assets/hero/images (1).jpeg', caption: 'Discipline and pride' },
-  { url: '/assets/hero/3e7e487a933835fd2aa5936d57c7cdd6.png', caption: 'Our team and community' },
-  { url: '/assets/hero/d8d53f724e0b195658e83c643a6b491e.png', caption: 'Celebrating achievements' },
+  { url: './assets/hero/hero1.jpg',  caption: 'Academic excellence' },
+  { url: './assets/hero/hero2.jpg',  caption: 'Amidst difficulties we rise' },
+  { url: './assets/hero/hero3.jpg',  caption: 'Provincial athletics champions' },
+  { url: './assets/hero/hero4.jpg',  caption: 'Our learners, our pride' },
+  { url: './assets/hero/hero5.jpg',  caption: 'Celebrating achievement' },
+  { url: './assets/hero/hero6.jpg',  caption: 'Discipline and hard work' },
+  { url: './assets/hero/hero7.jpg',  caption: 'The spirit of Ludidi SSS' },
+  { url: './assets/hero/hero8.jpg',  caption: 'Medal winners — Eastern Cape' },
+  { url: './assets/hero/hero9.jpg',  caption: 'Graduation and certificates' },
+  { url: './assets/hero/hero10.jpg', caption: 'Community and culture' },
+  { url: './assets/hero/hero11.jpg', caption: 'Leadership and excellence' },
+  { url: './assets/hero/hero12.jpg', caption: 'Tie ceremony — hard work pays' },
+  { url: './assets/hero/hero13.jpg', caption: 'Together we rise' },
 ];
 
 export const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [failed, setFailed] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, 6000);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -24,133 +32,132 @@ export const Hero = () => {
   const prev = () => setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
 
   const slide = slides[currentIndex];
-  const showImage = !!slide.url && !failed[currentIndex];
 
   return (
-    <div className="relative h-[650px] w-full overflow-hidden" style={{ background: '#7B1C2E' }}>
+    <div className="relative h-[650px] w-full overflow-hidden" style= background: '#7B1C2E' >
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
-          initial={{ opacity: 0, scale: 1.02 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.995 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
+          initial= opacity: 0, scale: 1.03 
+          animate= opacity: 1, scale: 1 
+          exit= opacity: 0 
+          transition= duration: 0.8, ease: 'easeOut' 
           className="absolute inset-0"
         >
-          {showImage ? (
-            <img
-              src={slide.url}
-              alt={slide.caption}
-              className="h-full w-full object-cover object-center opacity-40"
-              onError={() => setFailed((p) => ({ ...p, [currentIndex]: true }))}
-            />
-          ) : (
-            <div className="h-full w-full flex items-center justify-center opacity-80"
-              style={{ background: 'linear-gradient(135deg, #7B1C2E 0%, #540D1C 50%, #3A0812 100%)' }}>
-              <div className="text-center px-6" style={{ color: 'rgba(200,164,0,0.5)' }}>
-                <div className="mx-auto mb-3 w-12 h-12 rounded-xl flex items-center justify-center"
-                  style={{ background: 'rgba(200,164,0,0.1)', border: '1px solid rgba(200,164,0,0.2)' }}>
-                  <ImageIcon />
-                </div>
-                <div className="font-semibold">Hero image placeholder</div>
-                <div className="text-sm" style={{ color: 'rgba(200,164,0,0.4)' }}>
-                  Add images to <span className="font-mono">public/assets/hero/</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Overlay gradient */}
+          <img
+            src={slide.url}
+            alt={slide.caption}
+            className="h-full w-full object-cover object-center"
+            style= opacity: 0.45 
+          />
+          {/* Gradient overlay */}
           <div className="absolute inset-0"
-            style={{ background: 'linear-gradient(to top, rgba(58,8,18,0.85) 0%, rgba(123,28,46,0.5) 50%, transparent 100%)' }} />
-
-          <div className="absolute bottom-20 left-0 right-0 text-center z-20">
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              key={`caption-${currentIndex}`}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="text-lg md:text-xl font-medium tracking-wide uppercase"
-              style={{ color: 'rgba(200,164,0,0.9)' }}
-            >
-              {slide.caption}
-            </motion.p>
-          </div>
+            style= background: 'linear-gradient(to top, rgba(58,8,18,0.92) 0%, rgba(123,28,46,0.55) 45%, rgba(26,10,15,0.35) 100%)'  />
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4" style={{ zIndex: 10 }}>
+      {/* Caption */}
+      <div className="absolute bottom-24 left-0 right-0 text-center z-20 px-4">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={`caption-${currentIndex}`}
+            initial= opacity: 0, y: 8 
+            animate= opacity: 1, y: 0 
+            exit= opacity: 0, y: -8 
+            transition= duration: 0.35 
+            className="text-base md:text-lg font-medium tracking-widest uppercase"
+            style= color: 'rgba(200,164,0,0.85)' 
+          >
+            {slide.caption}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+
+      {/* Main content */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-10">
+        {/* Logo */}
+        <motion.div
+          initial= opacity: 0, scale: 0.9 
+          animate= opacity: 1, scale: 1 
+          transition= duration: 0.5, ease: 'easeOut' 
+          className="mb-5"
+        >
+          <img
+            src="./assets/logo.jpg"
+            alt="Ludidi SSS crest"
+            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover shadow-2xl mx-auto"
+            style= border: '3px solid #C8A400' 
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+          />
+        </motion.div>
+
         <motion.h1
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: 'easeOut', delay: 0.05 }}
-          className="text-4xl md:text-6xl font-bold mb-4 uppercase"
-          style={{ color: '#C8A400' }}
+          initial= opacity: 0, y: 12 
+          animate= opacity: 1, y: 0 
+          transition= duration: 0.5, delay: 0.1 
+          className="text-4xl md:text-6xl font-extrabold mb-3 uppercase tracking-wider"
+          style= color: '#C8A400' 
         >
           Ludidi SSS
         </motion.h1>
+
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: 'easeOut', delay: 0.1 }}
-          className="text-lg md:text-2xl font-light italic"
-          style={{ color: 'rgba(200,164,0,0.8)' }}
+          initial= opacity: 0, y: 12 
+          animate= opacity: 1, y: 0 
+          transition= duration: 0.5, delay: 0.18 
+          className="text-base md:text-xl font-light italic mb-8"
+          style= color: 'rgba(200,164,0,0.8)' 
         >
           "Amidst difficulties we rise"
         </motion.p>
+
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: 'easeOut', delay: 0.15 }}
-          className="mt-8 flex gap-4"
+          initial= opacity: 0, y: 12 
+          animate= opacity: 1, y: 0 
+          transition= duration: 0.5, delay: 0.26 
+          className="flex gap-4 flex-wrap justify-center"
         >
           <a href="/admissions"
-            className="px-6 py-2 font-semibold transition-colors"
-            style={{ background: '#C8A400', color: '#7B1C2E', borderRadius: '0.5rem' }}
-            onMouseEnter={e => (e.currentTarget.style.background = '#F0C800')}
-            onMouseLeave={e => (e.currentTarget.style.background = '#C8A400')}
+            className="px-7 py-3 font-bold transition-all rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            style= background: '#C8A400', color: '#7B1C2E' 
           >
-            Admissions
+            Apply Now
           </a>
           <a href="/about"
-            className="px-6 py-2 font-semibold transition-colors"
-            style={{ border: '2px solid #C8A400', color: '#C8A400', borderRadius: '0.5rem', background: 'transparent' }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(200,164,0,0.15)')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+            className="px-7 py-3 font-bold transition-all rounded-lg hover:-translate-y-0.5"
+            style= border: '2px solid #C8A400', color: '#C8A400', background: 'transparent' 
           >
-            Learn More
+            About Us
           </a>
         </motion.div>
       </div>
 
+      {/* Prev / Next arrows */}
       <button
         onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors"
-        style={{ background: 'rgba(200,164,0,0.2)', color: '#C8A400' }}
-        aria-label="Previous slide"
-        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(200,164,0,0.4)')}
-        onMouseLeave={e => (e.currentTarget.style.background = 'rgba(200,164,0,0.2)')}
+        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full z-20 transition-all hover:scale-110"
+        style= background: 'rgba(200,164,0,0.2)', color: '#C8A400' 
+        aria-label="Previous"
       >
         <ChevronLeft size={32} />
       </button>
       <button
         onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors"
-        style={{ background: 'rgba(200,164,0,0.2)', color: '#C8A400' }}
-        aria-label="Next slide"
-        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(200,164,0,0.4)')}
-        onMouseLeave={e => (e.currentTarget.style.background = 'rgba(200,164,0,0.2)')}
+        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full z-20 transition-all hover:scale-110"
+        style= background: 'rgba(200,164,0,0.2)', color: '#C8A400' 
+        aria-label="Next"
       >
         <ChevronRight size={32} />
       </button>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2" style={{ zIndex: 30 }}>
+      {/* Dot indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-30 flex-wrap justify-center max-w-xs">
         {slides.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrentIndex(i)}
-            className="h-2 w-2 rounded-full transition-colors"
-            style={{ background: i === currentIndex ? '#C8A400' : 'rgba(200,164,0,0.35)' }}
+            className="h-2 w-2 rounded-full transition-all"
+            style= background: i === currentIndex ? '#C8A400' : 'rgba(200,164,0,0.3)' 
           />
         ))}
       </div>
