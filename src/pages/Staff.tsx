@@ -77,12 +77,12 @@ const categories = [
 const StaffCard = ({ member }: { member: StaffMember }) => (
   <div
     className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
-    style= background: '#FFFBEF', border: '1px solid #C8A400' 
+    style={ { background: '#FFFBEF', border: '1px solid #C8A400' } }
   >
     {/* Avatar */}
     <div
       className="w-24 h-24 rounded-full flex items-center justify-center mb-4 overflow-hidden"
-      style= background: '#FDF9EC', border: '3px solid #C8A400' 
+      style={ { background: '#FDF9EC', border: '3px solid #C8A400' } }
     >
       {member.image ? (
         <img
@@ -92,20 +92,20 @@ const StaffCard = ({ member }: { member: StaffMember }) => (
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
         />
       ) : (
-        <User size={40} style= color: '#C8A400', opacity: 0.5  />
+        <User size={40} style={ { color: '#C8A400', opacity: 0.5 } } />
       )}
     </div>
 
-    <h3 className="text-sm font-bold leading-tight" style= color: '#7B1C2E' >
+    <h3 className="text-sm font-bold leading-tight" style={ { color: '#7B1C2E' } }>
       {member.name}
     </h3>
-    <p className="text-xs font-semibold mt-1" style= color: '#C8A400' >
+    <p className="text-xs font-semibold mt-1" style={ { color: '#C8A400' } }>
       {member.position}
     </p>
     {member.subject && (
       <span
         className="mt-2 inline-block text-xs font-medium px-3 py-1 rounded-full"
-        style= background: '#FDF9EC', color: '#7B1C2E', border: '1px solid #C8A400' 
+        style={ { background: '#FDF9EC', color: '#7B1C2E', border: '1px solid #C8A400' } }
       >
         {member.subject}
       </span>
@@ -118,15 +118,15 @@ export const Staff = () => {
   const filtered = staffData.filter(m => m.category === activeCategory);
 
   return (
-    <div className="min-h-screen py-12 px-4" style= background: '#FDF9EC' >
+    <div className="min-h-screen py-12 px-4" style={ { background: '#FDF9EC' } }>
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold tracking-tight mb-3" style= color: '#7B1C2E' >
+          <h1 className="text-4xl font-extrabold tracking-tight mb-3" style={ { color: '#7B1C2E' } }>
             Our Staff
           </h1>
-          <div className="w-16 h-1 mx-auto rounded-full mb-4" style= background: '#C8A400'  />
+          <div className="w-16 h-1 mx-auto rounded-full mb-4" style={ { background: '#C8A400' } } />
           <p className="text-gray-500 text-base max-w-2xl mx-auto">
             Meet the dedicated team of educators and support staff at Ludidi Senior Secondary School.
           </p>

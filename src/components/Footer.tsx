@@ -14,7 +14,7 @@ const TikTokIcon = (props: { size?: number; className?: string }) => {
 
 export const Footer = () => {
   return (
-    <footer className="pt-12 pb-8 w-full" style= background: '#7B1C2E', borderTop: '4px solid #C8A400' >
+    <footer className="pt-12 pb-8 w-full" style={ { background: '#7B1C2E', borderTop: '4px solid #C8A400' } }>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
@@ -23,15 +23,15 @@ export const Footer = () => {
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3 mb-3">
               <div className="h-12 w-12 shrink-0 rounded-xl overflow-hidden shadow-lg"
-                style= background: '#C8A400', border: '2px solid #C8A400' >
+                style={ { background: '#C8A400', border: '2px solid #C8A400' } }>
                 <img src="./assets/logo.jpg" alt="Ludidi SSS logo"
                   className="h-full w-full object-cover" />
               </div>
               <div>
-                <h3 className="text-base font-bold leading-tight" style= color: '#C8A400' >
+                <h3 className="text-base font-bold leading-tight" style={ { color: '#C8A400' } }>
                   Ludidi Senior Secondary School
                 </h3>
-                <p className="text-sm italic mt-0.5" style= color: 'rgba(200,164,0,0.65)' >
+                <p className="text-sm italic mt-0.5" style={ { color: 'rgba(200,164,0,0.65)' } }>
                   "Amidst difficulties we rise"
                 </p>
               </div>
@@ -40,13 +40,13 @@ export const Footer = () => {
             <div className="flex gap-3 mt-4">
               <a href="https://www.facebook.com/ludidisss/" target="_blank" rel="noreferrer"
                 className="p-2 rounded-full transition-colors"
-                style= background: 'rgba(200,164,0,0.15)', color: '#C8A400' 
+                style={ { background: 'rgba(200,164,0,0.15)', color: '#C8A400' } }
                 aria-label="Facebook">
                 <Facebook size={18} />
               </a>
               <a href="https://www.tiktok.com/@ludidisss" target="_blank" rel="noreferrer"
                 className="p-2 rounded-full transition-colors"
-                style= background: 'rgba(200,164,0,0.15)', color: '#C8A400' 
+                style={ { background: 'rgba(200,164,0,0.15)', color: '#C8A400' } }
                 aria-label="TikTok">
                 <TikTokIcon size={18} />
               </a>
@@ -56,10 +56,10 @@ export const Footer = () => {
           {/* Col 2 — Contact */}
           <div>
             <h4 className="text-sm font-bold mb-4 pb-2 uppercase tracking-wide"
-              style= color: '#C8A400', borderBottom: '1px solid rgba(200,164,0,0.25)' >
+              style={ { color: '#C8A400', borderBottom: '1px solid rgba(200,164,0,0.25)' } }>
               Contact Us
             </h4>
-            <ul className="space-y-3 text-sm" style= color: 'rgba(200,164,0,0.8)' >
+            <ul className="space-y-3 text-sm" style={ { color: 'rgba(200,164,0,0.8)' } }>
               <li className="flex items-start gap-2">
                 <MapPin className="shrink-0 mt-0.5" size={16} />
                 <span>Lukholweni Location, P.O. Box 1809, Matatiele, 4730 (Eastern Cape)</span>
@@ -78,10 +78,10 @@ export const Footer = () => {
           {/* Col 3 — School Hours */}
           <div>
             <h4 className="text-sm font-bold mb-4 pb-2 uppercase tracking-wide"
-              style= color: '#C8A400', borderBottom: '1px solid rgba(200,164,0,0.25)' >
+              style={ { color: '#C8A400', borderBottom: '1px solid rgba(200,164,0,0.25)' } }>
               School Hours
             </h4>
-            <ul className="space-y-2 text-sm" style= color: 'rgba(200,164,0,0.8)' >
+            <ul className="space-y-2 text-sm" style={ { color: 'rgba(200,164,0,0.8)' } }>
               <li className="flex justify-between gap-4">
                 <span>Mon – Thu</span>
                 <span className="font-medium">07:30 – 15:30</span>
@@ -99,11 +99,11 @@ export const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 text-center text-xs" style= borderTop: '1px solid rgba(200,164,0,0.15)', color: 'rgba(200,164,0,0.5)' >
+        <div className="pt-6 text-center text-xs" style={ { borderTop: '1px solid rgba(200,164,0,0.15)', color: 'rgba(200,164,0,0.5)' } }>
           <p>© {new Date().getFullYear()} Ludidi Senior Secondary School. All Rights Reserved.</p>
           <Link to="/admin/login"
             className="text-xs mt-2 inline-block transition-colors hover:opacity-80"
-            style= color: 'rgba(200,164,0,0.3)' >
+            style={ { color: 'rgba(200,164,0,0.3)' } }>
             Staff Portal
           </Link>
         </div>
