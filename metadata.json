@@ -1,0 +1,7 @@
+{
+  "name": "Ludidi Senior Secondary School",
+  "description": "Ludidi SSS is a public boarding school in Lukholweni Location, Matatiele, Eastern Cape. Amidst difficulties we rise.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
