@@ -43,33 +43,36 @@ export const About = () => {
             </div>
           </motion.div>
 
-          {/* Campus Image */}
+          {/* Campus Image (match principal styling + avoid cropping) */}
           <motion.div
             initial={ { opacity: 0, y: 24 } }
             whileInView={ { opacity: 1, y: 0 } }
             transition={ { duration: 0.35, delay: 0.05 } }
             viewport={ { once: true } }
-            className="rounded-2xl overflow-hidden shadow-2xl border-4 border-[#FDF9EC]"
-            style={ { aspectRatio: '4/3' } }
+            className="bg-[#FDF9EC] rounded-3xl overflow-hidden shadow-lg border border-[#C8A400]"
           >
-            {!campusFailed ? (
-              <img
-                src={campusImageUrl}
-                alt="School campus"
-                className="w-full h-full object-cover object-center"
-                onError={() => setCampusFailed(true)}
-              />
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-[#7B1C2E] via-[#C8A400] to-[#7B1C2E] flex items-center justify-center">
-                <div className="text-center text-white/70 px-6">
-                  <div className="mx-auto mb-3 w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center border border-white/15">
-                    <ImageIcon />
+            <div className="bg-[#7B1C2E] p-6 sm:p-8">
+              <div className="w-full rounded-2xl overflow-hidden border-4 border-[#C8A400] shadow-xl" style={ { aspectRatio: '4/3' } }>
+                {!campusFailed ? (
+                  <img
+                    src={campusImageUrl}
+                    alt="School campus"
+                    className="w-full h-full object-contain bg-[#7B1C2E]"
+                    onError={() => setCampusFailed(true)}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-[#7B1C2E] via-[#C8A400] to-[#7B1C2E] flex items-center justify-center">
+                    <div className="text-center text-white/70 px-6">
+                      <div className="mx-auto mb-3 w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center border border-white/15">
+                        <ImageIcon />
+                      </div>
+                      <div className="font-semibold">Campus image</div>
+                      <div className="text-sm text-white/60 font-mono">public/assets/about/</div>
+                    </div>
                   </div>
-                  <div className="font-semibold">Campus image</div>
-                  <div className="text-sm text-white/60 font-mono">public/assets/about/</div>
-                </div>
+                )}
               </div>
-            )}
+            </div>
           </motion.div>
         </div>
 
