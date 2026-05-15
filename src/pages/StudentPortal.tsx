@@ -20,7 +20,7 @@ export const StudentPortal = () => {
   const navigate = useNavigate();
 
   const studentNumber = useMemo(() => {
-    return sessionStorage.getItem('ludidi_student_portal_student_number') || '';
+    return sessionStorage.getItem('lupindo_student_portal_student_number') || '';
   }, []);
 
   const [search, setSearch] = useState('');
@@ -37,7 +37,7 @@ export const StudentPortal = () => {
   }, [docs, search]);
 
   const logout = () => {
-    sessionStorage.removeItem('ludidi_student_portal_student_number');
+    sessionStorage.removeItem('lupindo_student_portal_student_number');
     navigate('/student/login');
   };
 

@@ -17,10 +17,10 @@ export const Contact = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-            <h2 className="text-2xl font-bold text-[#7B1C2E] mb-8">Get in Touch</h2>
+            <h2 className="text-2xl font-bold text-[#166534] mb-8">Get in Touch</h2>
             <div className="space-y-8">
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#FDF9EC] text-[#7B1C2E] rounded-xl">
+                <div className="p-3 bg-[#FDF9EC] text-[#166534] rounded-xl">
                   <MapPin size={24} />
                 </div>
                 <div>
@@ -29,7 +29,7 @@ export const Contact = () => {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#FDF9EC] text-[#7B1C2E] rounded-xl">
+                <div className="p-3 bg-[#FDF9EC] text-[#166534] rounded-xl">
                   <Phone size={24} />
                 </div>
                 <div>
@@ -38,7 +38,7 @@ export const Contact = () => {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#FDF9EC] text-[#7B1C2E] rounded-xl">
+                <div className="p-3 bg-[#FDF9EC] text-[#166534] rounded-xl">
                   <Mail size={24} />
                 </div>
                 <div>
@@ -47,7 +47,7 @@ export const Contact = () => {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#FDF9EC] text-[#7B1C2E] rounded-xl">
+                <div className="p-3 bg-[#FDF9EC] text-[#166534] rounded-xl">
                   <Clock size={24} />
                 </div>
                 <div>
@@ -60,7 +60,7 @@ export const Contact = () => {
 
             <div className="mt-10 sm:mt-12 rounded-3xl overflow-hidden h-[260px] sm:h-[320px] border-4 border-gray-100 shadow-inner bg-gray-50 relative">
               <iframe
-                title="Ludidi SSS Location"
+                title="Lupindo SSS Location"
                 src="https://www.google.com/maps?q=-30.40676,28.70707&z=15&output=embed"
                 className="w-full h-full border-0"
                 loading="lazy"
@@ -74,7 +74,7 @@ export const Contact = () => {
             transition={{ duration: 0.3, delay: 0.05 }}
             className="bg-gray-50 p-6 sm:p-8 md:p-10 rounded-3xl border border-gray-100 shadow-sm"
           >
-            <h2 className="text-2xl font-bold text-[#7B1C2E] mb-8">Send us a Message</h2>
+            <h2 className="text-2xl font-bold text-[#166534] mb-8">Send us a Message</h2>
             <form className="space-y-6">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-700">Full Name</label>

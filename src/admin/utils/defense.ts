@@ -1,6 +1,6 @@
 /**
  * Anti-Malicious Defense System (AMD)
- * A lightweight, rule-based AI safety layer for the Ludidi SSS Staff Portal.
+ * A lightweight, rule-based AI safety layer for the Lupindo SSS Staff Portal.
  * Scans text and metadata for policy violations, inappropriate content, and context mismatches.
  */
 

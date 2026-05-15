@@ -61,7 +61,7 @@ export const AdminLayout = () => {
               </button>
 
               <Link to="/admin" className="text-lg font-bold text-white flex items-center gap-2">
-                <span className="text-[#7B1C2E]">LSSS</span> Staff Portal
+                <span className="text-[#166534]">LSSS</span> Staff Portal
               </Link>
 
               <div className="hidden lg:flex items-center gap-1.5 px-2 py-1 bg-[#FDF9EC]0/10 border border-green-500/20 rounded-full text-[10px] font-bold text-green-400 uppercase tracking-tighter">

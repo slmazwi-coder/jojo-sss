@@ -164,7 +164,7 @@ export const ExtraCurricularEditor = () => {
               )}
               <div className="flex-grow min-w-0">
                 <p className="font-bold text-white text-sm">{item.name}</p>
-                <span className="text-xs text-[#7B1C2E]">{item.category}</span>
+                <span className="text-xs text-[#166534]">{item.category}</span>
                 <p className="text-xs text-gray-400 truncate mt-1">{item.description}</p>
               </div>
               <div className="flex flex-col gap-1 shrink-0">

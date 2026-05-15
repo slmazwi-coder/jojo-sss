@@ -47,7 +47,7 @@ export const Activities = () => {
           {activities.map((a) => (
             <div key={a.name} className="bg-gray-50 rounded-3xl border border-gray-100 p-7">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#7B1C2E]">
+                <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#166534]">
                   <a.icon size={22} />
                 </div>
                 <h2 className="text-xl font-extrabold text-gray-900">{a.name}</h2>
@@ -58,7 +58,7 @@ export const Activities = () => {
         </div>
 
         <div className="mt-12 bg-[#FDF9EC] border border-[#C8A400] rounded-3xl p-6 sm:p-7">
-          <div className="text-sm font-black uppercase tracking-widest text-[#7B1C2E]">More activities</div>
+          <div className="text-sm font-black uppercase tracking-widest text-[#166534]">More activities</div>
           <p className="text-gray-700 mt-2">
             The school may add more academic activities over time, such as quiz competitions, coding club, entrepreneurship club,
             chess, and career guidance programs.

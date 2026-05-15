@@ -53,7 +53,7 @@ export const Sport = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="section-title text-center">Sport</h1>
         <p className="text-center text-lg text-gray-600 mb-12 max-w-3xl mx-auto">
-          Ludidi SSS offers structured sport programs to develop teamwork, fitness, and discipline.
+          Lupindo SSS offers structured sport programs to develop teamwork, fitness, and discipline.
         </p>
 
         <section className="mb-14">
@@ -61,7 +61,7 @@ export const Sport = () => {
             {sports.map((s) => (
               <div key={s.name} className="bg-gray-50 rounded-3xl border border-gray-100 p-7">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#7B1C2E]">
+                  <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#166534]">
                     <s.icon size={22} />
                   </div>
                   <h2 className="text-xl font-extrabold text-gray-900">{s.name}</h2>
@@ -75,7 +75,7 @@ export const Sport = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <section className="bg-gray-50 rounded-3xl border border-gray-100 p-7">
             <div className="flex items-center gap-3 mb-5">
-              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#7B1C2E]">
+              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#166534]">
                 <CalendarDays size={22} />
               </div>
               <h2 className="text-2xl font-extrabold text-gray-900">Fixtures</h2>
@@ -113,7 +113,7 @@ export const Sport = () => {
 
           <section className="bg-gray-50 rounded-3xl border border-gray-100 p-7">
             <div className="flex items-center gap-3 mb-5">
-              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#7B1C2E]">
+              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#166534]">
                 <Trophy size={22} />
               </div>
               <h2 className="text-2xl font-extrabold text-gray-900">Results</h2>

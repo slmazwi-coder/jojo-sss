@@ -31,7 +31,7 @@ export const AdminDashboard = () => {
             <Link
               key={card.path}
               to={card.path}
-              className="bg-gray-800 border border-gray-700 rounded-2xl p-6 hover:border-[#7B1C2E] transition-all group"
+              className="bg-gray-800 border border-gray-700 rounded-2xl p-6 hover:border-[#166534] transition-all group"
             >
               <div
                 className={`w-12 h-12 ${card.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
