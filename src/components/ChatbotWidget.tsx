@@ -134,7 +134,7 @@ async function translateText(text: string, src: SupportedLang, tgt: SupportedLan
 }
 
 // ── Claude AI (Anthropic) ────────────────────────────────────────────────────
-const SYSTEM_PROMPT = `You are a warm, knowledgeable and friendly assistant for Ludidi Senior Secondary School in Matatiele, Eastern Cape, South Africa.
+const SYSTEM_PROMPT = `You are a warm, knowledgeable and friendly assistant for Lupindo Senior Secondary School in Matatiele, Eastern Cape, South Africa.
 
 You help parents, learners, guardians and community members with anything about the school:
 - Admissions and application process (general and boarding)
@@ -149,10 +149,10 @@ You help parents, learners, guardians and community members with anything about 
 - General encouragement and guidance for parents and learners
 
 School details:
-- Name: Ludidi Senior Secondary School
+- Name: Lupindo Senior Secondary School
 - Location: Sigoga Location, Mgubo A/A, Matatiele, 4730 (Eastern Cape)
 - Phone: +27 76 707 3212
-- Email: office@ludidisss.co.za
+- Email: office@lupindosss.co.za
 - Motto: "We Can"
 - Principal: Ms B Ngozwana
 - Deputy Principal: Mr M Leanya
@@ -195,7 +195,7 @@ async function askClaude(userMessage: string): Promise<string> {
     return text;
   } catch (err) {
     console.error('[Chatbot] Claude request failed:', err);
-    return 'I\'m having trouble connecting right now. Please contact the school directly at +27 76 707 3212 or office@ludidisss.co.za.';
+    return 'I\'m having trouble connecting right now. Please contact the school directly at +27 76 707 3212 or office@lupindosss.co.za.';
   }
 }
 
@@ -211,7 +211,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
       id: uid(),
       role: 'bot',
       createdAt: Date.now(),
-      text: "👋 Hello! Let me help you! Whether it's admissions, boarding, fees, results, activities or anything else about Ludidi SSS — just ask and I'll be happy to assist.",
+      text: "👋 Hello! Let me help you! Whether it's admissions, boarding, fees, results, activities or anything else about Lupindo SSS — just ask and I'll be happy to assist.",
     },
   ]);
 
@@ -348,7 +348,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                 <Sparkles size={16} />
               </div>
               <div className="min-w-0">
-                <div className="font-bold text-sm leading-tight truncate">Ludidi Assistant</div>
+                <div className="font-bold text-sm leading-tight truncate">Lupindo Assistant</div>
                 <div className="flex items-center gap-1 text-[11px] text-white/70 mt-0.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-300 inline-block animate-pulse" />
                   Online · AI-powered
@@ -451,7 +451,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                     <button
                       key={q}
                       onClick={() => send(q)}
-                      className="text-[11px] px-2.5 py-1 rounded-full bg-white border border-[#7B1C2E]/25 text-[#7B1C2E] hover:bg-[#B89200] hover:text-white transition-colors font-medium shadow-sm"
+                      className="text-[11px] px-2.5 py-1 rounded-full bg-white border border-[#166534]/25 text-[#166534] hover:bg-[#B89200] hover:text-white transition-colors font-medium shadow-sm"
                     >
                       {q}
                     </button>
@@ -473,7 +473,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
                 }}
-                className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#C8A400]/20 focus:border-[#7B1C2E]/40 transition-all bg-gray-50 placeholder:text-gray-400"
+                className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#C8A400]/20 focus:border-[#166534]/40 transition-all bg-gray-50 placeholder:text-gray-400"
                 placeholder="Ask me anything about the school…"
                 aria-label="Chat input"
                 disabled={isTyping}

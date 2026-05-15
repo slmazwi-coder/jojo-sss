@@ -96,7 +96,7 @@ const StaffCard = ({ member }: { member: StaffMember }) => (
       )}
     </div>
 
-    <h3 className="text-sm font-bold leading-tight" style={ { color: '#7B1C2E' } }>
+    <h3 className="text-sm font-bold leading-tight" style={ { color: '#166534' } }>
       {member.name}
     </h3>
     <p className="text-xs font-semibold mt-1" style={ { color: '#C8A400' } }>
@@ -105,7 +105,7 @@ const StaffCard = ({ member }: { member: StaffMember }) => (
     {member.subject && (
       <span
         className="mt-2 inline-block text-xs font-medium px-3 py-1 rounded-full"
-        style={ { background: '#FDF9EC', color: '#7B1C2E', border: '1px solid #C8A400' } }
+        style={ { background: '#FDF9EC', color: '#166534', border: '1px solid #C8A400' } }
       >
         {member.subject}
       </span>
@@ -123,12 +123,12 @@ export const Staff = () => {
 
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold tracking-tight mb-3" style={ { color: '#7B1C2E' } }>
+          <h1 className="text-4xl font-extrabold tracking-tight mb-3" style={ { color: '#166534' } }>
             Our Staff
           </h1>
           <div className="w-16 h-1 mx-auto rounded-full mb-4" style={ { background: '#C8A400' } } />
           <p className="text-gray-500 text-base max-w-2xl mx-auto">
-            Meet the dedicated team of educators and support staff at Ludidi Senior Secondary School.
+            Meet the dedicated team of educators and support staff at Lupindo Senior Secondary School.
           </p>
         </div>
 
@@ -140,8 +140,8 @@ export const Staff = () => {
               onClick={() => setActiveCategory(cat)}
               style={
                 activeCategory === cat
-                  ? { background: '#C8A400', color: '#7B1C2E', border: '2px solid #C8A400', fontWeight: 700 }
-                  : { background: '#FFFBEF', color: '#7B1C2E', border: '2px solid #C8A400' }
+                  ? { background: '#C8A400', color: '#166534', border: '2px solid #C8A400', fontWeight: 700 }
+                  : { background: '#FFFBEF', color: '#166534', border: '2px solid #C8A400' }
               }
               className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:shadow-md"
             >

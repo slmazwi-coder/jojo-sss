@@ -11,7 +11,7 @@ export function generateApplicationPDF(app: Application): void {
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(22);
   doc.setFont('helvetica', 'bold');
-  doc.text('Ludidi Senior Secondary School', 105, 18, { align: 'center' });
+  doc.text('Lupindo Senior Secondary School', 105, 18, { align: 'center' });
   doc.setFontSize(12);
   doc.setFont('helvetica', 'normal');
   doc.text('Student Application Form', 105, 30, { align: 'center' });

@@ -21,7 +21,7 @@ export const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="w-full sticky top-0 z-50" style={ { background: '#C8A400', borderBottom: '3px solid #7B1C2E' } }>
+    <nav className="w-full sticky top-0 z-50" style={ { background: '#C8A400', borderBottom: '3px solid #166534' } }>
 
       {/* ── Top bar: Logo + School name + Student Portal ── */}
       <div className="w-full" style={ { borderBottom: '1px solid rgba(123,28,46,0.3)' } }>
@@ -30,19 +30,19 @@ export const Navbar = () => {
 
             {/* Logo + Name */}
             <Link to="/" className="flex items-center gap-3 min-w-0 flex-1">
-              <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-md" style={ { border: '2px solid #7B1C2E' } }>
+              <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-md" style={ { border: '2px solid #166534' } }>
                 <img
-                  src="/logo.jpg"
-                  alt="Ludidi SSS logo"
+                  src="/lslogo.png"
+                  alt="Lupindo SSS logo"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div className="min-w-0">
-                <span className="md:hidden text-sm font-bold block leading-tight" style={ { color: '#7B1C2E' } }>
-                  Ludidi SSS
+                <span className="md:hidden text-sm font-bold block leading-tight" style={ { color: '#166534' } }>
+                  Lupindo SSS
                 </span>
-                <span className="hidden md:block text-base font-bold leading-tight" style={ { color: '#7B1C2E' } }>
-                  Ludidi Senior Secondary School
+                <span className="hidden md:block text-base font-bold leading-tight" style={ { color: '#166534' } }>
+                  Lupindo Senior Secondary School
                 </span>
                 <span className="text-xs font-semibold tracking-wide uppercase" style={ { color: 'rgba(123,28,46,0.7)' } }>
                   Amidst difficulties we rise
@@ -57,8 +57,8 @@ export const Navbar = () => {
                 className={cn(
                   'px-4 py-2 rounded-lg text-sm font-bold transition-colors inline-flex items-center gap-2',
                   location.pathname.startsWith('/student')
-                    ? 'text-[#C8A400] bg-[#7B1C2E]'
-                    : 'text-[#7B1C2E] border-2 border-[#7B1C2E] hover:bg-[#7B1C2E] hover:text-[#C8A400]'
+                    ? 'text-[#C8A400] bg-[#166534]'
+                    : 'text-[#166534] border-2 border-[#166534] hover:bg-[#166534] hover:text-[#C8A400]'
                 )}
               >
                 <User size={15} /> Student Portal
@@ -70,7 +70,7 @@ export const Navbar = () => {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2"
-                style={ { color: '#7B1C2E' } }
+                style={ { color: '#166534' } }
                 aria-label="Open menu"
               >
                 {isOpen ? <X size={26} /> : <Menu size={26} />}
@@ -91,8 +91,8 @@ export const Navbar = () => {
                 className="px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap"
                 style={
                   location.pathname === link.path
-                    ? { color: '#C8A400', background: '#7B1C2E', fontWeight: 700 }
-                    : { color: '#7B1C2E' }
+                    ? { color: '#C8A400', background: '#166534', fontWeight: 700 }
+                    : { color: '#166534' }
                 }
                 onMouseEnter={e => {
                   if (location.pathname !== link.path) {
@@ -124,8 +124,8 @@ export const Navbar = () => {
                 className="flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-colors"
                 style={
                   location.pathname === link.path
-                    ? { color: '#C8A400', background: '#7B1C2E', fontWeight: 700 }
-                    : { color: '#7B1C2E' }
+                    ? { color: '#C8A400', background: '#166534', fontWeight: 700 }
+                    : { color: '#166534' }
                 }
               >
                 {link.name}
@@ -139,8 +139,8 @@ export const Navbar = () => {
                 className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-bold transition-colors"
                 style={
                   location.pathname.startsWith('/student')
-                    ? { color: '#C8A400', background: '#7B1C2E' }
-                    : { color: '#7B1C2E', background: 'rgba(123,28,46,0.1)' }
+                    ? { color: '#C8A400', background: '#166534' }
+                    : { color: '#166534', background: 'rgba(123,28,46,0.1)' }
                 }
               >
                 <User size={15} /> Student Portal

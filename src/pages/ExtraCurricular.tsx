@@ -69,7 +69,7 @@ const ProgramCard: React.FC<{ prog: any }> = ({ prog }) => (
     className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden group"
   >
     <div className="aspect-video bg-[#FDF9EC] flex items-center justify-center relative">
-      <prog.icon size={64} className="text-[#7B1C2E]/40" />
+      <prog.icon size={64} className="text-[#166534]/40" />
       <div className="absolute inset-0 bg-[#C8A400] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <prog.icon size={48} className="text-white" />
       </div>
@@ -77,8 +77,8 @@ const ProgramCard: React.FC<{ prog: any }> = ({ prog }) => (
     <div className="p-6">
       <div className="flex items-center gap-2 mb-2">
         <span className={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
-          prog.category === 'Sport' ? 'bg-[#FFF3CC] text-[#7B1C2E]' : 
-          prog.category === 'Academic' ? 'bg-[#FDF9EC] text-[#7B1C2E]' :
+          prog.category === 'Sport' ? 'bg-[#FFF3CC] text-[#166534]' : 
+          prog.category === 'Academic' ? 'bg-[#FDF9EC] text-[#166534]' :
           'bg-orange-100 text-orange-700'
         }`}>{prog.category}</span>
       </div>
@@ -114,13 +114,13 @@ export const ExtraCurricular = () => {
         <h1 className="section-title text-center">Sports & Culture</h1>
         
         <p className="text-center text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
-          At Ludidi SSS, we believe in a holistic education. Our extra-curricular programs are designed to discover and nurture the diverse talents of our learners.
+          At Lupindo SSS, we believe in a holistic education. Our extra-curricular programs are designed to discover and nurture the diverse talents of our learners.
         </p>
 
         {/* Sports */}
         <section className="mb-16">
-          <h2 className="text-2xl font-bold text-[#7B1C2E] mb-8 flex items-center gap-3">
-            <Dumbbell className="text-[#7B1C2E]" /> Sports
+          <h2 className="text-2xl font-bold text-[#166534] mb-8 flex items-center gap-3">
+            <Dumbbell className="text-[#166534]" /> Sports
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {sportsPrograms.map((prog, i) => <ProgramCard key={i} prog={prog} />)}
@@ -129,8 +129,8 @@ export const ExtraCurricular = () => {
 
         {/* Academic Extra-Curricular */}
         <section className="mb-16">
-          <h2 className="text-2xl font-bold text-[#7B1C2E] mb-8 flex items-center gap-3">
-            <BookOpen className="text-[#7B1C2E]" /> Academic Extra-Curricular
+          <h2 className="text-2xl font-bold text-[#166534] mb-8 flex items-center gap-3">
+            <BookOpen className="text-[#166534]" /> Academic Extra-Curricular
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {academicPrograms.map((prog, i) => <ProgramCard key={i} prog={prog} />)}
@@ -139,8 +139,8 @@ export const ExtraCurricular = () => {
 
         {/* Arts & Culture */}
         <section className="mb-24">
-          <h2 className="text-2xl font-bold text-[#7B1C2E] mb-8 flex items-center gap-3">
-            <Music className="text-[#7B1C2E]" /> Arts & Culture
+          <h2 className="text-2xl font-bold text-[#166534] mb-8 flex items-center gap-3">
+            <Music className="text-[#166534]" /> Arts & Culture
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {culturePrograms.map((prog, i) => <ProgramCard key={i} prog={prog} />)}
@@ -150,7 +150,7 @@ export const ExtraCurricular = () => {
         {/* Accolades and Hall of Fame */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <section>
-            <h2 className="text-3xl font-bold text-[#7B1C2E] mb-8 flex items-center gap-3">
+            <h2 className="text-3xl font-bold text-[#166534] mb-8 flex items-center gap-3">
               <Trophy className="text-yellow-600" /> Recent Accolades
             </h2>
             <div className="space-y-4">
@@ -173,12 +173,12 @@ export const ExtraCurricular = () => {
           </section>
 
           <section>
-            <h2 className="text-3xl font-bold text-[#7B1C2E] mb-8 flex items-center gap-3">
+            <h2 className="text-3xl font-bold text-[#166534] mb-8 flex items-center gap-3">
               <Star className="text-yellow-500" /> Sports Hall of Fame
             </h2>
             <div className="bg-[#C8A400] rounded-3xl p-8 text-white">
               <p className="text-lg italic mb-8 text-[#FFF3CC]">
-                "Recognizing those who have gone above and beyond in representing Ludidi SSS at regional, provincial, and national levels."
+                "Recognizing those who have gone above and beyond in representing Lupindo SSS at regional, provincial, and national levels."
               </p>
               <div className="space-y-6">
                 <div className="flex items-center gap-4">

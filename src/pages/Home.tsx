@@ -16,12 +16,12 @@ export const Home = () => {
         <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="rounded-3xl border border-[#C8A400] bg-[#FDF9EC] p-6 sm:p-7 flex gap-4 items-start">
-              <div className="p-3 rounded-2xl bg-white border border-[#C8A400] text-[#7B1C2E] shrink-0">
+              <div className="p-3 rounded-2xl bg-white border border-[#C8A400] text-[#166534] shrink-0">
                 <Megaphone size={22} />
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <div className="text-sm font-black uppercase tracking-widest text-[#7B1C2E]">Notice</div>
+                  <div className="text-sm font-black uppercase tracking-widest text-[#166534]">Notice</div>
                   <span className="px-2 py-1 rounded-full text-xs font-bold bg-white border border-[#C8A400] text-gray-700">
                     2027
                   </span>
@@ -30,19 +30,19 @@ export const Home = () => {
                 <p className="text-gray-700 mt-1">
                   General school applications for the <span className="font-bold">2027</span> academic year are open.
                 </p>
-                <a href="/admissions" className="mt-4 inline-flex items-center gap-2 text-[#7B1C2E] font-bold">
+                <a href="/admissions" className="mt-4 inline-flex items-center gap-2 text-[#166534] font-bold">
                   Apply now <ArrowRight size={18} />
                 </a>
               </div>
             </div>
 
             <div className="rounded-3xl border border-gray-200 bg-gray-50 p-6 sm:p-7 flex gap-4 items-start">
-              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#7B1C2E] shrink-0">
+              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#166534] shrink-0">
                 <Megaphone size={22} />
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <div className="text-sm font-black uppercase tracking-widest text-[#7B1C2E]">Boarding</div>
+                  <div className="text-sm font-black uppercase tracking-widest text-[#166534]">Boarding</div>
                   <span className="px-2 py-1 rounded-full text-xs font-bold bg-white border border-gray-200 text-gray-700">
                     2027
                   </span>
@@ -51,7 +51,7 @@ export const Home = () => {
                 <p className="text-gray-700 mt-1">
                   Hostel accommodation applications for the <span className="font-bold">2027</span> academic year are open.
                 </p>
-                <a href="/boarding" className="mt-4 inline-flex items-center gap-2 text-[#7B1C2E] font-bold">
+                <a href="/boarding" className="mt-4 inline-flex items-center gap-2 text-[#166534] font-bold">
                   Apply for boarding <ArrowRight size={18} />
                 </a>
               </div>
@@ -72,7 +72,7 @@ export const Home = () => {
               transition={{ delay: i * 0.1, duration: 0.3 }}
               className="bg-white p-8 rounded-2xl shadow-xl flex items-center gap-6 border-b-4 border-[#C8A400]"
             >
-              <div className="p-4 bg-[#FDF9EC] rounded-xl text-[#7B1C2E]">
+              <div className="p-4 bg-[#FDF9EC] rounded-xl text-[#166534]">
                 <stat.icon size={32} />
               </div>
               <div>

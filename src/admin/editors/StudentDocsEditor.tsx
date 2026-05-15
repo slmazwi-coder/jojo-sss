@@ -20,7 +20,7 @@ function generateId() {
 }
 
 function getStoreKey(studentNumber: string) {
-  return `ludidi_student_docs_${studentNumber}`;
+  return `lupindo_student_docs_${studentNumber}`;
 }
 
 function getDocs(studentNumber: string) {

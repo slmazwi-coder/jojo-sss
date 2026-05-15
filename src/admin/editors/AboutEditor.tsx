@@ -74,7 +74,7 @@ export const AboutEditor = () => {
       <section className="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold">School History</h2>
-          <button onClick={addParagraph} className="flex items-center gap-1 text-sm text-[#7B1C2E] hover:underline">
+          <button onClick={addParagraph} className="flex items-center gap-1 text-sm text-[#166534] hover:underline">
             <Plus size={14} /> Add Paragraph
           </button>
         </div>

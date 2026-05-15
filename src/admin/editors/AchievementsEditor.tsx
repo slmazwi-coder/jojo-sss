@@ -130,7 +130,7 @@ export const AchievementsEditor = () => {
       </section>
 
       <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6">
-        <p className="text-gray-400 text-sm">💡 To edit yearly results data and subject pass rates, update the code in <code className="text-[#7B1C2E]">Achievements.tsx</code> directly until Supabase is connected.</p>
+        <p className="text-gray-400 text-sm">💡 To edit yearly results data and subject pass rates, update the code in <code className="text-[#166534]">Achievements.tsx</code> directly until Supabase is connected.</p>
       </div>
     </div>
   );

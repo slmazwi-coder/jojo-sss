@@ -1,7 +1,7 @@
 // Storage utility — localStorage wrapper (swap with Supabase later)
 
 // ── Cache-buster: if stored data version doesn't match, clear stale school data ──
-const SCHOOL_DATA_VERSION = 'ludidi-v2';
+const SCHOOL_DATA_VERSION = 'lupindo-v2';
 if (localStorage.getItem('school_data_version') !== SCHOOL_DATA_VERSION) {
   ['admin_about', 'admin_contact', 'admin_news'].forEach(k => localStorage.removeItem(k));
   localStorage.setItem('school_data_version', SCHOOL_DATA_VERSION);
@@ -323,15 +323,15 @@ export const setContact = (info: ContactInfo) => setObject('admin_contact', info
 // About
 const defaultAbout: AboutInfo = {
   historyParagraphs: [
-    'Ludidi Senior Secondary School is a public school proudly serving learners at Lukholweni Location, Matatiele, in the Alfred Nzo West District of the Eastern Cape.',
-    'Located within the Nunge Circuit under CMC Matatiele, Ludidi SSS is committed to academic excellence, disciplined learning, and community values. Our motto — "Amidst difficulties we rise" — reflects the spirit of every learner who walks through our doors.',
+    'Lupindo Senior Secondary School is a public school proudly serving learners at Lukholweni Location, Matatiele, in the Alfred Nzo West District of the Eastern Cape.',
+    'Located within the Nunge Circuit under CMC Matatiele, Lupindo SSS is committed to academic excellence, disciplined learning, and community values. Our motto — "Amidst difficulties we rise" — reflects the spirit of every learner who walks through our doors.',
     'Parents and guardians are encouraged to engage actively with the school through meetings, events, and ongoing learner support. Together we build a culture of achievement and pride.',
   ],
   principalName: 'Mr S.S. Mafunda',
   principalTitle: 'Principal',
   principalMessage: [
-    'Welcome to Ludidi Senior Secondary School. We believe every learner carries within them the capacity for greatness. Our role is to unlock it — through discipline, love, and unwavering belief in their potential.',
-    'We value respect, responsibility, and pride in our school community. Hard work pays, and at Ludidi SSS, we are committed to proving that amidst every difficulty, we rise.',
+    'Welcome to Lupindo Senior Secondary School. We believe every learner carries within them the capacity for greatness. Our role is to unlock it — through discipline, love, and unwavering belief in their potential.',
+    'We value respect, responsibility, and pride in our school community. Hard work pays, and at Lupindo SSS, we are committed to proving that amidst every difficulty, we rise.',
   ],
 };
 export const getAbout = () => getObject<AboutInfo>('admin_about', defaultAbout);

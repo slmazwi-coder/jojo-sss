@@ -61,13 +61,13 @@ const Field = ({
 );
 
 const inp =
-  'border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#C8A400]/40 focus:border-[#7B1C2E] transition w-full bg-white';
+  'border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#C8A400]/40 focus:border-[#166534] transition w-full bg-white';
 
 const sel = inp + ' cursor-pointer';
 
 const SectionHeading = ({ icon, title }: { icon: React.ReactNode; title: string }) => (
   <div className="flex items-center gap-2 pb-2 border-b border-gray-200 mb-4">
-    <span className="text-[#7B1C2E]">{icon}</span>
+    <span className="text-[#166534]">{icon}</span>
     <h3 className="text-sm font-black uppercase tracking-widest text-gray-700">{title}</h3>
   </div>
 );
@@ -78,8 +78,8 @@ const StepBadge = ({
   <div className="flex items-center gap-2">
     <div
       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black border-2 transition-all
-        ${done   ? 'bg-[#C8A400] border-[#7B1C2E] text-white'
-        : active ? 'bg-white border-white text-[#7B1C2E]'
+        ${done   ? 'bg-[#C8A400] border-[#166534] text-white'
+        : active ? 'bg-white border-white text-[#166534]'
         :          'bg-white/20 border-white/30 text-white/60'}`}
     >
       {done ? <CheckCircle size={14} /> : num}
@@ -269,12 +269,12 @@ export const Admissions = () => {
           transition={{ duration: 0.25 }}
           className="text-center p-10 sm:p-12 bg-white rounded-3xl shadow-2xl max-w-md"
         >
-          <div className="w-20 h-20 bg-[#FFF3CC] text-[#7B1C2E] rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-[#FFF3CC] text-[#166534] rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle size={48} />
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Application Submitted!</h2>
           <p className="text-gray-600 mb-8">
-            Thank you for applying to Ludidi Senior Secondary School. We have received your application and will be in contact shortly.
+            Thank you for applying to Lupindo Senior Secondary School. We have received your application and will be in contact shortly.
           </p>
           <a href="/" className="btn-primary w-full inline-block">Back to Home</a>
         </motion.div>
@@ -310,7 +310,7 @@ export const Admissions = () => {
               <div>
                 <h2 className="text-2xl font-bold">Application for Admission to School</h2>
                 <p className="text-white/70 text-sm mt-1">
-                  Ludidi Senior Secondary School &nbsp;·&nbsp; Igoga Location, Matatiele 4730
+                  Lupindo Senior Secondary School &nbsp;·&nbsp; Igoga Location, Matatiele 4730
                 </p>
               </div>
               <div className="text-right text-sm text-white/70">
@@ -723,7 +723,7 @@ export const Admissions = () => {
                       <button
                         type="button"
                         onClick={() => setHasSecondParent(p => !p)}
-                        className="text-sm font-semibold text-[#7B1C2E] underline underline-offset-2"
+                        className="text-sm font-semibold text-[#166534] underline underline-offset-2"
                       >
                         {hasSecondParent ? '− Remove second parent/guardian' : '+ Add second parent/guardian'}
                       </button>
@@ -815,7 +815,7 @@ export const Admissions = () => {
                               key={field.key}
                               className={`relative flex items-center gap-3 p-3 rounded-xl border-2 transition
                                 ${file
-                                  ? 'border-[#7B1C2E] bg-[#FDF9EC]'
+                                  ? 'border-[#166534] bg-[#FDF9EC]'
                                   : field.required
                                     ? 'border-dashed border-red-300 bg-red-50/40'
                                     : 'border-dashed border-gray-300 bg-gray-50'}`}
@@ -828,10 +828,10 @@ export const Admissions = () => {
                                   {field.label}
                                   {field.required && <span className="text-red-500 ml-1">*</span>}
                                 </div>
-                                {file && <div className="text-xs text-[#7B1C2E] truncate mt-0.5">{file.name}</div>}
+                                {file && <div className="text-xs text-[#166534] truncate mt-0.5">{file.name}</div>}
                                 {!file && <div className="text-xs text-gray-400 mt-0.5">No file chosen</div>}
                               </div>
-                              <label className="shrink-0 text-xs font-bold text-[#7B1C2E] cursor-pointer hover:underline">
+                              <label className="shrink-0 text-xs font-bold text-[#166534] cursor-pointer hover:underline">
                                 {file ? 'Change' : 'Upload'}
                                 <input
                                   type="file"
