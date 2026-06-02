@@ -114,7 +114,7 @@ export const ExtraCurricular = () => {
         <h1 className="section-title text-center">Sports & Culture</h1>
         
         <p className="text-center text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
-          At Lupindo SSS, we believe in a holistic education. Our extra-curricular programs are designed to discover and nurture the diverse talents of our learners.
+          At Jojo SSS, we believe in a holistic education. Our extra-curricular programs are designed to discover and nurture the diverse talents of our learners.
         </p>
 
         {/* Sports */}
@@ -178,7 +178,7 @@ export const ExtraCurricular = () => {
             </h2>
             <div className="bg-[#C8A400] rounded-3xl p-8 text-white">
               <p className="text-lg italic mb-8 text-[#FFF3CC]">
-                "Recognizing those who have gone above and beyond in representing Lupindo SSS at regional, provincial, and national levels."
+                "Recognizing those who have gone above and beyond in representing Jojo SSS at regional, provincial, and national levels."
               </p>
               <div className="space-y-6">
                 <div className="flex items-center gap-4">

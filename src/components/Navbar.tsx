@@ -21,31 +21,31 @@ export const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="w-full sticky top-0 z-50" style={ { background: '#C8A400', borderBottom: '3px solid #166534' } }>
+    <nav className="w-full sticky top-0 z-50" style={ { background: '#CC0000', borderBottom: '3px solid #F5C518' } }>
 
       {/* ── Top bar: Logo + School name + Student Portal ── */}
-      <div className="w-full" style={ { borderBottom: '1px solid rgba(123,28,46,0.3)' } }>
+      <div className="w-full" style={ { borderBottom: '1px solid rgba(245,197,24,0.3)' } }>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
 
             {/* Logo + Name */}
             <Link to="/" className="flex items-center gap-3 min-w-0 flex-1">
-              <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-md" style={ { border: '2px solid #166534' } }>
+              <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-md" style={ { border: '2px solid #F5C518' } }>
                 <img
-                  src="/lslogo.png"
-                  alt="Lupindo SSS logo"
+                  src="/jojo_logo.png"
+                  alt="Jojo SSS logo"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div className="min-w-0">
-                <span className="md:hidden text-sm font-bold block leading-tight" style={ { color: '#166534' } }>
-                  Lupindo SSS
+                <span className="md:hidden text-sm font-bold block leading-tight" style={ { color: '#F5C518' } }>
+                  Jojo SSS
                 </span>
-                <span className="hidden md:block text-base font-bold leading-tight" style={ { color: '#166534' } }>
-                  Lupindo Senior Secondary School
+                <span className="hidden md:block text-base font-bold leading-tight" style={ { color: '#FFFFFF' } }>
+                  Jojo Senior Secondary School
                 </span>
-                <span className="text-xs font-semibold tracking-wide uppercase" style={ { color: 'rgba(123,28,46,0.7)' } }>
-                  Amidst difficulties we rise
+                <span className="text-xs font-semibold tracking-wide uppercase" style={ { color: 'rgba(245,197,24,0.7)' } }>
+                  The Sky Is The Limit
                 </span>
               </div>
             </Link>
@@ -57,8 +57,8 @@ export const Navbar = () => {
                 className={cn(
                   'px-4 py-2 rounded-lg text-sm font-bold transition-colors inline-flex items-center gap-2',
                   location.pathname.startsWith('/student')
-                    ? 'text-[#C8A400] bg-[#166534]'
-                    : 'text-[#166534] border-2 border-[#166534] hover:bg-[#166534] hover:text-[#C8A400]'
+                    ? 'text-[#CC0000] bg-[#F5C518]'
+                    : 'text-[#F5C518] border-2 border-[#F5C518] hover:bg-[#F5C518] hover:text-[#CC0000]'
                 )}
               >
                 <User size={15} /> Student Portal
@@ -70,7 +70,7 @@ export const Navbar = () => {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2"
-                style={ { color: '#166534' } }
+                style={ { color: '#F5C518' } }
                 aria-label="Open menu"
               >
                 {isOpen ? <X size={26} /> : <Menu size={26} />}
@@ -81,7 +81,7 @@ export const Navbar = () => {
       </div>
 
       {/* ── Bottom bar: Nav links (desktop only) ── */}
-      <div className="hidden md:block w-full" style={ { background: '#C8A400' } }>
+      <div className="hidden md:block w-full" style={ { background: '#CC0000' } }>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center flex-wrap gap-x-1 gap-y-0 py-1">
             {navLinks.map((link) => (
@@ -91,12 +91,12 @@ export const Navbar = () => {
                 className="px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap"
                 style={
                   location.pathname === link.path
-                    ? { color: '#C8A400', background: '#166534', fontWeight: 700 }
-                    : { color: '#166534' }
+                    ? { color: '#CC0000', background: '#F5C518', fontWeight: 700 }
+                    : { color: '#FFFFFF' }
                 }
                 onMouseEnter={e => {
                   if (location.pathname !== link.path) {
-                    (e.target as HTMLElement).style.background = 'rgba(123,28,46,0.12)';
+                    (e.target as HTMLElement).style.background = 'rgba(245,197,24,0.12)';
                   }
                 }}
                 onMouseLeave={e => {
@@ -114,7 +114,7 @@ export const Navbar = () => {
 
       {/* ── Mobile dropdown ── */}
       {isOpen && (
-        <div className="md:hidden shadow-lg" style={ { background: '#C8A400', borderTop: '1px solid rgba(123,28,46,0.3)' } }>
+        <div className="md:hidden shadow-lg" style={ { background: '#CC0000', borderTop: '1px solid rgba(245,197,24,0.3)' } }>
           <div className="px-3 pt-2 pb-4 space-y-1">
             {navLinks.map((link) => (
               <Link
@@ -124,23 +124,23 @@ export const Navbar = () => {
                 className="flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-colors"
                 style={
                   location.pathname === link.path
-                    ? { color: '#C8A400', background: '#166534', fontWeight: 700 }
-                    : { color: '#166534' }
+                    ? { color: '#CC0000', background: '#F5C518', fontWeight: 700 }
+                    : { color: '#FFFFFF' }
                 }
               >
                 {link.name}
               </Link>
             ))}
 
-            <div className="pt-2" style={ { borderTop: '1px solid rgba(123,28,46,0.3)' } }>
+            <div className="pt-2" style={ { borderTop: '1px solid rgba(245,197,24,0.3)' } }>
               <Link
                 to="/student/login"
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-bold transition-colors"
                 style={
                   location.pathname.startsWith('/student')
-                    ? { color: '#C8A400', background: '#166534' }
-                    : { color: '#166534', background: 'rgba(123,28,46,0.1)' }
+                    ? { color: '#CC0000', background: '#F5C518' }
+                    : { color: '#F5C518', background: 'rgba(245,197,24,0.1)' }
                 }
               >
                 <User size={15} /> Student Portal

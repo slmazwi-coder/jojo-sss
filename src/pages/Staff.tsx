@@ -128,7 +128,7 @@ export const Staff = () => {
           </h1>
           <div className="w-16 h-1 mx-auto rounded-full mb-4" style={ { background: '#C8A400' } } />
           <p className="text-gray-500 text-base max-w-2xl mx-auto">
-            Meet the dedicated team of educators and support staff at Lupindo Senior Secondary School.
+            Meet the dedicated team of educators and support staff at Jojo Senior Secondary School.
           </p>
         </div>
 

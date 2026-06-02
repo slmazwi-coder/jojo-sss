@@ -33,7 +33,7 @@ export const StudentLogin = () => {
     // IMPORTANT:
     // This demo portal uses client-side login state only.
     // Real security MUST be enforced server-side (Supabase RLS + protected storage).
-    sessionStorage.setItem('lupindo_student_portal_student_number', sn);
+    sessionStorage.setItem('jojo_student_portal_student_number', sn);
     navigate('/student');
   };
 
@@ -54,7 +54,7 @@ export const StudentLogin = () => {
             <Lock className="text-white" size={28} />
           </div>
           <h1 className="text-2xl font-bold text-white">Student Portal</h1>
-          <p className="text-gray-400 text-sm mt-1">Lupindo</p>
+          <p className="text-gray-400 text-sm mt-1">Jojo</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">

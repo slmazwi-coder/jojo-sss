@@ -86,7 +86,7 @@ export const Achievements = () => {
                   Celebrating strong results
                 </h2>
                 <p className="text-base sm:text-lg text-gray-700 max-w-2xl italic leading-relaxed text-center md:text-left">
-                  "Lupindo SSS continues to focus on steady improvement, learner support, and high academic standards."
+                  "Jojo SSS continues to focus on steady improvement, learner support, and high academic standards."
                 </p>
               </div>
             </div>

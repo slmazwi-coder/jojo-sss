@@ -274,7 +274,7 @@ export const Admissions = () => {
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Application Submitted!</h2>
           <p className="text-gray-600 mb-8">
-            Thank you for applying to Lupindo Senior Secondary School. We have received your application and will be in contact shortly.
+            Thank you for applying to Jojo Senior Secondary School. We have received your application and will be in contact shortly.
           </p>
           <a href="/" className="btn-primary w-full inline-block">Back to Home</a>
         </motion.div>
@@ -310,7 +310,7 @@ export const Admissions = () => {
               <div>
                 <h2 className="text-2xl font-bold">Application for Admission to School</h2>
                 <p className="text-white/70 text-sm mt-1">
-                  Lupindo Senior Secondary School &nbsp;·&nbsp; Igoga Location, Matatiele 4730
+                  Jojo Senior Secondary School &nbsp;·&nbsp; Igoga Location, Matatiele 4730
                 </p>
               </div>
               <div className="text-right text-sm text-white/70">

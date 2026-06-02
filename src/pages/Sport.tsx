@@ -53,7 +53,7 @@ export const Sport = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="section-title text-center">Sport</h1>
         <p className="text-center text-lg text-gray-600 mb-12 max-w-3xl mx-auto">
-          Lupindo SSS offers structured sport programs to develop teamwork, fitness, and discipline.
+          Jojo SSS offers structured sport programs to develop teamwork, fitness, and discipline.
         </p>
 
         <section className="mb-14">

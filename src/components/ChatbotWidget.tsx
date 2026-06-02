@@ -134,13 +134,13 @@ async function translateText(text: string, src: SupportedLang, tgt: SupportedLan
 }
 
 // ── Claude AI (Anthropic) ────────────────────────────────────────────────────
-const SYSTEM_PROMPT = `You are a warm, knowledgeable and friendly assistant for Lupindo Senior Secondary School in Matatiele, Eastern Cape, South Africa.
+const SYSTEM_PROMPT = `You are a warm, knowledgeable and friendly assistant for Jojo Senior Secondary School in Mount Ayliff, Eastern Cape, South Africa.
 
 You help parents, learners, guardians and community members with anything about the school:
 - Admissions and application process (general and boarding)
 - Required documents for applications
-- Boarding / hostel information (HTL 02 & HTL 03 forms, bursaries)
-- School fees, payment and financial assistance
+- Boarding / hostel information
+- School fees, payment and financial assistance (No-Fee school)
 - School hours and term dates
 - Staff, departments and contact information
 - Academic results, achievements and activities
@@ -149,17 +149,27 @@ You help parents, learners, guardians and community members with anything about 
 - General encouragement and guidance for parents and learners
 
 School details:
-- Name: Lupindo Senior Secondary School
-- Location: Sigoga Location, Mgubo A/A, Matatiele, 4730 (Eastern Cape)
-- Phone: +27 76 707 3212
-- Email: office@lupindosss.co.za
-- Motto: "We Can"
-- Principal: Ms B Ngozwana
-- Deputy Principal: Mr M Leanya
-- School hours: Monday–Thursday 07:30–15:30, Friday 07:30–13:30
+- Name: Jojo Senior Secondary School (Jojo SSS)
+- Location: Dundee A/A, Mount Ayliff, Eastern Cape 4735
+- District: Alfred Nzo West Education District
+- Municipality: Umzimvubu Local Municipality
+- Phone: 039 940 4284 / 073 454 3888 / (039) 254 8224
+- Email: Principal.200500338@ecschools.org.za
+- Website: jojohighschool.com
+- Facebook: Jojo Senior Secondary School
+- Motto: "The Sky Is The Limit"
+- Principal: Mr W.T. Mnganyana
+- School hours: Monday–Friday 07:30–15:30
 - Grades: Grade 8 to Grade 12
-- 2027 applications currently open (general and boarding)
-- 2025 Matric pass rate: 94.5% | Bachelor passes: 206 (71.8%) | Distinctions: 451
+- Type: Public No-Fee School
+- Learners: Approximately 1,609 to 1,758
+- Teachers: 46
+
+Key events:
+- Grade 12 Tie Ceremony — annual milestone event
+- Termly Parents' Meetings at Gillespie Church Hall
+
+School colours: Bold Red (#CC0000), White, Gold/Yellow (#F5C518)
 
 Be warm, clear and concise. Always encourage. If you are unsure about something very specific, direct them to call or email the school.`;
 
@@ -195,7 +205,7 @@ async function askClaude(userMessage: string): Promise<string> {
     return text;
   } catch (err) {
     console.error('[Chatbot] Claude request failed:', err);
-    return 'I\'m having trouble connecting right now. Please contact the school directly at +27 76 707 3212 or office@lupindosss.co.za.';
+    return 'I\'m having trouble connecting right now. Please contact the school directly at 039 940 4284 or Principal.200500338@ecschools.org.za.';
   }
 }
 
@@ -211,7 +221,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
       id: uid(),
       role: 'bot',
       createdAt: Date.now(),
-      text: "👋 Hello! Let me help you! Whether it's admissions, boarding, fees, results, activities or anything else about Lupindo SSS — just ask and I'll be happy to assist.",
+      text: "👋 Hello! Let me help you with anything about Jojo Senior Secondary School! Whether it's admissions, boarding, fees, results, activities or anything else — just ask and I'll be happy to assist.",
     },
   ]);
 
@@ -309,7 +319,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
         {
           id: uid(),
           role: 'bot',
-          text: 'Something went wrong. Please contact the school at +27 76 707 3212.',
+          text: 'Something went wrong. Please contact the school at 039 940 4284.',
           createdAt: Date.now(),
         },
       ]);
@@ -342,13 +352,13 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
           aria-label="School help desk chatbot"
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-[#C8A400] text-white shrink-0">
+          <div className="flex items-center justify-between px-4 py-3 bg-[#F5C518] text-[#CC0000] shrink-0">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="w-9 h-9 rounded-full bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
                 <Sparkles size={16} />
               </div>
               <div className="min-w-0">
-                <div className="font-bold text-sm leading-tight truncate">Lupindo Assistant</div>
+                <div className="font-bold text-sm leading-tight truncate">Jojo Assistant</div>
                 <div className="flex items-center gap-1 text-[11px] text-white/70 mt-0.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-300 inline-block animate-pulse" />
                   Online · AI-powered
@@ -378,7 +388,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                         onClick={() => { setCurrentLang(code); setShowLangMenu(false); }}
                         className={`w-full text-left px-3 py-2 text-xs transition-colors ${
                           currentLang === code
-                            ? 'bg-[#C8A400] text-white font-bold'
+                            ? 'bg-[#CC0000] text-white font-bold'
                             : 'text-gray-700 hover:bg-gray-50'
                         }`}
                       >
@@ -407,14 +417,14 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                 className={`flex items-end gap-1.5 ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
               >
                 {m.role === 'bot' && (
-                  <div className="w-6 h-6 rounded-full bg-[#C8A400] flex items-center justify-center shrink-0 mb-0.5">
+                  <div className="w-6 h-6 rounded-full bg-[#F5C518] flex items-center justify-center shrink-0 mb-0.5 text-[#CC0000]">
                     <Sparkles size={11} className="text-white" />
                   </div>
                 )}
                 <div
                   className={`max-w-[80%] rounded-2xl px-3 py-2.5 text-sm leading-relaxed shadow-sm whitespace-pre-wrap ${
                     m.role === 'user'
-                      ? 'bg-[#C8A400] text-white rounded-br-sm'
+                      ? 'bg-[#CC0000] text-white rounded-br-sm'
                       : 'bg-white text-gray-800 border border-gray-100 rounded-bl-sm'
                   }`}
                 >
@@ -431,7 +441,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
             {/* Typing indicator */}
             {isTyping && (
               <div className="flex items-end gap-1.5">
-                <div className="w-6 h-6 rounded-full bg-[#C8A400] flex items-center justify-center shrink-0">
+                <div className="w-6 h-6 rounded-full bg-[#CC0000] flex items-center justify-center shrink-0">
                   <Sparkles size={11} className="text-white" />
                 </div>
                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex gap-1 items-center">
@@ -451,7 +461,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                     <button
                       key={q}
                       onClick={() => send(q)}
-                      className="text-[11px] px-2.5 py-1 rounded-full bg-white border border-[#166534]/25 text-[#166534] hover:bg-[#B89200] hover:text-white transition-colors font-medium shadow-sm"
+                      className="text-[11px] px-2.5 py-1 rounded-full bg-white border border-[#CC0000]/25 text-[#CC0000] hover:bg-[#990000] hover:text-white transition-colors font-medium shadow-sm"
                     >
                       {q}
                     </button>
@@ -473,7 +483,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
                 }}
-                className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#C8A400]/20 focus:border-[#166534]/40 transition-all bg-gray-50 placeholder:text-gray-400"
+                className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#CC0000]/20 focus:border-[#CC0000]/40 transition-all bg-gray-50 placeholder:text-gray-400"
                 placeholder="Ask me anything about the school…"
                 aria-label="Chat input"
                 disabled={isTyping}
@@ -481,7 +491,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
               <button
                 onClick={() => send()}
                 disabled={isTyping || !input.trim()}
-                className="bg-[#C8A400] hover:bg-[#B89200]/90 text-white px-3 py-2 rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center shrink-0"
+                className="bg-[#CC0000] hover:bg-[#990000]/90 text-white px-3 py-2 rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center shrink-0"
                 aria-label="Send message"
               >
                 <Send size={16} />
@@ -499,7 +509,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
         onClick={() => setOpen((v) => !v)}
         className="fixed z-50 bottom-4 right-3 sm:bottom-6 sm:right-6
           w-14 h-14 rounded-full shadow-xl
-          bg-[#C8A400] hover:bg-[#B89200]/90
+          bg-[#CC0000] hover:bg-[#990000]/90
           text-white flex items-center justify-center
           transition-all duration-200 hover:scale-105 active:scale-95"
         aria-label={open ? 'Close chatbot' : 'Open chatbot'}
