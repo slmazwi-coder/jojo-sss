@@ -12,7 +12,7 @@ interface StaffMember {
 const staffData: StaffMember[] = [
   // ── Leadership ──────────────────────────────────────────────────────────
   {
-    name: 'Mr S.S. Mafunda',
+    name: 'Mr W.T. Mnganyana',
     position: 'Principal',
     category: 'Leadership',
     image: './assets/about/principal.jpg',
@@ -77,12 +77,12 @@ const categories = [
 const StaffCard = ({ member }: { member: StaffMember }) => (
   <div
     className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
-    style={ { background: '#FFFBEF', border: '1px solid #C8A400' } }
+    style={ { background: '#FFFBEF', border: '1px solid #CC0000' } }
   >
     {/* Avatar */}
     <div
       className="w-24 h-24 rounded-full flex items-center justify-center mb-4 overflow-hidden"
-      style={ { background: '#FDF9EC', border: '3px solid #C8A400' } }
+      style={ { background: '#FDF9EC', border: '3px solid #CC0000' } }
     >
       {member.image ? (
         <img
@@ -92,20 +92,20 @@ const StaffCard = ({ member }: { member: StaffMember }) => (
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
         />
       ) : (
-        <User size={40} style={ { color: '#C8A400', opacity: 0.5 } } />
+        <User size={40} style={ { color: '#CC0000', opacity: 0.5 } } />
       )}
     </div>
 
-    <h3 className="text-sm font-bold leading-tight" style={ { color: '#166534' } }>
+    <h3 className="text-sm font-bold leading-tight" style={ { color: '#CC0000' } }>
       {member.name}
     </h3>
-    <p className="text-xs font-semibold mt-1" style={ { color: '#C8A400' } }>
+    <p className="text-xs font-semibold mt-1" style={ { color: '#F5C518' } }>
       {member.position}
     </p>
     {member.subject && (
       <span
         className="mt-2 inline-block text-xs font-medium px-3 py-1 rounded-full"
-        style={ { background: '#FDF9EC', color: '#166534', border: '1px solid #C8A400' } }
+        style={ { background: '#FDF9EC', color: '#CC0000', border: '1px solid #CC0000' } }
       >
         {member.subject}
       </span>
@@ -123,10 +123,10 @@ export const Staff = () => {
 
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold tracking-tight mb-3" style={ { color: '#166534' } }>
+          <h1 className="text-4xl font-extrabold tracking-tight mb-3" style={ { color: '#CC0000' } }>
             Our Staff
           </h1>
-          <div className="w-16 h-1 mx-auto rounded-full mb-4" style={ { background: '#C8A400' } } />
+          <div className="w-16 h-1 mx-auto rounded-full mb-4" style={ { background: '#F5C518' } } />
           <p className="text-gray-500 text-base max-w-2xl mx-auto">
             Meet the dedicated team of educators and support staff at Jojo Senior Secondary School.
           </p>
@@ -140,8 +140,8 @@ export const Staff = () => {
               onClick={() => setActiveCategory(cat)}
               style={
                 activeCategory === cat
-                  ? { background: '#C8A400', color: '#166534', border: '2px solid #C8A400', fontWeight: 700 }
-                  : { background: '#FFFBEF', color: '#166534', border: '2px solid #C8A400' }
+                  ? { background: '#F5C518', color: '#CC0000', border: '2px solid #F5C518', fontWeight: 700 }
+                  : { background: '#FFFBEF', color: '#CC0000', border: '2px solid #CC0000' }
               }
               className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:shadow-md"
             >
