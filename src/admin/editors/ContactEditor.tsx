@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { getContact, setContact, type ContactInfo } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
 import { Save, ShieldCheck, Loader2 } from 'lucide-react';

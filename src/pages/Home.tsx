@@ -3,9 +3,9 @@ import { motion } from 'motion/react';
 import { Award, TrendingUp, Users, Megaphone, ArrowRight } from 'lucide-react';
 
 const stats = [
-  { label: 'Learners Enrolled', value: '1,609+', icon: Users },
-  { label: 'Dedicated Teachers', value: '46', icon: Award },
-  { label: 'Years of Excellence', value: 'Decades', icon: TrendingUp },
+  { label: 'Learners Enrolled', value: '1,600+', icon: Users },
+  { label: 'Dedicated Educators', value: '46', icon: Award },
+  { label: 'Grades Offered', value: '8 - 12', icon: TrendingUp },
 ];
 
 export const Home = () => {
@@ -23,12 +23,12 @@ export const Home = () => {
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="text-sm font-black uppercase tracking-widest text-[#CC0000]">Notice</div>
                   <span className="px-2 py-1 rounded-full text-xs font-bold bg-white border border-[#CC0000] text-gray-700">
-                    2026
+                    2027
                   </span>
                 </div>
-                <h3 className="text-xl font-extrabold text-gray-900 mt-2">Admissions applications are now open</h3>
+                <h3 className="text-xl font-extrabold text-gray-900 mt-2">2027 Admissions are open</h3>
                 <p className="text-gray-700 mt-1">
-                  General school applications for the <span className="font-bold">2026</span> academic year are open.
+                  Grade 8 applications for the <span className="font-bold">2027</span> academic year are open. Apply online or download the form.
                 </p>
                 <a href="/admissions" className="mt-4 inline-flex items-center gap-2 text-[#CC0000] font-bold">
                   Apply now <ArrowRight size={18} />
@@ -42,14 +42,14 @@ export const Home = () => {
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <div className="text-sm font-black uppercase tracking-widest text-[#CC0000]">Parent Meeting</div>
+                  <div className="text-sm font-black uppercase tracking-widest text-[#CC0000]">Info</div>
                   <span className="px-2 py-1 rounded-full text-xs font-bold bg-white border border-gray-200 text-gray-700">
-                    15 April 2026
+                    School
                   </span>
                 </div>
-                <h3 className="text-xl font-extrabold text-gray-900 mt-2">Term 1 Parents' Meeting</h3>
+                <h3 className="text-xl font-extrabold text-gray-900 mt-2">No-fee school in Mount Ayliff</h3>
                 <p className="text-gray-700 mt-1">
-                  Join us at <span className="font-bold">Gillespie Church Hall</span> at 08:00 for Term 1 feedback and Term 2 planning.
+                  Jojo SSS is a Quintile 2 no-fee school offering Grades 8–12 in Dundee Area, Mount Ayliff.
                 </p>
                 <a href="/contact" className="mt-4 inline-flex items-center gap-2 text-[#CC0000] font-bold">
                   Contact school <ArrowRight size={18} />
@@ -92,7 +92,7 @@ export const Home = () => {
             "The Sky Is The Limit"
           </p>
           <p className="text-lg text-gray-500 mt-4">
-            "We are unity. We don't remember the days — we remember the moments."
+            "We are committed to excellence in everything we do as the school that will enable our learners to become responsible citizens."
           </p>
         </div>
       </section>

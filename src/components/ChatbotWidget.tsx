@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { MessageCircle, X, Send, Globe, ChevronDown, Sparkles } from 'lucide-react';
 import { getApplications, type Application } from '../admin/utils/storage';
+import { generateChatResponse } from '../services/geminiService';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 type ChatRole = 'user' | 'bot';
@@ -21,13 +22,6 @@ const LANG_LABELS: Record<SupportedLang, string> = {
   sot: 'Sesotho',
 };
 
-const VULAVULA_LANG_MAP: Record<SupportedLang, string> = {
-  eng: 'eng_Latn',
-  zul: 'zul_Latn',
-  xho: 'xho_Latn',
-  sot: 'sot_Latn',
-};
-
 const QUICK_QUESTIONS = [
   'How do I apply for admission?',
   'What documents do I need?',
@@ -46,7 +40,11 @@ function normalize(s: string) {
 
 function formatDate(iso: string | undefined) {
   if (!iso) return '';
-  try { return new Date(iso).toLocaleDateString(); } catch { return iso; }
+  try {
+    return new Date(iso).toLocaleDateString();
+  } catch {
+    return iso;
+  }
 }
 
 // ── Status lookup ────────────────────────────────────────────────────────────
@@ -76,137 +74,12 @@ function findApplication(apps: Application[], q: StatusQuery) {
   if (q.kind === 'studentNumber') {
     return apps.find((a) => normalize(a.studentNumber) === normalize(q.studentNumber));
   }
-  return apps.find((a) =>
-    normalize(a.firstName) === normalize(q.firstName) &&
-    normalize(a.lastName) === normalize(q.lastName) &&
-    normalize(a.dob) === normalize(q.dob)
+  return apps.find(
+    (a) =>
+      normalize(a.firstName) === normalize(q.firstName) &&
+      normalize(a.lastName) === normalize(q.lastName) &&
+      normalize(a.dob) === normalize(q.dob)
   );
-}
-
-// ── Vulavula: detect language ────────────────────────────────────────────────
-async function detectLanguage(text: string): Promise<SupportedLang> {
-  try {
-    const key =
-      (import.meta as any).env?.VITE_VULAVULA_API_KEY ||
-      (import.meta as any).env?.VULAVULA_API_KEY ||
-      '';
-    if (!key) return 'eng';
-    const res = await fetch('https://vulavula-services.lelapa.ai/api/v1/classify/process', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-CLIENT-TOKEN': key },
-      body: JSON.stringify({ text }),
-    });
-    if (!res.ok) return 'eng';
-    const data = await res.json();
-    const detected = (data?.predicted_label ?? '').toLowerCase();
-    if (detected.includes('zul')) return 'zul';
-    if (detected.includes('xho')) return 'xho';
-    if (detected.includes('sot')) return 'sot';
-    return 'eng';
-  } catch {
-    return 'eng';
-  }
-}
-
-async function translateText(text: string, src: SupportedLang, tgt: SupportedLang): Promise<string> {
-  if (src === tgt) return text;
-  try {
-    const key =
-      (import.meta as any).env?.VITE_VULAVULA_API_KEY ||
-      (import.meta as any).env?.VULAVULA_API_KEY ||
-      '';
-    if (!key) return text;
-    const res = await fetch('https://vulavula-services.lelapa.ai/api/v1/translate/process', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-CLIENT-TOKEN': key },
-      body: JSON.stringify({
-        input_text: text,
-        source_lang: VULAVULA_LANG_MAP[src],
-        target_lang: VULAVULA_LANG_MAP[tgt],
-      }),
-    });
-    if (!res.ok) return text;
-    const data = await res.json();
-    return data?.translation ?? text;
-  } catch {
-    return text;
-  }
-}
-
-// ── Claude AI (Anthropic) ────────────────────────────────────────────────────
-const SYSTEM_PROMPT = `You are a warm, knowledgeable and friendly assistant for Jojo Senior Secondary School in Mount Ayliff, Eastern Cape, South Africa.
-
-You help parents, learners, guardians and community members with anything about the school:
-- Admissions and application process (general and boarding)
-- Required documents for applications
-- Boarding / hostel information
-- School fees, payment and financial assistance (No-Fee school)
-- School hours and term dates
-- Staff, departments and contact information
-- Academic results, achievements and activities
-- Sports, culture and extra-curricular programs
-- Student welfare and support services
-- General encouragement and guidance for parents and learners
-
-School details:
-- Name: Jojo Senior Secondary School (Jojo SSS)
-- Location: Dundee A/A, Mount Ayliff, Eastern Cape 4735
-- District: Alfred Nzo West Education District
-- Municipality: Umzimvubu Local Municipality
-- Phone: 039 940 4284 / 073 454 3888 / (039) 254 8224
-- Email: Principal.200500338@ecschools.org.za
-- Website: jojohighschool.com
-- Facebook: Jojo Senior Secondary School
-- Motto: "The Sky Is The Limit"
-- Principal: Mr W.T. Mnganyana
-- School hours: Monday–Friday 07:30–15:30
-- Grades: Grade 8 to Grade 12
-- Type: Public No-Fee School
-- Learners: Approximately 1,609 to 1,758
-- Teachers: 46
-
-Key events:
-- Grade 12 Tie Ceremony — annual milestone event
-- Termly Parents' Meetings at Gillespie Church Hall
-
-School colours: Bold Red (#CC0000), White, Gold/Yellow (#F5C518)
-
-Be warm, clear and concise. Always encourage. If you are unsure about something very specific, direct them to call or email the school.`;
-
-async function askClaude(userMessage: string): Promise<string> {
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: userMessage }],
-      }),
-    });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      console.warn('[Chatbot] Claude API error:', response.status, errText);
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-    const text = data?.content
-      ?.filter((b: any) => b.type === 'text')
-      .map((b: any) => b.text)
-      .join('\n')
-      .trim();
-
-    if (!text) throw new Error('Empty response');
-    return text;
-  } catch (err) {
-    console.error('[Chatbot] Claude request failed:', err);
-    return 'I\'m having trouble connecting right now. Please contact the school directly at 039 940 4284 or Principal.200500338@ecschools.org.za.';
-  }
 }
 
 // ── Main ChatbotWidget ───────────────────────────────────────────────────────
@@ -259,7 +132,11 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
   }, [showLangMenu]);
 
   const apps = useMemo(() => {
-    try { return getApplications(); } catch { return []; }
+    try {
+      return getApplications();
+    } catch {
+      return [];
+    }
   }, [open]);
 
   const showQuickQuestions = messages.length <= 1 && !isTyping;
@@ -279,38 +156,26 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
       if (statusQ) {
         const app = findApplication(apps, statusQ);
         const replyText = app
-          ? `I found the application for ${app.firstName} ${app.lastName} (Student number: ${app.studentNumber}). Status: ${app.status}.${app.submittedDate ? ` Submitted: ${formatDate(app.submittedDate)}.` : ''}`
+          ? `I found the application for ${app.firstName} ${app.lastName} (Student number: ${app.studentNumber}). Status: ${app.status}.${
+              app.submittedDate ? ` Submitted: ${formatDate(app.submittedDate)}.` : ''
+            }`
           : 'I could not find a matching application. Please double-check the student number or learner name and date of birth.';
         setMessages((prev) => [...prev, { id: uid(), role: 'bot', text: replyText, createdAt: Date.now() }]);
         setIsTyping(false);
         return;
       }
 
-      // 2. Detect language
-      const detectedLang = await detectLanguage(text);
-      setCurrentLang(detectedLang);
-
-      // 3. Translate to English if needed
-      const englishText = detectedLang !== 'eng'
-        ? await translateText(text, detectedLang, 'eng')
-        : text;
-
-      // 4. Ask Claude
-      const englishReply = await askClaude(englishText);
-
-      // 5. Translate reply back if needed
-      const finalReply = detectedLang !== 'eng'
-        ? await translateText(englishReply, 'eng', detectedLang)
-        : englishReply;
+      // 2. Ask Gemini in the currently selected language
+      const reply = await generateChatResponse(text, LANG_LABELS[currentLang]);
 
       setMessages((prev) => [
         ...prev,
         {
           id: uid(),
           role: 'bot',
-          text: finalReply,
+          text: reply,
           createdAt: Date.now(),
-          detectedLang: detectedLang !== 'eng' ? LANG_LABELS[detectedLang] : undefined,
+          detectedLang: currentLang !== 'eng' ? LANG_LABELS[currentLang] : undefined,
         },
       ]);
     } catch {
@@ -319,7 +184,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
         {
           id: uid(),
           role: 'bot',
-          text: 'Something went wrong. Please contact the school at 039 940 4284.',
+          text: 'Something went wrong. Please contact the school at 039 940 4284 or 072 349 3647.',
           createdAt: Date.now(),
         },
       ]);
@@ -359,8 +224,8 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
               </div>
               <div className="min-w-0">
                 <div className="font-bold text-sm leading-tight truncate">Jojo Assistant</div>
-                <div className="flex items-center gap-1 text-[11px] text-white/70 mt-0.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-300 inline-block animate-pulse" />
+                <div className="flex items-center gap-1 text-[11px] text-[#CC0000]/70 mt-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-600 inline-block animate-pulse" />
                   Online · AI-powered
                   {currentLang !== 'eng' && <span className="ml-1">· {LANG_LABELS[currentLang]}</span>}
                 </div>
@@ -385,7 +250,10 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                     {(Object.entries(LANG_LABELS) as [SupportedLang, string][]).map(([code, label]) => (
                       <button
                         key={code}
-                        onClick={() => { setCurrentLang(code); setShowLangMenu(false); }}
+                        onClick={() => {
+                          setCurrentLang(code);
+                          setShowLangMenu(false);
+                        }}
                         className={`w-full text-left px-3 py-2 text-xs transition-colors ${
                           currentLang === code
                             ? 'bg-[#CC0000] text-white font-bold'
@@ -431,7 +299,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                   {m.text}
                   {m.detectedLang && (
                     <div className="text-[10px] text-gray-400 mt-1 flex items-center gap-1">
-                      <Globe size={9} /> Detected: {m.detectedLang}
+                      <Globe size={9} /> {m.detectedLang}
                     </div>
                   )}
                 </div>
@@ -481,7 +349,10 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    send();
+                  }
                 }}
                 className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#CC0000]/20 focus:border-[#CC0000]/40 transition-all bg-gray-50 placeholder:text-gray-400"
                 placeholder="Ask me anything about the school…"

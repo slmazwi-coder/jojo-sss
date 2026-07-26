@@ -38,7 +38,27 @@ export const Documents = () => {
     <div className="py-16 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="section-title">Student Documents & Resources</h1>
-        
+
+        {/* Application form download */}
+        <div className="bg-[#CC0000] rounded-2xl shadow-lg p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-white">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-white/10 rounded-xl">
+              <FileText size={28} />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold">Application for Admission</h2>
+              <p className="text-sm text-white/80">Download the school application form, complete it and submit it with the required documents.</p>
+            </div>
+          </div>
+          <a
+            href="/assets/documents/application_form.pdf"
+            download
+            className="inline-flex items-center gap-2 bg-[#F5C518] text-[#CC0000] px-5 py-2.5 rounded-xl font-bold hover:bg-white transition-colors shrink-0"
+          >
+            <Download size={18} /> Download Form
+          </a>
+        </div>
+
         <div className="bg-white rounded-2xl shadow-sm p-8 mb-12">
           <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
             <div className="flex flex-wrap gap-2">

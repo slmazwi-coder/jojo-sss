@@ -38,21 +38,22 @@ export const About = () => {
             </div>
             <div className="space-y-4 text-gray-600 leading-relaxed text-base">
               <p>
-                Jojo Senior Secondary School (Jojo SSS) is a public senior secondary school 
-                located at Dundee A/A, Mount Ayliff, Eastern Cape. The school serves the 
-                Umzimvubu Local Municipality within the Alfred Nzo West Education District 
-                and operates as a No-Fee school.
+                Jojo Senior Secondary School (Jojo SSS) is a public no-fee school located in
+                the Dundee Area of Mount Ayliff, Eastern Cape. The school serves the local
+                community within the Alfred Nzo West Education District.
               </p>
               <p>
-                Under the inspiring motto "The Sky Is The Limit", Jojo SSS has built a proud 
+                Under the inspiring motto "The Sky Is The Limit", Jojo SSS has built a proud
                 community of learners and a strong culture of unity and academic ambition.
               </p>
               <p>
-                With approximately 1,609 to 1,758 learners and 46 dedicated teachers, 
-                the school offers comprehensive education from Grades 8 to 12.
+                The school offers Grades 8 to 12 with three streams per grade (A, B and C) and
+                46 dedicated educators. Our FET streams include Science, Business/Commerce (BCM)
+                and Humanities.
               </p>
               <p className="text-[#CC0000] font-semibold">
-                "We are unity. We don't remember the days — we remember the moments."
+                "We are committed to excellence in everything we do as the school that will
+                enable our learners to become responsible citizens."
               </p>
             </div>
           </motion.div>
@@ -140,6 +141,7 @@ export const About = () => {
                 <p className="text-[#F5C518] text-sm font-semibold mt-1 text-center">
                   Principal
                 </p>
+                <p className="text-white/80 text-xs mt-1 text-center">063 088 4862</p>
 
                 {/* Decorative divider */}
                 <div className="w-10 h-0.5 bg-[#CC0000] mt-4 rounded-full opacity-60" />
@@ -154,19 +156,18 @@ export const About = () => {
 
                 <div className="space-y-4 text-gray-700 text-base sm:text-lg leading-relaxed">
                   <p>
-                    Welcome to Jojo Senior Secondary School. Our institution stands as a 
-                    beacon of academic excellence and community spirit in the heart of 
-                    Mount Ayliff.
+                    Welcome to Jojo Senior Secondary School. We are committed to excellence
+                    in everything we do so that our learners become responsible citizens.
                   </p>
                   <p>
-                    At Jojo SSS, we believe that every learner has the potential to reach 
-                    for the sky. Our dedicated team of 46 teachers works tirelessly to 
-                    nurture talent, foster creativity, and build responsible citizens.
+                    At Jojo SSS we believe every learner has the potential to reach for the sky.
+                    Our dedicated team of 46 educators works tirelessly to nurture talent, foster
+                    creativity and build responsible citizens.
                   </p>
                   <p>
-                    Together, we create an environment where "We are unity" is not just 
-                    a phrase, but a way of life. Our learners leave Jojo SSS not only with 
-                    knowledge but with values that will serve them throughout their lives.
+                    We strive to create an environment conducive to teaching and learning, to
+                    build good working relations between teachers, parents and learners, and to
+                    provide a welcoming atmosphere to all stakeholders visiting the school.
                   </p>
                 </div>
 

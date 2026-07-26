@@ -9,6 +9,7 @@ import {
   ChevronRight,
   ChevronLeft,
   AlertCircle,
+  Download,
 } from 'lucide-react';
 import {
   generateId,
@@ -24,12 +25,12 @@ import {
 type UploadField = { key: string; label: string; required?: boolean };
 
 const uploadFields: UploadField[] = [
-  { key: 'learnerId',     label: 'Copy of Birth Certificate / ID',                    required: true },
-  { key: 'reportCard',    label: 'Progress Report from Previous School',              required: true },
-  { key: 'guardianId',    label: 'Parent/Guardian ID Copy',                           required: true },
-  { key: 'residence',     label: 'Proof of Residence',                                required: true },
-  { key: 'transfer',      label: 'Transfer Letter from Previous School (if applicable)' },
-  { key: 'immunisation',  label: 'Copy of Immunisation Records (if available)' },
+  { key: 'birthCertificate', label: 'Copy of Birth Certificate / ID',                    required: true },
+  { key: 'reportCard',       label: 'Progress Report from Previous School',              required: true },
+  { key: 'transferLetter',   label: 'Transfer Letter from Previous School',              required: true },
+  { key: 'immunisation',     label: 'Copy of Immunisation Records',                      required: true },
+  { key: 'guardianId',       label: 'Parent/Guardian ID Copy',                           required: true },
+  { key: 'conductRecord',    label: 'Learner Conduct Record from Previous School',       required: false },
 ];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -51,7 +52,8 @@ async function fileToDataUrl(file: File): Promise<string> {
 
 const Field = ({
   label, required, children,
-}: { label: string; required?: boolean; children: React.ReactNode }) => (
+  _key,
+}: { label: string; required?: boolean; children: React.ReactNode; _key?: React.Key }) => (
   <div className="flex flex-col gap-1">
     <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
       {label}{required && <span className="text-red-500 ml-0.5">*</span>}
@@ -106,7 +108,7 @@ export const Admissions = () => {
   // ── Step 1 state ─────────────────────────────────────────────────────────
 
   const [learner, setL] = useState({
-    surname: '', firstName: '', initials: '', otherNames: '',
+    surname: '', firstName: '', initials: '', otherNames: '', nickName: '',
     dob: '', gender: '', identificationNumber: '', citizenship: '', race: '',
     grade: '', year: '2027',
     highestGradePassed: '', yearWhenGradeWasPassed: '', accessionNo: '',
@@ -302,6 +304,25 @@ export const Admissions = () => {
           </a>
         </div>
 
+        {/* Download form notice */}
+        <div className="mb-6 bg-[#FDF9EC] border border-[#CC0000]/20 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <div className="font-bold text-gray-900 flex items-center gap-2">
+              <FileText size={18} className="text-[#CC0000]" /> Prefer a paper form?
+            </div>
+            <div className="text-sm text-gray-600">
+              Download the application form, complete it by hand and submit it to the school office with the required documents.
+            </div>
+          </div>
+          <a
+            href="/assets/documents/application_form.pdf"
+            download
+            className="inline-flex items-center justify-center gap-2 shrink-0 bg-[#CC0000] text-[#F5C518] px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#990000] transition-colors"
+          >
+            <Download size={18} /> Download Form
+          </a>
+        </div>
+
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
 
           {/* Header / step indicator */}
@@ -310,11 +331,11 @@ export const Admissions = () => {
               <div>
                 <h2 className="text-2xl font-bold">Application for Admission to School</h2>
                 <p className="text-white/70 text-sm mt-1">
-                  Jojo Senior Secondary School &nbsp;·&nbsp; Igoga Location, Matatiele 4730
+                  Jojo Senior Secondary School &nbsp;·&nbsp; Dundee Area, Mount Ayliff, 4735
                 </p>
               </div>
               <div className="text-right text-sm text-white/70">
-                <div>Tel: 083 - 7175264</div>
+                <div>Tel: 039 940 4284 / 072 349 3647</div>
                 <div>Step {step} of 3</div>
               </div>
             </div>
@@ -360,6 +381,7 @@ export const Admissions = () => {
                             <option value="">Select grade</option>
                             {['8','9','10','11','12'].map(g => <option key={g} value={g}>Grade {g}</option>)}
                           </select>
+                          <p className="text-[10px] text-white/70 mt-1">Admissions currently prioritise Grade 8 applications.</p>
                         </Field>
 
                         <Field label="Year">
@@ -399,7 +421,7 @@ export const Admissions = () => {
                         </Field>
 
                         <Field label="Nick Name">
-                          <input className={inp} value={learner.otherNames} onChange={e => patchL('otherNames', e.target.value)} />
+                          <input className={inp} value={learner.nickName} onChange={e => patchL('nickName', e.target.value)} />
                         </Field>
 
                         <Field label="Date of Birth (YYYY-MM-DD)" required>
@@ -648,7 +670,7 @@ export const Admissions = () => {
                         {[
                           ['title','Title'],['initials','Initials'],['firstName','First Name *'],['surname','Surname *'],
                         ].map(([k,l]) => (
-                          <Field key={k} label={l} required={l.includes('*')}>
+                          <Field _key={k} label={l} required={l.includes('*')}>
                             <input className={inp} value={parent1[k as keyof typeof parent1]} onChange={e => patchP1(k, e.target.value)} />
                           </Field>
                         ))}
@@ -738,7 +760,7 @@ export const Admissions = () => {
                           {[
                             ['title','Title'],['initials','Initials'],['firstName','First Name'],['surname','Surname'],
                           ].map(([k,l]) => (
-                            <Field key={k} label={l}>
+                            <Field _key={k} label={l}>
                               <input className={inp} value={parent2[k as keyof typeof parent2]} onChange={e => patchP2(k, e.target.value)} />
                             </Field>
                           ))}
@@ -793,7 +815,7 @@ export const Admissions = () => {
                           ['spouseWorkTelephoneNumber','Spouse Work Telephone'],['spouseCellNumber','Spouse Cell Number'],
                           ['emailAddress','E-Mail Address'],['spouseEmailAddress','Spouse E-Mail Address'],
                         ].map(([k,l]) => (
-                          <Field key={k} label={l}>
+                          <Field _key={k} label={l}>
                             <input className={inp} type={k.includes('email') || k.includes('Email') ? 'email' : 'tel'} value={otherContact[k as keyof typeof otherContact]} onChange={e => patchOC(k, e.target.value)} />
                           </Field>
                         ))}

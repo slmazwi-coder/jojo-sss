@@ -66,10 +66,11 @@ const StepBadge = ({ num, label, active, done }: {
   </div>
 );
 
-const FileUploadRow = ({ label, required, fileKey, files, onChange }: {
+const FileUploadRow = ({ label, required, fileKey, files, onChange, _key }: {
   label: string; required?: boolean; fileKey: string;
   files: Record<string, File | null>;
   onChange: (key: string, file: File | null) => void;
+  _key?: React.Key;
 }) => {
   const file = files[fileKey];
   return (
@@ -572,10 +573,10 @@ export const Boarding = () => {
                               <tr key={k} className="border-t border-gray-100">
                                 <td className="px-3 py-2 bg-gray-50 text-xs font-semibold text-gray-600">{lbl}</td>
                                 <td className="px-2 py-1.5">
-                                  <input className={inp} value={father[k]} onChange={e => patchF(k, e.target.value)} />
+                                  <input className={inp} value={father[k]} onChange={e => patchF(k as string, e.target.value)} />
                                 </td>
                                 <td className="px-2 py-1.5">
-                                  <input className={inp} value={mother[k as keyof typeof mother]} onChange={e => patchM(k, e.target.value)} />
+                                  <input className={inp} value={mother[k as keyof typeof mother]} onChange={e => patchM(k as string, e.target.value)} />
                                 </td>
                               </tr>
                             ))}
@@ -598,8 +599,8 @@ export const Boarding = () => {
                                   {lbl}
                                   {k === 'salaryIncome' && <span className="block text-gray-400 font-normal">(Attach salary advice)</span>}
                                 </td>
-                                <td className="px-2 py-1.5"><input className={inp} value={father[k]} onChange={e => patchF(k, e.target.value)} /></td>
-                                <td className="px-2 py-1.5"><input className={inp} value={mother[k as keyof typeof mother]} onChange={e => patchM(k, e.target.value)} /></td>
+                                <td className="px-2 py-1.5"><input className={inp} value={father[k]} onChange={e => patchF(k as string, e.target.value)} /></td>
+                                <td className="px-2 py-1.5"><input className={inp} value={mother[k as keyof typeof mother]} onChange={e => patchM(k as string, e.target.value)} /></td>
                               </tr>
                             ))}
                           </tbody>
@@ -644,7 +645,7 @@ export const Boarding = () => {
                       <SectionHeading title="Document Uploads – HTL 02" />
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {htl02RequiredUploads.map(f => (
-                          <FileUploadRow key={f.key} label={f.label} required={f.required} fileKey={f.key} files={files} onChange={handleFileChange} />
+                          <FileUploadRow _key={f.key} label={f.label} required={f.required} fileKey={f.key} files={files} onChange={handleFileChange} />
                         ))}
                       </div>
                     </section>
@@ -917,7 +918,7 @@ export const Boarding = () => {
                       <SectionHeading title="Step 2 — Upload All Supporting Documents" />
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {htl03RequiredUploads.map(f => (
-                          <FileUploadRow key={f.key} label={f.label} required={f.required} fileKey={f.key} files={files} onChange={handleFileChange} />
+                          <FileUploadRow _key={f.key} label={f.label} required={f.required} fileKey={f.key} files={files} onChange={handleFileChange} />
                         ))}
                       </div>
                     </section>

@@ -25,7 +25,7 @@ export const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900">Address</h3>
-                  <p className="text-gray-600">Dundee A/A, Mount Ayliff, Eastern Cape 4735</p>
+                  <p className="text-gray-600 whitespace-pre-line">{info.address}</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -34,7 +34,7 @@ export const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900">Phone</h3>
-                  <p className="text-gray-600">039 940 4284 / 073 454 3888 / (039) 254 8224</p>
+                  <p className="text-gray-600">{info.phone}</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -43,7 +43,8 @@ export const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900">Email</h3>
-                  <p className="text-gray-600 break-words">Principal.200500338@ecschools.org.za</p>
+                  <p className="text-gray-600 break-words">{info.email}</p>
+                  <p className="text-xs text-gray-500 break-words">admissions@jojosss.co.za</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -52,8 +53,9 @@ export const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-lg">Office Hours</h4>
-                  <p className="text-gray-600">Monday - Friday: 07:30 – 15:30</p>
-                  <p className="text-gray-600">Saturday - Sunday: Closed</p>
+                  <p className="text-gray-600">Monday - Thursday: {info.monThu}</p>
+                  <p className="text-gray-600">Friday: {info.friday}</p>
+                  <p className="text-gray-600">{info.weekend}</p>
                 </div>
               </div>
             </div>
