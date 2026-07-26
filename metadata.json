@@ -1,6 +1,6 @@
 {
-  "name": "Lupindo Senior Secondary School",
-  "description": "Lupindo SSS is a public boarding school in Lukholweni Location, Matatiele, Eastern Cape. Amidst difficulties we rise.",
+  "name": "Jojo Senior Secondary School",
+  "description": "Jojo SSS is a public no-fee school in Dundee Area, Mount Ayliff, Eastern Cape. The Sky Is The Limit.",
   "requestFramePermissions": [
     "geolocation"
   ]

@@ -1,12 +1,13 @@
 // Storage utility — localStorage wrapper (swap with Supabase later)
 
 // ── Cache-buster: if stored data version doesn't match, clear stale school data ──
-const SCHOOL_DATA_VERSION = 'jojo-sss-v1';
+const SCHOOL_DATA_VERSION = 'jojo-sss-v2';
 if (localStorage.getItem('school_data_version') !== SCHOOL_DATA_VERSION) {
-  ['admin_about', 'admin_contact', 'admin_news'].forEach(k => localStorage.removeItem(k));
+  ['admin_about', 'admin_contact', 'admin_news', 'admin_activities', 'admin_applications'].forEach((k) =>
+    localStorage.removeItem(k)
+  );
   localStorage.setItem('school_data_version', SCHOOL_DATA_VERSION);
 }
-
 
 export interface NewsItem {
   id: string;
@@ -48,14 +49,18 @@ export type LearnerContact = {
 
 export type LearnerParticulars = {
   initials?: string;
+  nickName?: string;
   otherNames?: string;
   identificationNumber?: string; // ID / Passport
   citizenship?: string;
   race?: string;
   homeLanguage?: string;
+  preferredLanguageOfInstruction?: string;
   physicalAddress?: string;
   citySuburb?: string;
   postalCode?: string;
+  province?: string;
+  countryOfResidence?: string;
   isBoarder?: 'Yes' | 'No';
   modeOfTransport?: string;
   deceasedParent?: 'Mother' | 'Father' | 'Both' | 'None';
@@ -88,6 +93,7 @@ export type LearnerMedicalInfo = {
 
 export type SiblingInfo = {
   numberOfOtherChildrenAtSchool?: string;
+  positionInFamily?: string;
   siblings?: Array<{ name: string; grade: string; positionInFamily?: string }>;
 };
 
@@ -272,7 +278,7 @@ function padNumber(num: number, length: number) {
 }
 
 export function generateStudentNumber(year: string): string {
-  // Example: 2027-000123
+  // Example: 2027-000001
   const key = `admin_student_counter_${year}`;
   const current = Number(localStorage.getItem(key) || '0');
   const next = current + 1;
@@ -290,10 +296,18 @@ export function calculateAverageMark(subjectMarks: SubjectMark[]): number {
 const defaultNews: NewsItem[] = [
   {
     id: '1',
-    title: '2027 Applications Open',
-    date: 'Now open',
+    title: '2027 Admissions Open',
+    date: '01 Apr 2026',
     content:
-      'Applications for admissions and boarding for the 2027 academic year are now open. Please submit your application using the online forms.',
+      'Applications for Grade 8 admission for the 2027 academic year are now open. Apply online or download the application form from the Admissions page.',
+    image: '',
+  },
+  {
+    id: '2',
+    title: 'Term 1 Parents Meeting',
+    date: '15 Apr 2026',
+    content:
+      'Parents and guardians are invited to a Term 1 feedback meeting. Time and venue will be confirmed by the school.',
     image: '',
   },
 ];
@@ -310,9 +324,9 @@ export const setApplications = (items: Application[]) => setItems('admin_applica
 
 // Contact
 const defaultContact: ContactInfo = {
-  address: 'Dundee A/A, Mount Ayliff, Eastern Cape 4735',
-  phone: '039 940 4284 / 073 454 3888 / (039) 254 8224',
-  email: 'Principal.200500338@ecschools.org.za',
+  address: 'Dundee Area, Mount Ayliff, Eastern Cape 4735\nP.O. Box 58, Mount Ayliff, 4735',
+  phone: '039 940 4284 / 072 349 3647',
+  email: 'jojos.s.school@gmail.com',
   monThu: '07:30 - 15:30',
   friday: '07:30 - 15:30',
   weekend: 'Closed',
@@ -323,16 +337,16 @@ export const setContact = (info: ContactInfo) => setObject('admin_contact', info
 // About
 const defaultAbout: AboutInfo = {
   historyParagraphs: [
-    'Jojo Senior Secondary School is a public senior secondary school located at Dundee A/A, Mount Ayliff, in the Alfred Nzo West Education District of the Eastern Cape.',
-    'Operating as a No-Fee school, Jojo SSS is committed to academic excellence, community values, and nurturing the potential of every learner. Our motto — "The Sky Is The Limit" — inspires us to reach for greatness.',
-    'With approximately 1,609 to 1,758 learners and 46 dedicated teachers, we offer comprehensive education from Grades 8 to 12. "We are unity. We don\'t remember the days — we remember the moments."',
+    'Jojo Senior Secondary School is a public no-fee school located in the Dundee Area of Mount Ayliff, Eastern Cape. The school falls under the Alfred Nzo West Education District and serves the local community with dedication and pride.',
+    'Guided by the motto "The Sky Is The Limit", Jojo SSS is committed to excellence in teaching and learning, building strong working relationships among teachers, parents and learners, and providing a welcoming atmosphere to all stakeholders.',
+    'The school offers Grades 8 to 12 with three streams per grade (A, B and C). With 46 educators, Jojo SSS provides a comprehensive curriculum including Science, Business/Commerce and Humanities streams in the FET phase.',
   ],
   principalName: 'Mr W.T. Mnganyana',
   principalTitle: 'Principal',
   principalMessage: [
-    'Welcome to Jojo Senior Secondary School. Our institution stands as a beacon of academic excellence and community spirit in the heart of Mount Ayliff.',
-    'At Jojo SSS, we believe that every learner has the potential to reach for the sky. Our dedicated team of 46 teachers works tirelessly to nurture talent, foster creativity, and build responsible citizens.',
-    'Together, we create an environment where "We are unity" is not just a phrase, but a way of life. Our learners leave Jojo SSS not only with knowledge but with values that will serve them throughout their lives.',
+    'Welcome to Jojo Senior Secondary School. We are committed to excellence in everything we do so that our learners become responsible citizens.',
+    'We strive to create an environment that is conducive for teaching and learning, to build good working relations between teachers, parents and learners, and to provide a welcoming atmosphere to all stakeholders visiting the school.',
+    'Together we reach for the sky.',
   ],
 };
 export const getAbout = () => getObject<AboutInfo>('admin_about', defaultAbout);
@@ -346,7 +360,8 @@ const defaultActivities: Activity[] = [
   { id: '4', name: 'Debating', category: 'Academic', description: 'Building critical thinking and communication skills.', image: '' },
   { id: '5', name: 'Choir', category: 'Culture', description: 'Music and performance for school events and competitions.', image: '' },
 ];
-export const getActivities = () => (getItems<Activity>('admin_activities').length ? getItems<Activity>('admin_activities') : defaultActivities);
+export const getActivities = () =>
+  getItems<Activity>('admin_activities').length ? getItems<Activity>('admin_activities') : defaultActivities;
 export const setActivities = (items: Activity[]) => setItems('admin_activities', items);
 
 // Achievers by year
@@ -366,51 +381,129 @@ export const setHallOfFame = (items: HallOfFameEntry[]) => setItems('admin_hall_
 // Results by year
 const defaultResults: Record<string, YearResults> = {
   '2025': {
-    overall: 94.5,
-    bachelor: 206,
-    bachelorRate: 71.8,
-    distinctions: 451,
-    wrote: 287,
-    subjects: [
-      { subject: 'Accounting', rate: 90.6 },
-      { subject: 'Mathematics', rate: 71.1 },
-      { subject: 'Physical Sciences', rate: 82.1 },
-    ],
+    overall: 0,
+    bachelor: 0,
+    bachelorRate: 0,
+    distinctions: 0,
+    wrote: 0,
+    subjects: [],
   },
   '2024': {
-    overall: 94.0,
+    overall: 0,
     bachelor: 0,
     bachelorRate: 0,
     distinctions: 0,
     wrote: 0,
-    subjects: [
-      { subject: 'English FAL', rate: 100 },
-      { subject: 'Life Orientation', rate: 100 },
-    ],
+    subjects: [],
   },
   '2023': {
-    overall: 92.1,
+    overall: 0,
     bachelor: 0,
     bachelorRate: 0,
     distinctions: 0,
     wrote: 0,
-    subjects: [
-      { subject: 'Life Orientation', rate: 100 },
-      { subject: 'Geography', rate: 93.5 },
-    ],
+    subjects: [],
   },
 };
 export const getResultsByYear = (year: string) =>
   getObject<YearResults | null>(`admin_results_${year}`, defaultResults[year] || null);
 export const setResultsByYear = (year: string, data: YearResults) => setObject(`admin_results_${year}`, data);
 
-// Auth
-export const isAuthenticated = () => localStorage.getItem('admin_auth') === 'true';
-export const login = (password: string): boolean => {
-  if (password === 'admin2026') {
-    localStorage.setItem('admin_auth', 'true');
-    return true;
-  }
-  return false;
+// ── Shared hashing helper ──────────────────────────────────────────────────────
+
+async function sha256(input: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(input);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ── Admin User Management ──────────────────────────────────────────────────────
+
+export type AdminUser = {
+  username: string;
+  name: string;
+  role: string;
+  passwordHash?: string;
+  requiresSetup: boolean;
 };
-export const logout = () => localStorage.removeItem('admin_auth');
+
+const ADMIN_USERS_KEY = 'jojo_admin_users';
+const ADMIN_CURRENT_KEY = 'jojo_admin_current_user';
+
+export const getAdminUsers = (): AdminUser[] => getItems<AdminUser>(ADMIN_USERS_KEY);
+
+export async function seedAdminUsers(): Promise<void> {
+  if (getAdminUsers().length > 0) return;
+
+  // A maintenance account with a known password so Age Thirty4 support can access.
+  const age34Hash = await sha256('AgeJojo#26');
+
+  const defaults: AdminUser[] = [
+    { username: 'principal', name: 'Principal', role: 'Principal', requiresSetup: true },
+    { username: 'curriculum-deputy', name: 'Curriculum Deputy Principal', role: 'Deputy Principal', requiresSetup: true },
+    { username: 'finance-deputy', name: 'Finance Deputy Principal', role: 'Deputy Principal', requiresSetup: true },
+    { username: 'admin', name: 'School Administrator', role: 'Administrator', requiresSetup: true },
+    { username: 'sciences-maths', name: 'Sciences & Maths HOD', role: 'HOD', requiresSetup: true },
+    { username: 'age34', name: 'Age34', role: 'Maintenance', passwordHash: age34Hash, requiresSetup: false },
+  ];
+
+  setItems(ADMIN_USERS_KEY, defaults);
+}
+
+export const getCurrentAdmin = (): AdminUser | null => {
+  try {
+    const raw = localStorage.getItem(ADMIN_CURRENT_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+};
+
+export const setCurrentAdmin = (user: AdminUser | null): void => {
+  if (user) {
+    localStorage.setItem(ADMIN_CURRENT_KEY, JSON.stringify(user));
+  } else {
+    localStorage.removeItem(ADMIN_CURRENT_KEY);
+  }
+};
+
+export const isAuthenticated = (): boolean => !!getCurrentAdmin();
+
+export const logout = (): void => {
+  localStorage.removeItem(ADMIN_CURRENT_KEY);
+};
+
+export async function login(
+  username: string,
+  password: string
+): Promise<{ success: boolean; requiresSetup?: boolean; user?: AdminUser }> {
+  await seedAdminUsers();
+  const users = getAdminUsers();
+  const user = users.find((u) => u.username === username);
+  if (!user) return { success: false };
+
+  if (user.requiresSetup && !user.passwordHash) {
+    return { success: false, requiresSetup: true, user };
+  }
+
+  if (!user.passwordHash) return { success: false };
+
+  const hash = await sha256(password);
+  if (hash === user.passwordHash) {
+    setCurrentAdmin(user);
+    return { success: true, user };
+  }
+
+  return { success: false };
+}
+
+export async function setAdminPassword(username: string, password: string): Promise<void> {
+  const users = getAdminUsers();
+  const idx = users.findIndex((u) => u.username === username);
+  if (idx === -1) return;
+  const hash = await sha256(password);
+  users[idx] = { ...users[idx], passwordHash: hash, requiresSetup: false };
+  setItems(ADMIN_USERS_KEY, users);
+}

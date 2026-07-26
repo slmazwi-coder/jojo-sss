@@ -18,27 +18,50 @@ const staffData: StaffMember[] = [
     image: './assets/about/principal.jpg',
   },
   {
-    name: 'Deputy Principal',
-    position: 'Deputy Principal',
+    name: 'Curriculum Deputy Principal',
+    position: 'Deputy Principal — Curriculum',
+    category: 'Leadership',
+  },
+  {
+    name: 'Finance Deputy Principal',
+    position: 'Deputy Principal — Finance',
     category: 'Leadership',
   },
 
   // ── Departmental Heads ───────────────────────────────────────────────────
-  // Update names below via the Staff Portal once confirmed
+  // Names to be added via the Staff Portal once confirmed
   {
-    name: 'HOD — Humanities',
+    name: 'Sciences & Maths HOD',
     position: 'Head of Department',
-    subject: 'Humanities',
+    subject: 'Sciences & Maths',
     category: 'Departmental Heads',
   },
   {
-    name: 'HOD — Mathematics & Science',
+    name: 'Sciences & Agriculture HOD',
     position: 'Head of Department',
-    subject: 'Mathematics & Science',
+    subject: 'Sciences & Agriculture',
     category: 'Departmental Heads',
   },
   {
-    name: 'HOD — Languages',
+    name: 'Humanities FET HOD',
+    position: 'Head of Department',
+    subject: 'Humanities FET',
+    category: 'Departmental Heads',
+  },
+  {
+    name: 'Humanities GET HOD',
+    position: 'Head of Department',
+    subject: 'Humanities GET',
+    category: 'Departmental Heads',
+  },
+  {
+    name: 'Business/Commerce HOD',
+    position: 'Head of Department',
+    subject: 'BCM',
+    category: 'Departmental Heads',
+  },
+  {
+    name: 'Languages HOD',
     position: 'Head of Department',
     subject: 'Languages',
     category: 'Departmental Heads',
@@ -63,8 +86,10 @@ const staffData: StaffMember[] = [
 
   // ── Support Staff ────────────────────────────────────────────────────────
   { name: 'School Administrator', position: 'School Administrator', category: 'Support Staff' },
+  { name: 'School Secretary',     position: 'Secretary',     category: 'Support Staff' },
   { name: 'Security Officer',     position: 'Security Officer',     category: 'Support Staff' },
   { name: 'Learner Support Agent',position: 'Learner Support Agent',category: 'Support Staff' },
+  { name: 'General Assistant',position: 'General Assistant',category: 'Support Staff' },
 ];
 
 const categories = [
@@ -74,7 +99,7 @@ const categories = [
   'Support Staff',
 ];
 
-const StaffCard = ({ member }: { member: StaffMember }) => (
+const StaffCard = ({ member, _key }: { member: StaffMember; _key?: React.Key }) => (
   <div
     className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
     style={ { background: '#FFFBEF', border: '1px solid #CC0000' } }
@@ -156,7 +181,7 @@ export const Staff = () => {
         {/* Staff Cards Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
           {filtered.map((member, index) => (
-            <StaffCard key={index} member={member} />
+            <StaffCard _key={index} member={member} />
           ))}
         </div>
 

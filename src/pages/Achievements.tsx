@@ -75,18 +75,18 @@ export const Achievements = () => {
             </div>
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-10">
               <div className="w-32 h-32 sm:w-40 sm:h-40 bg-[#FDEEA0] rounded-full flex flex-col items-center justify-center text-[#166534] border-8 border-white shadow-lg shrink-0">
-                <span className="text-3xl sm:text-4xl font-black">94.5%</span>
+                <span className="text-2xl sm:text-3xl font-black">TBA</span>
                 <span className="text-sm font-bold uppercase tracking-tighter italic">Pass Rate</span>
               </div>
               <div>
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-[#C8A400] font-bold uppercase tracking-widest text-sm mb-2">
-                  <Star size={16} fill="currentColor" /> 2025 Matric Highlight <Star size={16} fill="currentColor" />
+                  <Star size={16} fill="currentColor" /> Matric Results <Star size={16} fill="currentColor" />
                 </div>
                 <h2 className="text-3xl md:text-5xl font-black text-[#C8A400] mb-4 text-center md:text-left">
-                  Celebrating strong results
+                  Celebrating excellence
                 </h2>
                 <p className="text-base sm:text-lg text-gray-700 max-w-2xl italic leading-relaxed text-center md:text-left">
-                  "Jojo SSS continues to focus on steady improvement, learner support, and high academic standards."
+                  "Jojo SSS continues to focus on steady improvement, learner support, and high academic standards. Matric results will be updated here once released."
                 </p>
               </div>
             </div>

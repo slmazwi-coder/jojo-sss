@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { getDocuments, setDocuments, generateId, type DocumentItem } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
 import { Plus, Trash2, Download, FileText, X, Upload, ShieldCheck, Loader2 } from 'lucide-react';
