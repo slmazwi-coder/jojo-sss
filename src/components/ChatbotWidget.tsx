@@ -25,7 +25,7 @@ const LANG_LABELS: Record<SupportedLang, string> = {
 const QUICK_QUESTIONS = [
   'How do I apply for admission?',
   'What documents do I need?',
-  'Is boarding available?',
+  'What grades do you offer?',
   'What are the school hours?',
 ];
 
@@ -94,7 +94,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
       id: uid(),
       role: 'bot',
       createdAt: Date.now(),
-      text: "👋 Hello! Let me help you with anything about Jojo Senior Secondary School! Whether it's admissions, boarding, fees, results, activities or anything else — just ask and I'll be happy to assist.",
+      text: "👋 Hello! Let me help you with anything about Jojo Senior Secondary School! Whether it's admissions, fees, results, activities or anything else — just ask and I'll be happy to assist.",
     },
   ]);
 

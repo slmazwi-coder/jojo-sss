@@ -61,7 +61,7 @@ export const Sport = () => {
             {sports.map((s) => (
               <div key={s.name} className="bg-gray-50 rounded-3xl border border-gray-100 p-7">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#166534]">
+                  <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#CC0000]">
                     <s.icon size={22} />
                   </div>
                   <h2 className="text-xl font-extrabold text-gray-900">{s.name}</h2>
@@ -75,7 +75,7 @@ export const Sport = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <section className="bg-gray-50 rounded-3xl border border-gray-100 p-7">
             <div className="flex items-center gap-3 mb-5">
-              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#166534]">
+              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#CC0000]">
                 <CalendarDays size={22} />
               </div>
               <h2 className="text-2xl font-extrabold text-gray-900">Fixtures</h2>
@@ -113,7 +113,7 @@ export const Sport = () => {
 
           <section className="bg-gray-50 rounded-3xl border border-gray-100 p-7">
             <div className="flex items-center gap-3 mb-5">
-              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#166534]">
+              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#CC0000]">
                 <Trophy size={22} />
               </div>
               <h2 className="text-2xl font-extrabold text-gray-900">Results</h2>
