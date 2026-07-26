@@ -66,7 +66,7 @@ const API_KEY =
   (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_GEMINI_API_KEY) ||
   (typeof process !== 'undefined' && (process as any).env?.GEMINI_API_KEY) ||
   '';
-const MODEL = 'gemini-2.0-flash';
+const MODEL = 'gemini-2.5-flash';
 
 export async function generateChatResponse(message: string, language = 'English'): Promise<string> {
   if (!API_KEY) {
