@@ -31,7 +31,7 @@ const StudentAvatar = ({ image, name, year }: { image: string; name: string; yea
           </p>
         </div>
       )}
-      <div className="absolute top-0 right-0 bg-[#FDF9EC] p-4 text-[#166534] opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="absolute top-0 right-0 bg-[#FDF9EC] p-4 text-[#CC0000] opacity-0 group-hover:opacity-100 transition-opacity">
         <Award size={24} />
       </div>
     </div>
@@ -69,12 +69,12 @@ export const Achievements = () => {
         <h1 className="section-title text-center mb-12 sm:mb-16">Academic Excellence</h1>
 
         <section className="mb-16 sm:mb-24">
-          <div className="bg-[#166534] border-2 border-[#C8A400] rounded-3xl p-6 sm:p-8 md:p-12 relative overflow-hidden shadow-xl">
+          <div className="bg-[#CC0000] border-2 border-[#C8A400] rounded-3xl p-6 sm:p-8 md:p-12 relative overflow-hidden shadow-xl">
             <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
-              <Star size={200} className="text-[#166534]" />
+              <Star size={200} className="text-[#CC0000]" />
             </div>
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-10">
-              <div className="w-32 h-32 sm:w-40 sm:h-40 bg-[#FDEEA0] rounded-full flex flex-col items-center justify-center text-[#166534] border-8 border-white shadow-lg shrink-0">
+              <div className="w-32 h-32 sm:w-40 sm:h-40 bg-[#FDEEA0] rounded-full flex flex-col items-center justify-center text-[#CC0000] border-8 border-white shadow-lg shrink-0">
                 <span className="text-2xl sm:text-3xl font-black">TBA</span>
                 <span className="text-sm font-bold uppercase tracking-tighter italic">Pass Rate</span>
               </div>
@@ -95,7 +95,7 @@ export const Achievements = () => {
 
         <section className="mb-20 sm:mb-32">
           <div className="text-center mb-10 sm:mb-12">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#166534] mb-4 flex items-center justify-center gap-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#CC0000] mb-4 flex items-center justify-center gap-4">
               <Trophy className="text-yellow-500 w-10 h-10 sm:w-12 sm:h-12" />
               Hall of Fame
               <Trophy className="text-yellow-500 w-10 h-10 sm:w-12 sm:h-12" />
@@ -114,7 +114,7 @@ export const Achievements = () => {
                 <StudentAvatar image={student.image} name={student.name} year={student.year} />
                 <div className="p-6 text-center">
                   <h3 className="text-xl font-bold text-gray-900 mb-1">{student.name}</h3>
-                  <div className="text-[#166534] text-sm font-bold mb-3 flex items-center justify-center gap-1">
+                  <div className="text-[#CC0000] text-sm font-bold mb-3 flex items-center justify-center gap-1">
                     <Medal size={16} /> {student.title}
                   </div>
                   {student.desc ? <p className="text-gray-500 text-xs leading-relaxed">{student.desc}</p> : null}
@@ -126,8 +126,8 @@ export const Achievements = () => {
 
         <section className="mb-20 sm:mb-32">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#166534] flex items-center gap-3">
-              <BarChart3 className="text-[#166534]" /> Matric Results Summary
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#CC0000] flex items-center gap-3">
+              <BarChart3 className="text-[#CC0000]" /> Matric Results Summary
             </h2>
             <div className="flex flex-wrap gap-2 bg-gray-100 p-1 rounded-xl">
               {(['2025', '2024', '2023'] as const).map((year) => (
@@ -197,7 +197,7 @@ export const Achievements = () => {
                         <div key={i} className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
                           <div className="flex justify-between items-center mb-3 gap-3">
                             <span className="font-semibold text-gray-700">{stat.subject}</span>
-                            <span className="text-[#166534] font-bold">{stat.rate}%</span>
+                            <span className="text-[#CC0000] font-bold">{stat.rate}%</span>
                           </div>
                           <div className="w-full bg-gray-100 rounded-full h-2">
                             <motion.div
@@ -219,8 +219,8 @@ export const Achievements = () => {
 
         <section>
           <div className="text-center mb-10 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#166534] flex items-center justify-center gap-3 mb-4">
-              <Calendar className="text-[#166534]" /> Top Achievers Timeline
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#CC0000] flex items-center justify-center gap-3 mb-4">
+              <Calendar className="text-[#CC0000]" /> Top Achievers Timeline
             </h2>
             <p className="text-gray-600 italic">Select a year to see the class achievers.</p>
           </div>
@@ -233,7 +233,7 @@ export const Achievements = () => {
                 className={`px-4 sm:px-5 py-2 rounded-full font-bold transition-all text-sm ${
                   activeAchieversYear === year
                     ? 'bg-[#C8A400] text-white shadow-lg scale-105'
-                    : 'bg-white text-gray-500 border border-gray-200 hover:border-[#166534] hover:text-[#166534]'
+                    : 'bg-white text-gray-500 border border-gray-200 hover:border-[#CC0000] hover:text-[#CC0000]'
                 }`}
               >
                 {year}
@@ -256,7 +256,7 @@ export const Achievements = () => {
                     <StudentAvatar image={person.image} name={person.name} year={activeAchieversYear} />
                     <div className="mt-4">
                       <h3 className="text-lg font-bold text-gray-900">{person.name}</h3>
-                      <p className="text-xs font-semibold text-[#166534] uppercase tracking-wider">{person.title}</p>
+                      <p className="text-xs font-semibold text-[#CC0000] uppercase tracking-wider">{person.title}</p>
                     </div>
                   </div>
                 ))

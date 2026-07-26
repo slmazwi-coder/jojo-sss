@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook } from 'lucide-react';
+import { getContact, type ContactInfo } from '../admin/utils/storage';
 
 const TikTokIcon = (props: { size?: number; className?: string }) => {
   const size = props.size ?? 20;
@@ -13,6 +14,14 @@ const TikTokIcon = (props: { size?: number; className?: string }) => {
 };
 
 export const Footer = () => {
+  const [info, setInfo] = useState<ContactInfo>(getContact());
+
+  useEffect(() => {
+    const onStorage = () => setInfo(getContact());
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
   return (
     <footer className="pt-12 pb-8 w-full" style={ { background: '#CC0000', borderTop: '4px solid #F5C518' } }>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,15 +71,15 @@ export const Footer = () => {
             <ul className="space-y-3 text-sm" style={ { color: 'rgba(245,197,24,0.8)' } }>
               <li className="flex items-start gap-2">
                 <MapPin className="shrink-0 mt-0.5" size={16} />
-                <span>Dundee A/A, Mount Ayliff, Eastern Cape 4735</span>
+                <span className="whitespace-pre-line">{info.address}</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={16} className="shrink-0" />
-                <span>039 940 4284 / 073 454 3888</span>
+                <span>{info.phone}</span>
               </li>
               <li className="flex items-start gap-2">
                 <Mail size={16} className="shrink-0 mt-0.5" />
-                <span className="break-all">Principal.200500338@ecschools.org.za</span>
+                <span className="break-all">{info.email}</span>
               </li>
             </ul>
           </div>
@@ -83,12 +92,16 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-2 text-sm" style={ { color: 'rgba(245,197,24,0.8)' } }>
               <li className="flex justify-between gap-4">
-                <span>Mon – Fri</span>
-                <span className="font-medium">07:30 – 15:30</span>
+                <span>Mon – Thu</span>
+                <span className="font-medium">{info.monThu}</span>
+              </li>
+              <li className="flex justify-between gap-4">
+                <span>Fri</span>
+                <span className="font-medium">{info.friday}</span>
               </li>
               <li className="flex justify-between gap-4">
                 <span>Sat – Sun</span>
-                <span className="font-medium">Closed</span>
+                <span className="font-medium">{info.weekend}</span>
               </li>
             </ul>
           </div>

@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import {
   Upload,
   CheckCircle,
-  BedDouble,
   X,
   FileText,
   ChevronRight,
@@ -63,13 +62,13 @@ const Field = ({
 );
 
 const inp =
-  'border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#C8A400]/40 focus:border-[#166534] transition w-full bg-white';
+  'border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#C8A400]/40 focus:border-[#CC0000] transition w-full bg-white';
 
 const sel = inp + ' cursor-pointer';
 
 const SectionHeading = ({ icon, title }: { icon: React.ReactNode; title: string }) => (
   <div className="flex items-center gap-2 pb-2 border-b border-gray-200 mb-4">
-    <span className="text-[#166534]">{icon}</span>
+    <span className="text-[#CC0000]">{icon}</span>
     <h3 className="text-sm font-black uppercase tracking-widest text-gray-700">{title}</h3>
   </div>
 );
@@ -80,8 +79,8 @@ const StepBadge = ({
   <div className="flex items-center gap-2">
     <div
       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black border-2 transition-all
-        ${done   ? 'bg-[#C8A400] border-[#166534] text-white'
-        : active ? 'bg-white border-white text-[#166534]'
+        ${done   ? 'bg-[#C8A400] border-[#CC0000] text-white'
+        : active ? 'bg-white border-white text-[#CC0000]'
         :          'bg-white/20 border-white/30 text-white/60'}`}
     >
       {done ? <CheckCircle size={14} /> : num}
@@ -271,7 +270,7 @@ export const Admissions = () => {
           transition={{ duration: 0.25 }}
           className="text-center p-10 sm:p-12 bg-white rounded-3xl shadow-2xl max-w-md"
         >
-          <div className="w-20 h-20 bg-[#FFF3CC] text-[#166534] rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-[#FFF3CC] text-[#CC0000] rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle size={48} />
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Application Submitted!</h2>
@@ -290,19 +289,6 @@ export const Admissions = () => {
     <div className="py-12 sm:py-16 bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="section-title">General Application for Admission</h1>
-
-        {/* Boarding notice */}
-        <div className="mb-8 bg-white border border-gray-200 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <div className="font-bold text-gray-900">Need boarding accommodation?</div>
-            <div className="text-sm text-gray-600">
-              General and boarding applications are separate. Submit both if a hostel bed is required.
-            </div>
-          </div>
-          <a href="/boarding" className="btn-primary inline-flex items-center justify-center gap-2 shrink-0">
-            <BedDouble size={18} /> Boarding Application
-          </a>
-        </div>
 
         {/* Download form notice */}
         <div className="mb-6 bg-[#FDF9EC] border border-[#CC0000]/20 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -745,7 +731,7 @@ export const Admissions = () => {
                       <button
                         type="button"
                         onClick={() => setHasSecondParent(p => !p)}
-                        className="text-sm font-semibold text-[#166534] underline underline-offset-2"
+                        className="text-sm font-semibold text-[#CC0000] underline underline-offset-2"
                       >
                         {hasSecondParent ? '− Remove second parent/guardian' : '+ Add second parent/guardian'}
                       </button>
@@ -837,7 +823,7 @@ export const Admissions = () => {
                               key={field.key}
                               className={`relative flex items-center gap-3 p-3 rounded-xl border-2 transition
                                 ${file
-                                  ? 'border-[#166534] bg-[#FDF9EC]'
+                                  ? 'border-[#CC0000] bg-[#FDF9EC]'
                                   : field.required
                                     ? 'border-dashed border-red-300 bg-red-50/40'
                                     : 'border-dashed border-gray-300 bg-gray-50'}`}
@@ -850,10 +836,10 @@ export const Admissions = () => {
                                   {field.label}
                                   {field.required && <span className="text-red-500 ml-1">*</span>}
                                 </div>
-                                {file && <div className="text-xs text-[#166534] truncate mt-0.5">{file.name}</div>}
+                                {file && <div className="text-xs text-[#CC0000] truncate mt-0.5">{file.name}</div>}
                                 {!file && <div className="text-xs text-gray-400 mt-0.5">No file chosen</div>}
                               </div>
-                              <label className="shrink-0 text-xs font-bold text-[#166534] cursor-pointer hover:underline">
+                              <label className="shrink-0 text-xs font-bold text-[#CC0000] cursor-pointer hover:underline">
                                 {file ? 'Change' : 'Upload'}
                                 <input
                                   type="file"

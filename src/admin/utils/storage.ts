@@ -179,9 +179,7 @@ export interface Application {
   correspondenceDetails?: CorrespondenceDetails;
   otherContactDetails?: OtherContactDetails;
 
-  // Boarding
-  applicationType: 'General' | 'Boarding';
-  boardingType?: string;
+  applicationType: 'General';
 
   // Uploads
   uploads: UploadedFile[];

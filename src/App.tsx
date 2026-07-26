@@ -13,7 +13,6 @@ import { Achievements } from './pages/Achievements';
 import { Sport } from './pages/Sport';
 import { Activities } from './pages/Activities';
 import { Admissions } from './pages/Admissions';
-import { Boarding } from './pages/Boarding';
 import { Contact } from './pages/Contact';
 import { StudentLogin } from './pages/StudentLogin';
 import { StudentPortal } from './pages/StudentPortal';
@@ -61,7 +60,6 @@ export default function App() {
         <Route path="/sport" element={<PageShell><Sport /></PageShell>} />
         <Route path="/activities" element={<PageShell><Activities /></PageShell>} />
         <Route path="/admissions" element={<PageShell><Admissions /></PageShell>} />
-        <Route path="/boarding" element={<PageShell><Boarding /></PageShell>} />
         <Route path="/contact" element={<PageShell><Contact /></PageShell>} />
 
         {/* Student portal routes */}

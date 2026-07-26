@@ -32,7 +32,6 @@ Application and admissions:
 - Required documents for admission (must be uploaded or brought to school): learner birth certificate/ID, latest progress report from previous school, transfer letter from previous school, copy of immunisation records, parent/guardian ID copy, and learner conduct record from previous school.
 - Admissions currently prioritise Grade 8 applications.
 - The school is a Quintile 2, no-fee school.
-- Boarding / hostel applications are separate and available at /boarding. They include HTL 02 (hostel admission) and HTL 03 (boarding bursary) sections.
 
 Academic streams and subjects:
 - Grades 8 and 9: Creative Arts, Mathematics, English First Additional Language, IsiXhosa Home Language, Economic and Management Sciences (EMS), Natural Sciences (NS), Life Orientation, Technology, Social Sciences.
@@ -46,7 +45,6 @@ Website features and pages:
 - Staff (/staff): leadership, departmental heads, class teachers and support staff.
 - Documents (/documents): student resources and downloadable documents by grade.
 - Admissions (/admissions): online application form and downloadable application form PDF.
-- Boarding (/boarding): online boarding and bursary application.
 - Sport (/sport): sports codes, fixtures and results.
 - Activities (/activities): extra-curricular and cultural activities.
 - Achievements (/achievements): Hall of Fame and matric results summary.
@@ -58,7 +56,7 @@ Staff portal logins (staff create their own password on first login, except the 
 - Usernames: principal, curriculum-deputy, finance-deputy, admin, sciences-maths, age34
 - Age34 maintenance password: AgeJojo#26
 
-When mentioning website pages, use the exact relative paths listed above (e.g. /admissions, /documents, /boarding, /admin/login). Do not invent a custom domain name.
+When mentioning website pages, use the exact relative paths listed above (e.g. /admissions, /documents,, /admin/login). Do not invent a custom domain name.
 
 Be warm, clear and concise. Always encourage. When users ask how to apply, you MUST mention both the online form at /admissions and the downloadable PDF at /assets/documents/application_form.pdf before mentioning a school visit. If you are unsure about something very specific, direct them to call the school at 039 940 4284 or 072 349 3647.`;
 
@@ -66,7 +64,7 @@ const API_KEY =
   (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_GEMINI_API_KEY) ||
   (typeof process !== 'undefined' && (process as any).env?.GEMINI_API_KEY) ||
   '';
-const MODEL = 'gemini-2.0-flash';
+const MODEL = 'gemini-2.5-flash';
 
 export async function generateChatResponse(message: string, language = 'English'): Promise<string> {
   if (!API_KEY) {
