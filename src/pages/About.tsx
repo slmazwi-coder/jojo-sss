@@ -9,7 +9,7 @@ export const About = () => {
   const [principalFailed, setPrincipalFailed] = useState(false);
 
   const campusImageUrl = '/assets/about/jojocampus.jpg';
-  const principalImageUrl = '/assets/about/principal.jpg';
+  const principalImageUrl = '/assets/staff/mr-mganyana.jpg';
 
   useEffect(() => {
     setData(getAbout());

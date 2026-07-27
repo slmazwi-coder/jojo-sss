@@ -51,7 +51,7 @@ const staffData: StaffMember[] = [
   {
     name: 'Mr Mdi A',
     position: 'Class Teacher — Grade 10A',
-    subject: 'Mathematics',
+    subject: 'Mathematics — Grade 10A',
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '10A',
     image: './assets/staff/mr-mdi-a.jpg',
@@ -59,7 +59,7 @@ const staffData: StaffMember[] = [
   {
     name: 'Miss Ndzelu',
     position: 'Class Teacher — Grade 11B',
-    subject: 'Economics',
+    subject: 'Economics — Grade 11B',
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '11B',
     image: './assets/staff/miss-ndzelu.jpg',
@@ -67,18 +67,18 @@ const staffData: StaffMember[] = [
   {
     name: 'Ms N Reid-Magongo',
     position: 'Class Teacher — Grade 11C',
-    subject: 'IsiXhosa',
+    subject: 'IsiXhosa — Grade 11C',
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '11C',
     image: './assets/staff/ms-n-reid-magongo.jpg',
   },
   {
-    name: 'Mr M Lakthika',
+    name: 'Mr M Lakhithika',
     position: 'Class Teacher — Grade 12A',
-    subject: 'Life Orientation, IsiXhosa HL, Technology',
+    subject: 'Life Orientation, IsiXhosa HL, Technology — Grade 12A',
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '12A',
-    image: './assets/staff/mr-m-lakthika.jpg',
+    image: './assets/staff/mr-m-lakhithika.jpg',
   },
   {
     name: 'Miss A. Nqatsha',
@@ -91,7 +91,7 @@ const staffData: StaffMember[] = [
   {
     name: 'Mr M Nozulela',
     position: 'Class Teacher — Grade 9A',
-    subject: 'History and Technology',
+    subject: 'History and Technology — Grade 9A',
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '9A',
     image: './assets/staff/mr-m-nozulela.jpg',
@@ -244,7 +244,7 @@ const staffData: StaffMember[] = [
 
 const categories = ['School Management', 'Class Teachers', 'Subject Teachers', 'Support Staff'];
 
-const StaffCard = ({ member }: { member: StaffMember }) => (
+const StaffCard = ({ member, activeCategory }: { member: StaffMember; activeCategory: string }) => (
   <div
     className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
     style={ { background: '#FFFBEF', border: '1px solid #CC0000' } }
@@ -269,16 +269,18 @@ const StaffCard = ({ member }: { member: StaffMember }) => (
     <h3 className="text-sm font-bold leading-tight" style={ { color: '#CC0000' } }>
       {member.name}
     </h3>
-    <p className="text-xs font-semibold mt-1" style={ { color: '#F5C518' } }>
-      {member.position}
-    </p>
-    {member.subject && (
-      <span
-        className="mt-2 inline-block text-xs font-medium px-3 py-1 rounded-full"
-        style={ { background: '#FDF9EC', color: '#CC0000', border: '1px solid #CC0000' } }
+    {activeCategory !== 'Subject Teachers' && (
+      <p className="text-xs font-semibold mt-1" style={ { color: '#F5C518' } }>
+        {member.position}
+      </p>
+    )}
+    {activeCategory !== 'Class Teachers' && member.subject && (
+      <div
+        className="mt-3 w-full text-xs font-medium px-2 py-2 rounded-md text-center leading-tight"
+        style={ { background: '#FDF9EC', color: '#CC0000', border: '2px solid #CC0000' } }
       >
         {member.subject}
-      </span>
+      </div>
     )}
   </div>
 );
@@ -336,7 +338,7 @@ export const Staff = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
           {filtered.map((member, index) => (
             <div key={index}>
-              <StaffCard member={member} />
+              <StaffCard member={member} activeCategory={activeCategory} />
             </div>
           ))}
         </div>
