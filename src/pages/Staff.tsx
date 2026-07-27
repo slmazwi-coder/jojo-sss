@@ -65,6 +65,14 @@ const staffData: StaffMember[] = [
     image: './assets/staff/miss-ndzelu.jpg',
   },
   {
+    name: 'Ms N Reid-Magongo',
+    position: 'Class Teacher — Grade 11C',
+    subject: 'IsiXhosa',
+    categories: ['Class Teachers', 'Subject Teachers'],
+    classTeacherFor: '11C',
+    image: './assets/staff/ms-n-reid-magongo.jpg',
+  },
+  {
     name: 'Mr M Lakthika',
     position: 'Class Teacher — Grade 12A',
     subject: 'Life Orientation, IsiXhosa HL, Technology',
@@ -181,6 +189,27 @@ const staffData: StaffMember[] = [
     subject: 'Agricultural Sciences (Grade 11), Natural Sciences (Grades 8 & 9)',
     categories: ['Subject Teachers'],
     image: './assets/staff/mr-m-pepu.jpg',
+  },
+  {
+    name: 'Ms O Magewushe',
+    position: 'Subject Teacher',
+    subject: 'Mathematics (Grades 11 & 12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/ms-o-magewushe.jpg',
+  },
+  {
+    name: 'Ms A Dinga',
+    position: 'Subject Teacher',
+    subject: 'Agricultural Sciences (Grades 10 & 12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/ms-a-dinga.jpg',
+  },
+  {
+    name: 'Mr Z Mkoti',
+    position: 'Subject Teacher',
+    subject: 'Business Studies (Grade 10C), Life Orientation (Grades 8A & 8B)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mr-z-mkoti.jpg',
   },
 
   // ── Support Staff ─────────────────────────────────────────────────────────
