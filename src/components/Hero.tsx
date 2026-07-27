@@ -80,8 +80,8 @@ export const Hero = () => {
           <img
             src="./jojo_logo.png"
             alt="Jojo SSS crest"
-            className="w-28 h-28 md:w-32 md:h-32 rounded-full object-contain bg-white p-3 shadow-2xl mx-auto"
-            style={ { border: '5px solid #F5C518' } }
+            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover shadow-2xl mx-auto"
+            style={ { border: '3px solid #F5C518' } }
             onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
           />
         </motion.div>
