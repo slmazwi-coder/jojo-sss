@@ -5,101 +5,246 @@ interface StaffMember {
   name: string;
   position: string;
   subject?: string;
-  category: string;
+  categories: string[];
   image?: string;
+  classTeacherFor?: string;
+  supportOrder?: number;
+}
+
+const streamIndex: Record<string, number> = { A: 0, B: 1, C: 2 };
+
+function classOrder(cls?: string): number {
+  if (!cls) return 9999;
+  const grade = parseInt(cls, 10);
+  const stream = cls.replace(/^\d+/, '');
+  const streamRank = streamIndex[stream] ?? 9;
+  if (grade >= 10 && grade <= 12) {
+    return (grade - 10) * 3 + streamRank;
+  }
+  return 100 + grade * 3 + streamRank;
 }
 
 const staffData: StaffMember[] = [
-  // ── Leadership ──────────────────────────────────────────────────────────
+  // ── School Management ─────────────────────────────────────────────────────
   {
     name: 'Mr W.T. Mnganyana',
     position: 'Principal',
-    category: 'Leadership',
-    image: './assets/about/principal.jpg',
+    categories: ['School Management'],
+    image: './assets/staff/mr-mganyana.jpg',
   },
   {
-    name: 'Curriculum Deputy Principal',
-    position: 'Deputy Principal — Curriculum',
-    category: 'Leadership',
+    name: 'Mr B. Mamfengu',
+    position: 'Deputy Principal',
+    subject: 'Physical Sciences (Grades 10 & 12)',
+    categories: ['School Management'],
+    image: './assets/staff/mr-b-mamfengu.jpg',
   },
   {
-    name: 'Finance Deputy Principal',
-    position: 'Deputy Principal — Finance',
-    category: 'Leadership',
+    name: 'Mr R. K Qangule',
+    position: 'Deputy Principal',
+    subject: 'Mathematics',
+    categories: ['School Management'],
+    image: './assets/staff/mr-rk-qangule.jpg',
   },
 
-  // ── Departmental Heads ───────────────────────────────────────────────────
-  // Names to be added via the Staff Portal once confirmed
+  // ── Class Teachers (also listed under Subject Teachers) ───────────────────
   {
-    name: 'Sciences & Maths HOD',
-    position: 'Head of Department',
-    subject: 'Sciences & Maths',
-    category: 'Departmental Heads',
+    name: 'Mr Mdi A',
+    position: 'Class Teacher — Grade 10A',
+    subject: 'Mathematics',
+    categories: ['Class Teachers', 'Subject Teachers'],
+    classTeacherFor: '10A',
+    image: './assets/staff/mr-mdi-a.jpg',
   },
   {
-    name: 'Sciences & Agriculture HOD',
-    position: 'Head of Department',
-    subject: 'Sciences & Agriculture',
-    category: 'Departmental Heads',
+    name: 'Miss Ndzelu',
+    position: 'Class Teacher — Grade 11B',
+    subject: 'Economics',
+    categories: ['Class Teachers', 'Subject Teachers'],
+    classTeacherFor: '11B',
+    image: './assets/staff/miss-ndzelu.jpg',
   },
   {
-    name: 'Humanities FET HOD',
-    position: 'Head of Department',
-    subject: 'Humanities FET',
-    category: 'Departmental Heads',
+    name: 'Ms N Reid-Magongo',
+    position: 'Class Teacher — Grade 11C',
+    subject: 'IsiXhosa',
+    categories: ['Class Teachers', 'Subject Teachers'],
+    classTeacherFor: '11C',
+    image: './assets/staff/ms-n-reid-magongo.jpg',
   },
   {
-    name: 'Humanities GET HOD',
-    position: 'Head of Department',
-    subject: 'Humanities GET',
-    category: 'Departmental Heads',
+    name: 'Mr M Lakthika',
+    position: 'Class Teacher — Grade 12A',
+    subject: 'Life Orientation, IsiXhosa HL, Technology',
+    categories: ['Class Teachers', 'Subject Teachers'],
+    classTeacherFor: '12A',
+    image: './assets/staff/mr-m-lakthika.jpg',
   },
   {
-    name: 'Business/Commerce HOD',
-    position: 'Head of Department',
-    subject: 'BCM',
-    category: 'Departmental Heads',
+    name: 'Miss A. Nqatsha',
+    position: 'Class Teacher — Grade 12C',
+    subject: 'English FAL (Grade 10), Business Studies (Grade 12)',
+    categories: ['Class Teachers', 'Subject Teachers'],
+    classTeacherFor: '12C',
+    image: './assets/staff/miss-a-nqatsha.jpg',
   },
   {
-    name: 'Languages HOD',
-    position: 'Head of Department',
-    subject: 'Languages',
-    category: 'Departmental Heads',
+    name: 'Mr M Nozulela',
+    position: 'Class Teacher — Grade 9A',
+    subject: 'History and Technology',
+    categories: ['Class Teachers', 'Subject Teachers'],
+    classTeacherFor: '9A',
+    image: './assets/staff/mr-m-nozulela.jpg',
+  },
+  {
+    name: 'Ms G. Jojo',
+    position: 'Class Teacher — Grade 9B',
+    subject: 'English Grade 9, Life Orientation Grade 10',
+    categories: ['Class Teachers', 'Subject Teachers'],
+    classTeacherFor: '9B',
+    image: './assets/staff/ms-g-jojo.jpg',
   },
 
-  // ── Class Teachers ───────────────────────────────────────────────────────
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 8A',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 8B',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 8C',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 9A',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 9B',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 9C',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 10A', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 10B', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 10C', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 11A', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 11B', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 11C', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 12A', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 12B', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 12C', category: 'Class Teachers' },
+  // ── Subject Teachers ──────────────────────────────────────────────────────
+  {
+    name: 'Miss O Nongogo',
+    position: 'Subject Teacher',
+    subject: 'Life Science, Physical Sciences, Natural Sciences',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-o-nongogo.jpg',
+  },
+  {
+    name: 'Miss Bangani A.',
+    position: 'Subject Teacher',
+    subject: 'IsiXhosa HL and Geography',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-bangani-a.jpg',
+  },
+  {
+    name: 'Ms S. Sukazi',
+    position: 'Subject Teacher',
+    subject: 'Mathematical Literacy and Business Studies',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/ms-s-sukazi.jpg',
+  },
+  {
+    name: 'Miss N.M. Gaulana',
+    position: 'Subject Teacher',
+    subject: 'Business Studies (Grades 11 & 12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-nm-gaulana.jpg',
+  },
+  {
+    name: 'Miss M.P Zulu',
+    position: 'Subject Teacher',
+    subject: 'English FAL (Grades 11 & 12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-mp-zulu.jpg',
+  },
+  {
+    name: 'Miss Nokhwali',
+    position: 'Subject Teacher',
+    subject: 'IsiXhosa',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-nokhwali.jpg',
+  },
+  {
+    name: 'Miss P Sonqishe',
+    position: 'Subject Teacher',
+    subject: 'Tourism',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-p-sonqishe.jpg',
+  },
+  {
+    name: 'Miss F.S.P Qwabe',
+    position: 'Subject Teacher',
+    subject: 'Tourism (Grade 12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-fsp-qwabe.jpg',
+  },
+  {
+    name: 'A. Nogula',
+    position: 'Subject Teacher',
+    subject: 'Mathematical Literacy (Grades 10 & 12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/a-nogula.jpg',
+  },
+  {
+    name: 'Mr Mambi Zuko',
+    position: 'Subject Teacher',
+    subject: 'Accounting (Grades 10, 11 & 12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mr-mambi-zuko.jpg',
+  },
+  {
+    name: 'Mr M Cele',
+    position: 'Subject Teacher',
+    subject: 'English FAL (Grades 12B & 11C)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mr-m-cele.jpg',
+  },
+  {
+    name: 'Mr M. Pepu',
+    position: 'Subject Teacher',
+    subject: 'Agricultural Sciences (Grade 11), Natural Sciences (Grades 8 & 9)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mr-m-pepu.jpg',
+  },
+  {
+    name: 'Ms O Magewushe',
+    position: 'Subject Teacher',
+    subject: 'Mathematics (Grades 11 & 12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/ms-o-magewushe.jpg',
+  },
+  {
+    name: 'Ms A Dinga',
+    position: 'Subject Teacher',
+    subject: 'Agricultural Sciences (Grades 10 & 12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/ms-a-dinga.jpg',
+  },
+  {
+    name: 'Mr Z Mkoti',
+    position: 'Subject Teacher',
+    subject: 'Business Studies (Grade 10C), Life Orientation (Grades 8A & 8B)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mr-z-mkoti.jpg',
+  },
 
-  // ── Support Staff ────────────────────────────────────────────────────────
-  { name: 'School Administrator', position: 'School Administrator', category: 'Support Staff' },
-  { name: 'School Secretary',     position: 'Secretary',     category: 'Support Staff' },
-  { name: 'Security Officer',     position: 'Security Officer',     category: 'Support Staff' },
-  { name: 'Learner Support Agent',position: 'Learner Support Agent',category: 'Support Staff' },
-  { name: 'General Assistant',position: 'General Assistant',category: 'Support Staff' },
+  // ── Support Staff ─────────────────────────────────────────────────────────
+  {
+    name: 'Ms Z.S. Pitoyi',
+    position: 'Admin Clerk',
+    categories: ['Support Staff'],
+    supportOrder: 1,
+  },
+  {
+    name: 'Mr VQwayede',
+    position: 'Admin Clerk',
+    categories: ['Support Staff'],
+    supportOrder: 2,
+    image: './assets/staff/mr-v-qwayede.jpg',
+  },
+  {
+    name: 'Miss V Gwanya',
+    position: 'Cleaner',
+    categories: ['Support Staff'],
+    supportOrder: 4,
+    image: './assets/staff/miss-v-gwanya.jpg',
+  },
+  {
+    name: 'Mrs Z Mjomle',
+    position: 'Cleaner',
+    categories: ['Support Staff'],
+    supportOrder: 5,
+    image: './assets/staff/mrs-z-mjomle.jpg',
+  },
 ];
 
-const categories = [
-  'Leadership',
-  'Departmental Heads',
-  'Class Teachers',
-  'Support Staff',
-];
+const categories = ['School Management', 'Class Teachers', 'Subject Teachers', 'Support Staff'];
 
-const StaffCard = ({ member, _key }: { member: StaffMember; _key?: React.Key }) => (
+const StaffCard = ({ member }: { member: StaffMember }) => (
   <div
     className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
     style={ { background: '#FFFBEF', border: '1px solid #CC0000' } }
@@ -139,8 +284,17 @@ const StaffCard = ({ member, _key }: { member: StaffMember; _key?: React.Key }) 
 );
 
 export const Staff = () => {
-  const [activeCategory, setActiveCategory] = React.useState('Leadership');
-  const filtered = staffData.filter(m => m.category === activeCategory);
+  const [activeCategory, setActiveCategory] = React.useState('School Management');
+  const filtered = React.useMemo(() => {
+    const list = staffData.filter(m => m.categories.includes(activeCategory));
+    if (activeCategory === 'Class Teachers') {
+      return [...list].sort((a, b) => classOrder(a.classTeacherFor) - classOrder(b.classTeacherFor));
+    }
+    if (activeCategory === 'Support Staff') {
+      return [...list].sort((a, b) => (a.supportOrder ?? 99) - (b.supportOrder ?? 99));
+    }
+    return list;
+  }, [activeCategory]);
 
   return (
     <div className="min-h-screen py-12 px-4" style={ { background: '#FDF9EC' } }>
@@ -153,7 +307,7 @@ export const Staff = () => {
           </h1>
           <div className="w-16 h-1 mx-auto rounded-full mb-4" style={ { background: '#F5C518' } } />
           <p className="text-gray-500 text-base max-w-2xl mx-auto">
-            Meet the dedicated team of educators and support staff at Jojo Senior Secondary School.
+            Meet the dedicated management, educators and support staff of Jojo Senior Secondary School.
           </p>
         </div>
 
@@ -172,7 +326,7 @@ export const Staff = () => {
             >
               {cat}
               <span className="ml-2 text-xs font-bold opacity-60">
-                ({staffData.filter(m => m.category === cat).length})
+                ({staffData.filter(m => m.categories.includes(cat)).length})
               </span>
             </button>
           ))}
@@ -181,13 +335,15 @@ export const Staff = () => {
         {/* Staff Cards Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
           {filtered.map((member, index) => (
-            <StaffCard _key={index} member={member} />
+            <div key={index}>
+              <StaffCard member={member} />
+            </div>
           ))}
         </div>
 
         {/* Note */}
         <p className="text-center text-gray-400 text-xs mt-10 italic">
-          Staff names and photos will be updated progressively. Add details via the Staff Portal.
+          Staff names and photos are updated as new information is provided.
         </p>
       </div>
     </div>
