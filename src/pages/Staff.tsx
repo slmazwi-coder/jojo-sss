@@ -14,14 +14,11 @@ interface StaffMember {
 const streamIndex: Record<string, number> = { A: 0, B: 1, C: 2 };
 
 function classOrder(cls?: string): number {
-  if (!cls) return 9999;
+  if (!cls) return -1;
   const grade = parseInt(cls, 10);
   const stream = cls.replace(/^\d+/, '');
   const streamRank = streamIndex[stream] ?? 9;
-  if (grade >= 10 && grade <= 12) {
-    return (grade - 10) * 3 + streamRank;
-  }
-  return 100 + grade * 3 + streamRank;
+  return grade * 10 + streamRank;
 }
 
 const staffData: StaffMember[] = [
@@ -211,6 +208,13 @@ const staffData: StaffMember[] = [
     categories: ['Subject Teachers'],
     image: './assets/staff/mr-z-mkoti.jpg',
   },
+  {
+    name: 'Mrs N Sokanyile',
+    position: 'Subject Teacher',
+    subject: 'IsiXhosa Grade 9',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mrs-n-sokanyile.jpg',
+  },
 
   // ── Support Staff ─────────────────────────────────────────────────────────
   {
@@ -218,6 +222,7 @@ const staffData: StaffMember[] = [
     position: 'Admin Clerk',
     categories: ['Support Staff'],
     supportOrder: 1,
+    image: './assets/staff/ms-z-pitoyi.jpg',
   },
   {
     name: 'Mr VQwayede',
@@ -258,7 +263,7 @@ const StaffCard = ({ member, activeCategory }: { member: StaffMember; activeCate
         <img
           src={member.image}
           alt={member.name}
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-center"
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
         />
       ) : (
@@ -290,7 +295,7 @@ export const Staff = () => {
   const filtered = React.useMemo(() => {
     const list = staffData.filter(m => m.categories.includes(activeCategory));
     if (activeCategory === 'Class Teachers') {
-      return [...list].sort((a, b) => classOrder(a.classTeacherFor) - classOrder(b.classTeacherFor));
+      return [...list].sort((a, b) => classOrder(b.classTeacherFor) - classOrder(a.classTeacherFor));
     }
     if (activeCategory === 'Support Staff') {
       return [...list].sort((a, b) => (a.supportOrder ?? 99) - (b.supportOrder ?? 99));
@@ -335,13 +340,28 @@ export const Staff = () => {
         </div>
 
         {/* Staff Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-          {filtered.map((member, index) => (
-            <div key={index}>
-              <StaffCard member={member} activeCategory={activeCategory} />
+        {activeCategory === 'School Management' ? (
+          <div className="flex flex-col items-center gap-5">
+            <div className="w-full max-w-[260px]">
+              <StaffCard member={filtered[0]} activeCategory={activeCategory} />
             </div>
-          ))}
-        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-2xl justify-items-center">
+              {filtered.slice(1).map((member, index) => (
+                <div key={index} className="w-full max-w-[260px]">
+                  <StaffCard member={member} activeCategory={activeCategory} />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+            {filtered.map((member, index) => (
+              <div key={index}>
+                <StaffCard member={member} activeCategory={activeCategory} />
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Note */}
         <p className="text-center text-gray-400 text-xs mt-10 italic">
