@@ -11,6 +11,9 @@ School details:
 - Phone: 039 940 4284 / 072 349 3647
 - WhatsApp/School cell: 072 349 3647
 - Principal: Mr W.T. Mnganyana (cell: 063 088 4862)
+- Deputy Principals: Mr B. Mamfengu (Physical Sciences, Grades 10 & 12), Mr R. K Qangule (Mathematics)
+- Key Educators: Mr M Lakthika (Life Orientation, IsiXhosa HL, Technology; Grade 12A class teacher); Miss O Nongogo (Life Science, Physical Sciences, Natural Sciences); Mr M Nozulela (History and Technology; Grade 9A class teacher); Miss Bangani A. (IsiXhosa HL and Geography); Ms S. Sukazi (Mathematical Literacy and Business Studies); Miss N.M. Gaulana (Business Studies, Grades 11 & 12); Miss M.P Zulu (English FAL, Grades 11 & 12); Miss Ndzelu (Economics; Grade 11B class teacher); Miss Nokhwali (IsiXhosa); Miss P Sonqishe (Tourism); Miss A. Nqatsha (English FAL Grade 10, Business Studies Grade 12; Grade 12C class teacher); Miss F.S.P Qwabe (Tourism, Grade 12).
+- Total educators: 46
 - Email: jojos.s.school@gmail.com; admissions: admissions@jojosss.co.za; general: info@jojosss.co.za
 - EMIS Number: 200500338
 - Quintile / fee status: Quintile 2, No-Fee school
@@ -18,7 +21,6 @@ School details:
 - Vision: "We are committed to excellence in everything we do as the school that will enable our learners to become responsible citizens."
 - Mission: 1) Create an environment conducive for teaching and learning. 2) Build good working relations between teachers, parents and learners. 3) Provide a welcoming atmosphere to all stakeholders visiting the school.
 - School hours: Monday–Friday 07:30–15:30 (office hours)
-- Educators: 46
 - Learners: approximately 1,600+
 - Grades: Grade 8 to Grade 12 (GET + FET). Five grades in total.
 - Streams: Grades 8–12 each have three streams: A, B and C (e.g. 8A, 8B, 8C through 12A, 12B, 12C).

@@ -15,91 +15,112 @@ const staffData: StaffMember[] = [
     name: 'Mr W.T. Mnganyana',
     position: 'Principal',
     category: 'Leadership',
-    image: './assets/about/principal.jpg',
+    image: './assets/staff/mr-mganyana.jpg',
   },
   {
-    name: 'Curriculum Deputy Principal',
-    position: 'Deputy Principal — Curriculum',
+    name: 'Mr B. Mamfengu',
+    position: 'Deputy Principal',
+    subject: 'Physical Sciences (Grades 10 & 12)',
     category: 'Leadership',
+    image: './assets/staff/mr-b-mamfengu.jpg',
   },
   {
-    name: 'Finance Deputy Principal',
-    position: 'Deputy Principal — Finance',
+    name: 'Mr R. K Qangule',
+    position: 'Deputy Principal',
+    subject: 'Mathematics',
     category: 'Leadership',
+    image: './assets/staff/mr-rk-qangule.jpg',
   },
 
-  // ── Departmental Heads ───────────────────────────────────────────────────
-  // Names to be added via the Staff Portal once confirmed
+  // ── Educators ───────────────────────────────────────────────────────────
   {
-    name: 'Sciences & Maths HOD',
-    position: 'Head of Department',
-    subject: 'Sciences & Maths',
-    category: 'Departmental Heads',
+    name: 'Mr M Lakthika',
+    position: 'Class Teacher — Grade 12A',
+    subject: 'Life Orientation, IsiXhosa HL, Technology',
+    category: 'Educators',
+    image: './assets/staff/mr-m-lakthika.jpg',
   },
   {
-    name: 'Sciences & Agriculture HOD',
-    position: 'Head of Department',
-    subject: 'Sciences & Agriculture',
-    category: 'Departmental Heads',
+    name: 'Miss O Nongogo',
+    position: 'Educator',
+    subject: 'Life Science, Physical Sciences, Natural Sciences',
+    category: 'Educators',
+    image: './assets/staff/miss-o-nongogo.jpg',
   },
   {
-    name: 'Humanities FET HOD',
-    position: 'Head of Department',
-    subject: 'Humanities FET',
-    category: 'Departmental Heads',
+    name: 'Mr M Nozulela',
+    position: 'Class Teacher — Grade 9A',
+    subject: 'History and Technology',
+    category: 'Educators',
+    image: './assets/staff/mr-m-nozulela.jpg',
   },
   {
-    name: 'Humanities GET HOD',
-    position: 'Head of Department',
-    subject: 'Humanities GET',
-    category: 'Departmental Heads',
+    name: 'Miss Bangani A.',
+    position: 'Educator',
+    subject: 'IsiXhosa HL and Geography',
+    category: 'Educators',
+    image: './assets/staff/miss-bangani-a.jpg',
   },
   {
-    name: 'Business/Commerce HOD',
-    position: 'Head of Department',
-    subject: 'BCM',
-    category: 'Departmental Heads',
+    name: 'Ms S. Sukazi',
+    position: 'Educator',
+    subject: 'Mathematical Literacy and Business Studies',
+    category: 'Educators',
+    image: './assets/staff/ms-s-sukazi.jpg',
   },
   {
-    name: 'Languages HOD',
-    position: 'Head of Department',
-    subject: 'Languages',
-    category: 'Departmental Heads',
+    name: 'Miss N.M. Gaulana',
+    position: 'Educator',
+    subject: 'Business Studies (Grades 11 & 12)',
+    category: 'Educators',
+    image: './assets/staff/miss-nm-gaulana.jpg',
   },
-
-  // ── Class Teachers ───────────────────────────────────────────────────────
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 8A',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 8B',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 8C',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 9A',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 9B',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 9C',  category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 10A', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 10B', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 10C', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 11A', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 11B', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 11C', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 12A', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 12B', category: 'Class Teachers' },
-  { name: 'Class Teacher', position: 'Class Teacher — Grade 12C', category: 'Class Teachers' },
-
-  // ── Support Staff ────────────────────────────────────────────────────────
-  { name: 'School Administrator', position: 'School Administrator', category: 'Support Staff' },
-  { name: 'School Secretary',     position: 'Secretary',     category: 'Support Staff' },
-  { name: 'Security Officer',     position: 'Security Officer',     category: 'Support Staff' },
-  { name: 'Learner Support Agent',position: 'Learner Support Agent',category: 'Support Staff' },
-  { name: 'General Assistant',position: 'General Assistant',category: 'Support Staff' },
+  {
+    name: 'Miss M.P Zulu',
+    position: 'Educator',
+    subject: 'English FAL (Grades 11 & 12)',
+    category: 'Educators',
+    image: './assets/staff/miss-mp-zulu.jpg',
+  },
+  {
+    name: 'Miss Ndzelu',
+    position: 'Class Teacher — Grade 11B',
+    subject: 'Economics',
+    category: 'Educators',
+  },
+  {
+    name: 'Miss Nokhwali',
+    position: 'Educator',
+    subject: 'IsiXhosa',
+    category: 'Educators',
+    image: './assets/staff/miss-nokhwali.jpg',
+  },
+  {
+    name: 'Miss P Sonqishe',
+    position: 'Educator',
+    subject: 'Tourism',
+    category: 'Educators',
+    image: './assets/staff/miss-p-sonqishe.jpg',
+  },
+  {
+    name: 'Miss A. Nqatsha',
+    position: 'Class Teacher — Grade 12C',
+    subject: 'English FAL (Grade 10), Business Studies (Grade 12)',
+    category: 'Educators',
+    image: './assets/staff/miss-a-nqatsha.jpg',
+  },
+  {
+    name: 'Miss F.S.P Qwabe',
+    position: 'Educator',
+    subject: 'Tourism (Grade 12)',
+    category: 'Educators',
+    image: './assets/staff/miss-fsp-qwabe.jpg',
+  },
 ];
 
-const categories = [
-  'Leadership',
-  'Departmental Heads',
-  'Class Teachers',
-  'Support Staff',
-];
+const categories = ['Leadership', 'Educators'];
 
-const StaffCard = ({ member, _key }: { member: StaffMember; _key?: React.Key }) => (
+const StaffCard = ({ member }: { member: StaffMember }) => (
   <div
     className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
     style={ { background: '#FFFBEF', border: '1px solid #CC0000' } }
@@ -153,7 +174,7 @@ export const Staff = () => {
           </h1>
           <div className="w-16 h-1 mx-auto rounded-full mb-4" style={ { background: '#F5C518' } } />
           <p className="text-gray-500 text-base max-w-2xl mx-auto">
-            Meet the dedicated team of educators and support staff at Jojo Senior Secondary School.
+            Meet the dedicated leadership and educators of Jojo Senior Secondary School.
           </p>
         </div>
 
@@ -181,13 +202,15 @@ export const Staff = () => {
         {/* Staff Cards Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
           {filtered.map((member, index) => (
-            <StaffCard _key={index} member={member} />
+            <div key={index}>
+              <StaffCard member={member} />
+            </div>
           ))}
         </div>
 
         {/* Note */}
         <p className="text-center text-gray-400 text-xs mt-10 italic">
-          Staff names and photos will be updated progressively. Add details via the Staff Portal.
+          Staff names and photos are updated as new information is provided.
         </p>
       </div>
     </div>
