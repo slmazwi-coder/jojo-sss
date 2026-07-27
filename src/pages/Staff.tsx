@@ -29,6 +29,7 @@ const staffData: StaffMember[] = [
     position: 'Principal',
     categories: ['School Management'],
     image: './assets/staff/mr-mganyana.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Mr B. Mamfengu',
@@ -36,6 +37,7 @@ const staffData: StaffMember[] = [
     subject: 'Physical Sciences (Grades 10 & 12)',
     categories: ['School Management'],
     image: './assets/staff/mr-b-mamfengu.jpg',
+    imgPosition: 'center center',
   },
   {
     name: 'Mr R. K Qangule',
@@ -43,7 +45,7 @@ const staffData: StaffMember[] = [
     subject: 'Mathematics',
     categories: ['School Management'],
     image: './assets/staff/mr-rk-qangule.jpg',
-    imgPosition: 'center center',
+    imgPosition: 'center 25%',
   },
 
   // ── Class Teachers (also listed under Subject Teachers) ───────────────────
@@ -54,6 +56,7 @@ const staffData: StaffMember[] = [
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '10A',
     image: './assets/staff/mr-mdi-a.jpg',
+    imgPosition: 'center 0%',
   },
   {
     name: 'Miss Ndzelu',
@@ -62,6 +65,7 @@ const staffData: StaffMember[] = [
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '11B',
     image: './assets/staff/miss-ndzelu.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Ms N Reid-Magongo',
@@ -70,6 +74,7 @@ const staffData: StaffMember[] = [
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '11C',
     image: './assets/staff/ms-n-reid-magongo.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Mr M Lakhithika',
@@ -78,6 +83,7 @@ const staffData: StaffMember[] = [
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '12A',
     image: './assets/staff/mr-m-lakhithika.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Miss A. Nqatsha',
@@ -86,6 +92,7 @@ const staffData: StaffMember[] = [
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '12C',
     image: './assets/staff/miss-a-nqatsha.jpg',
+    imgPosition: 'center 1%',
   },
   {
     name: 'Mr M Nozulela',
@@ -94,6 +101,7 @@ const staffData: StaffMember[] = [
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '9A',
     image: './assets/staff/mr-m-nozulela.jpg',
+    imgPosition: 'center 49%',
   },
   {
     name: 'Ms G. Jojo',
@@ -102,6 +110,7 @@ const staffData: StaffMember[] = [
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '9B',
     image: './assets/staff/ms-g-jojo.jpg',
+    imgPosition: 'center 50%',
   },
 
   // ── Subject Teachers ──────────────────────────────────────────────────────
@@ -111,6 +120,7 @@ const staffData: StaffMember[] = [
     subject: 'Life Science, Physical Sciences, Natural Sciences',
     categories: ['Subject Teachers'],
     image: './assets/staff/miss-o-nongogo.jpg',
+    imgPosition: 'center 49%',
   },
   {
     name: 'Miss Bangani A.',
@@ -118,6 +128,7 @@ const staffData: StaffMember[] = [
     subject: 'IsiXhosa HL and Geography',
     categories: ['Subject Teachers'],
     image: './assets/staff/miss-bangani-a.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Ms S. Sukazi',
@@ -125,6 +136,7 @@ const staffData: StaffMember[] = [
     subject: 'Mathematical Literacy and Business Studies',
     categories: ['Subject Teachers'],
     image: './assets/staff/ms-s-sukazi.jpg',
+    imgPosition: 'center 100%',
   },
   {
     name: 'Miss N.M. Gaulana',
@@ -132,6 +144,7 @@ const staffData: StaffMember[] = [
     subject: 'Business Studies (Grades 11 & 12)',
     categories: ['Subject Teachers'],
     image: './assets/staff/miss-nm-gaulana.jpg',
+    imgPosition: 'center 52%',
   },
   {
     name: 'Miss M.P Zulu',
@@ -147,6 +160,7 @@ const staffData: StaffMember[] = [
     subject: 'IsiXhosa',
     categories: ['Subject Teachers'],
     image: './assets/staff/miss-nokhwali.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Miss P Sonqishe',
@@ -154,6 +168,7 @@ const staffData: StaffMember[] = [
     subject: 'Tourism',
     categories: ['Subject Teachers'],
     image: './assets/staff/miss-p-sonqishe.jpg',
+    imgPosition: 'center center',
   },
   {
     name: 'Miss F.S.P Qwabe',
@@ -161,6 +176,7 @@ const staffData: StaffMember[] = [
     subject: 'Tourism (Grade 12)',
     categories: ['Subject Teachers'],
     image: './assets/staff/miss-fsp-qwabe.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'A. Nogula',
@@ -168,6 +184,7 @@ const staffData: StaffMember[] = [
     subject: 'Mathematical Literacy (Grades 10 & 12)',
     categories: ['Subject Teachers'],
     image: './assets/staff/a-nogula.jpg',
+    imgPosition: 'center 37%',
   },
   {
     name: 'Mr Mambi Zuko',
@@ -175,6 +192,7 @@ const staffData: StaffMember[] = [
     subject: 'Accounting (Grades 10, 11 & 12)',
     categories: ['Subject Teachers'],
     image: './assets/staff/mr-mambi-zuko.jpg',
+    imgPosition: 'center 44%',
   },
   {
     name: 'Mr M Cele',
@@ -182,6 +200,7 @@ const staffData: StaffMember[] = [
     subject: 'English FAL (Grades 12B & 11C)',
     categories: ['Subject Teachers'],
     image: './assets/staff/mr-m-cele.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Mr M. Pepu',
@@ -189,6 +208,7 @@ const staffData: StaffMember[] = [
     subject: 'Agricultural Sciences (Grade 11), Natural Sciences (Grades 8 & 9)',
     categories: ['Subject Teachers'],
     image: './assets/staff/mr-m-pepu.jpg',
+    imgPosition: 'center 49%',
   },
   {
     name: 'Ms O Magewushe',
@@ -196,6 +216,7 @@ const staffData: StaffMember[] = [
     subject: 'Mathematics (Grades 11 & 12)',
     categories: ['Subject Teachers'],
     image: './assets/staff/ms-o-magewushe.jpg',
+    imgPosition: 'center center',
   },
   {
     name: 'Ms A Dinga',
@@ -203,6 +224,7 @@ const staffData: StaffMember[] = [
     subject: 'Agricultural Sciences (Grades 10 & 12)',
     categories: ['Subject Teachers'],
     image: './assets/staff/ms-a-dinga.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Mr Z Mkoti',
@@ -210,6 +232,7 @@ const staffData: StaffMember[] = [
     subject: 'Business Studies (Grade 10C), Life Orientation (Grades 8A & 8B)',
     categories: ['Subject Teachers'],
     image: './assets/staff/mr-z-mkoti.jpg',
+    imgPosition: 'center center',
   },
   {
     name: 'Mrs N Sokanyile',
@@ -217,6 +240,7 @@ const staffData: StaffMember[] = [
     subject: 'IsiXhosa Grade 9',
     categories: ['Subject Teachers'],
     image: './assets/staff/mrs-n-sokanyile.jpg',
+    imgPosition: 'center 50%',
   },
 
   // ── Support Staff ─────────────────────────────────────────────────────────
@@ -226,6 +250,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 1,
     image: './assets/staff/ms-z-pitoyi.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Mr VQwayede',
@@ -233,6 +258,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 2,
     image: './assets/staff/mr-v-qwayede.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Miss V Gwanya',
@@ -240,6 +266,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 4,
     image: './assets/staff/miss-v-gwanya.jpg',
+    imgPosition: 'center 50%',
   },
   {
     name: 'Mrs Z Mjomle',
@@ -247,6 +274,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 5,
     image: './assets/staff/mrs-z-mjomle.jpg',
+    imgPosition: 'center 50%',
   },
 ];
 
