@@ -29,11 +29,11 @@ export const Navbar = () => {
 
             {/* Logo + Name */}
             <Link to="/" className="flex items-center gap-3 min-w-0 flex-1">
-              <div className="h-11 w-11 shrink-0 flex items-center justify-center overflow-hidden">
+              <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-md" style={ { border: '2px solid #F5C518' } }>
                 <img
-                  src="/jojo_logo_white.png"
+                  src="/jojo_logo.png"
                   alt="Jojo SSS logo"
-                  className="h-full w-full object-contain drop-shadow-sm"
+                  className="h-full w-full object-cover"
                 />
               </div>
               <div className="min-w-0">
