@@ -31,10 +31,9 @@ export const Footer = () => {
           {/* Col 1 — Logo + Name + Socials */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3 mb-3">
-              <div className="h-12 w-12 shrink-0 rounded-xl overflow-hidden shadow-lg"
-                style={ { background: '#F5C518', border: '2px solid #F5C518' } }>
-                <img src="/jojo_logo.png" alt="Jojo SSS logo"
-                  className="h-full w-full object-cover" />
+              <div className="h-12 w-12 shrink-0 overflow-hidden">
+                <img src="/jojo_logo_white.png" alt="Jojo SSS logo"
+                  className="h-full w-full object-contain" />
               </div>
               <div>
                 <h3 className="text-base font-bold leading-tight" style={ { color: '#F5C518' } }>
