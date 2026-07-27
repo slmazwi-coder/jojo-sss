@@ -12,7 +12,9 @@ School details:
 - WhatsApp/School cell: 072 349 3647
 - Principal: Mr W.T. Mnganyana (cell: 063 088 4862)
 - Deputy Principals: Mr B. Mamfengu (Physical Sciences, Grades 10 & 12), Mr R. K Qangule (Mathematics)
-- Key Educators: Mr M Lakthika (Life Orientation, IsiXhosa HL, Technology; Grade 12A class teacher); Miss O Nongogo (Life Science, Physical Sciences, Natural Sciences); Mr M Nozulela (History and Technology; Grade 9A class teacher); Miss Bangani A. (IsiXhosa HL and Geography); Ms S. Sukazi (Mathematical Literacy and Business Studies); Miss N.M. Gaulana (Business Studies, Grades 11 & 12); Miss M.P Zulu (English FAL, Grades 11 & 12); Miss Ndzelu (Economics; Grade 11B class teacher); Miss Nokhwali (IsiXhosa); Miss P Sonqishe (Tourism); Miss A. Nqatsha (English FAL Grade 10, Business Studies Grade 12; Grade 12C class teacher); Miss F.S.P Qwabe (Tourism, Grade 12).
+- Class teachers: Mr Mdi A (Mathematics; Grade 10A), Miss Ndzelu (Economics; Grade 11B), Mr M Lakthika (Life Orientation, IsiXhosa HL, Technology; Grade 12A), Miss A. Nqatsha (English FAL Grade 10, Business Studies Grade 12; Grade 12C), Mr M Nozulela (History and Technology; Grade 9A), Ms G. Jojo (English Grade 9, Life Orientation Grade 10; Grade 9B)
+- Subject teachers: Miss O Nongogo (Life Science, Physical Sciences, Natural Sciences), Miss Bangani A. (IsiXhosa HL and Geography), Ms S. Sukazi (Mathematical Literacy and Business Studies), Miss N.M. Gaulana (Business Studies Grades 11 & 12), Miss M.P Zulu (English FAL Grades 11 & 12), Miss Nokhwali (IsiXhosa), Miss P Sonqishe (Tourism), Miss F.S.P Qwabe (Tourism Grade 12), A. Nogula (Mathematical Literacy Grades 10 & 12), Mr Mambi Zuko (Accounting Grades 10, 11 & 12), Mr M Cele (English FAL Grades 12B & 11C), Mr M. Pepu (Agricultural Sciences Grade 11, Natural Sciences Grades 8 & 9)
+- Support staff: Ms Z.S. Pitoyi (Admin Clerk), Mr VQwayede (Admin Clerk), Miss V Gwanya (Cleaner), Mrs Z Mjomle (Cleaner)
 - Total educators: 46
 - Email: jojos.s.school@gmail.com; admissions: admissions@jojosss.co.za; general: info@jojosss.co.za
 - EMIS Number: 200500338
