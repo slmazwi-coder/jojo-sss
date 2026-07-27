@@ -65,7 +65,7 @@ const staffData: StaffMember[] = [
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '11B',
     image: './assets/staff/miss-ndzelu.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center 25%',
   },
   {
     name: 'Ms N Reid-Magongo',
@@ -120,7 +120,7 @@ const staffData: StaffMember[] = [
     subject: 'Life Science, Physical Sciences, Natural Sciences',
     categories: ['Subject Teachers'],
     image: './assets/staff/miss-o-nongogo.jpg',
-    imgPosition: 'center 49%',
+    imgPosition: 'center top',
   },
   {
     name: 'Miss Bangani A.',
@@ -160,7 +160,7 @@ const staffData: StaffMember[] = [
     subject: 'IsiXhosa',
     categories: ['Subject Teachers'],
     image: './assets/staff/miss-nokhwali.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center top',
   },
   {
     name: 'Miss P Sonqishe',
@@ -240,7 +240,7 @@ const staffData: StaffMember[] = [
     subject: 'IsiXhosa Grade 9',
     categories: ['Subject Teachers'],
     image: './assets/staff/mrs-n-sokanyile.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center top',
   },
 
   // ── Support Staff ─────────────────────────────────────────────────────────
