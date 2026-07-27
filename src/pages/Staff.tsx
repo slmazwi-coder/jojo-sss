@@ -7,6 +7,7 @@ interface StaffMember {
   subject?: string;
   categories: string[];
   image?: string;
+  imgPosition?: string;
   classTeacherFor?: string;
   supportOrder?: number;
 }
@@ -42,6 +43,7 @@ const staffData: StaffMember[] = [
     subject: 'Mathematics',
     categories: ['School Management'],
     image: './assets/staff/mr-rk-qangule.jpg',
+    imgPosition: 'center center',
   },
 
   // ── Class Teachers (also listed under Subject Teachers) ───────────────────
@@ -137,6 +139,7 @@ const staffData: StaffMember[] = [
     subject: 'English FAL (Grades 11 & 12)',
     categories: ['Subject Teachers'],
     image: './assets/staff/miss-mp-zulu.jpg',
+    imgPosition: 'center center',
   },
   {
     name: 'Miss Nokhwali',
@@ -263,7 +266,8 @@ const StaffCard = ({ member, activeCategory }: { member: StaffMember; activeCate
         <img
           src={member.image}
           alt={member.name}
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover"
+          style={ { objectPosition: member.imgPosition || 'center center' } }
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
         />
       ) : (
@@ -345,7 +349,7 @@ export const Staff = () => {
             <div className="w-full max-w-[260px]">
               <StaffCard member={filtered[0]} activeCategory={activeCategory} />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-2xl justify-items-center">
+            <div className="grid grid-cols-2 gap-5 w-full max-w-2xl justify-items-center">
               {filtered.slice(1).map((member, index) => (
                 <div key={index} className="w-full max-w-[260px]">
                   <StaffCard member={member} activeCategory={activeCategory} />
