@@ -62,7 +62,7 @@ Be warm, clear and concise. Always encourage. When users ask how to apply, you M
 
 const API_KEY =
   (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_GEMINI_API_KEY) ||
-  (typeof process !== 'undefined' && (process as any).env?.GEMINI_API_KEY) ||
+  (typeof __GEMINI_API_KEY__ !== 'undefined' ? __GEMINI_API_KEY__ : '') ||
   '';
 const MODEL = 'gemini-2.5-flash';
 
