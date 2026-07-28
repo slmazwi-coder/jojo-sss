@@ -104,24 +104,37 @@ export const Achievements = () => {
             <p className="text-sm text-gray-500 max-w-3xl mx-auto mt-2">Names and photos can be managed in the Staff Portal.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
-            {hallOfFame.slice(0, 8).map((student, idx) => (
-              <motion.div
-                key={student.id || idx}
-                whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
-              >
-                <StudentAvatar image={student.image} name={student.name} year={student.year} />
-                <div className="p-6 text-center">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{student.name}</h3>
-                  <div className="text-[#CC0000] text-sm font-bold mb-3 flex items-center justify-center gap-1">
-                    <Medal size={16} /> {student.title}
-                  </div>
-                  {student.desc ? <p className="text-gray-500 text-xs leading-relaxed">{student.desc}</p> : null}
+          {(() => {
+            const grouped: Record<string, HallOfFameEntry[]> = {};
+            hallOfFame.forEach((entry) => {
+              if (!grouped[entry.year]) grouped[entry.year] = [];
+              grouped[entry.year].push(entry);
+            });
+            const years = Object.keys(grouped).sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
+            return years.map((year) => (
+              <div key={year} className="mb-12">
+                <h3 className="text-center text-2xl font-bold text-[#CC0000] mb-6">{year}</h3>
+                <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
+                  {grouped[year].map((student, idx) => (
+                    <motion.div
+                      key={student.id || idx}
+                      whileHover={{ scale: 1.02 }}
+                      className="w-[calc(50%-0.75rem)] sm:w-72 bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
+                    >
+                      <StudentAvatar image={student.image} name={student.name} year={student.year} />
+                      <div className="p-6 text-center">
+                        <h3 className="text-xl font-bold text-gray-900 mb-1">{student.name}</h3>
+                        <div className="text-[#CC0000] text-sm font-bold mb-3 flex items-center justify-center gap-1">
+                          <Medal size={16} /> {student.title}
+                        </div>
+                        {student.desc ? <p className="text-gray-500 text-xs leading-relaxed">{student.desc}</p> : null}
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            ));
+          })()}
         </section>
 
         <section className="mb-20 sm:mb-32">
@@ -248,11 +261,11 @@ export const Achievements = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.25 }}
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8"
+              className="flex flex-wrap justify-center gap-6 sm:gap-8"
             >
               {achieversByYear[activeAchieversYear] && achieversByYear[activeAchieversYear].length > 0 ? (
                 achieversByYear[activeAchieversYear].map((person, i) => (
-                  <div key={i} className="text-center">
+                  <div key={i} className="text-center w-[calc(50%-0.75rem)] sm:w-72">
                     <StudentAvatar image={person.image} name={person.name} year={activeAchieversYear} />
                     <div className="mt-4">
                       <h3 className="text-lg font-bold text-gray-900">{person.name}</h3>
@@ -261,7 +274,7 @@ export const Achievements = () => {
                   </div>
                 ))
               ) : (
-                <div className="col-span-full py-12 text-center text-gray-400">
+                <div className="w-full py-12 text-center text-gray-400">
                   <p>No achiever records found for {activeAchieversYear}.</p>
                 </div>
               )}
