@@ -368,9 +368,10 @@ export const setAchieversByYear = (year: string, items: AchieverEntry[]) => setI
 
 // Hall of Fame
 const defaultHall: HallOfFameEntry[] = [
-  { id: '1', name: 'Top Achiever 1', title: 'Top Achiever', year: '2025', desc: '', image: '' },
-  { id: '2', name: 'Top Achiever 2', title: 'Top Achiever', year: '2025', desc: '', image: '' },
-  { id: '3', name: 'Top Achiever 3', title: 'Top Achiever', year: '2025', desc: '', image: '' },
+  { id: '1', name: 'Mrhwebi Esam', title: 'Top Achiever', year: '2025', desc: '', image: '/assets/achievements/mrhwebi-esam.jpg' },
+  { id: '2', name: 'Dlungwana Kungawo', title: 'Top Achiever', year: '2024', desc: '', image: '/assets/achievements/dlungwana-kungawo.jpg' },
+  { id: '3', name: 'Mhloleli Mbali', title: 'Top Achiever', year: '2023', desc: '', image: '/assets/achievements/mhloleli-mbali.jpg' },
+  { id: '4', name: 'Gwanya Mcoseleli', title: 'Top Achiever', year: '2023', desc: '', image: '/assets/achievements/gwanya-mcoseleli.jpg' },
 ];
 export const getHallOfFame = () =>
   getItems<HallOfFameEntry>('admin_hall_of_fame').length ? getItems<HallOfFameEntry>('admin_hall_of_fame') : defaultHall;
