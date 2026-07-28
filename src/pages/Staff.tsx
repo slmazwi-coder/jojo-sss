@@ -244,6 +244,38 @@ const staffData: StaffMember[] = [
     image: './assets/staff/mrs-n-sokanyile.jpg',
     imgPosition: 'center top',
   },
+  {
+    name: 'Mr M. Ngqolosi',
+    position: 'Subject Teacher',
+    subject: 'English and Social Sciences',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mr-m-ngqolosi.jpg',
+    imgPosition: 'center 5%',
+  },
+  {
+    name: 'Miss A. Nyakatha',
+    position: 'Subject Teacher',
+    subject: 'IsiXhosa HL (Grades 8 & 10)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-a-nyakatha.jpg',
+    imgPosition: 'center 10%',
+  },
+  {
+    name: 'Miss T. Mpompi',
+    position: 'Subject Teacher',
+    subject: 'Mathematics',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-t-mpompi.jpg',
+    imgPosition: 'center 10%',
+  },
+  {
+    name: 'Sikete N',
+    position: 'Subject Teacher',
+    subject: 'Tourism (Grade 10)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/sikete-n.jpg',
+    imgPosition: 'center 10%',
+  },
 
   // ── New Departmental Heads / Subject Teachers (Jul 2026 batch) ─────────────
   {
