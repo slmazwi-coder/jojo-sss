@@ -36,7 +36,7 @@ const staffData: StaffMember[] = [
     name: 'Mr B. Mamfengu',
     position: 'Deputy Principal',
     subject: 'Physical Sciences (Grades 10 & 12)',
-    categories: ['School Management'],
+    categories: ['School Management', 'Subject Teachers'],
     image: './assets/staff/mr-b-mamfengu.jpg',
     imgPosition: 'center center',
   },
@@ -44,7 +44,7 @@ const staffData: StaffMember[] = [
     name: 'Mr R. K Qangule',
     position: 'Deputy Principal',
     subject: 'Mathematics',
-    categories: ['School Management'],
+    categories: ['School Management', 'Subject Teachers'],
     image: './assets/staff/mr-rk-qangule.jpg',
     imgPosition: 'center 25%',
   },
@@ -247,12 +247,12 @@ const staffData: StaffMember[] = [
 
   // ── New Departmental Heads / Subject Teachers (Jul 2026 batch) ─────────────
   {
-    name: 'Mr [Name to be confirmed]',
+    name: 'Mr S Mgedezi',
     position: 'Departmental Head',
     departmentHead: 'Languages',
     subject: 'English FAL (Grades 11 & 12)',
     categories: ['School Management', 'Subject Teachers'],
-    image: './assets/staff/mr-name-to-be-confirmed.jpg',
+    image: './assets/staff/mr-s-mgedezi.jpg',
     imgPosition: 'center 25%',
   },
   {
@@ -323,6 +323,23 @@ const staffData: StaffMember[] = [
     image: './assets/staff/mrs-h-nongogo.jpg',
     imgPosition: 'center 25%',
   },
+  {
+    name: 'Mr S. Mbatha',
+    position: 'Subject Teacher',
+    subject: 'Life Sciences (Grades 8–10), Natural Sciences & Technology (Grades 8 & 9)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mr-s-mbatha.jpg',
+    imgPosition: 'center 25%',
+  },
+
+  {
+    name: 'Miss Z Gexu',
+    position: 'Subject Teacher',
+    subject: 'Life Orientation (Grades 10–12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-z-gexu.jpg',
+    imgPosition: 'center center',
+  },
 
   // ── Class Teachers (added Jul 2026) ────────────────────────────────────────
   {
@@ -342,7 +359,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 1,
     image: './assets/staff/ms-z-pitoyi.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center 15%',
   },
   {
     name: 'Mr VQwayede',
@@ -350,7 +367,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 2,
     image: './assets/staff/mr-v-qwayede.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center 15%',
   },
   {
     name: 'Miss V Gwanya',
@@ -358,7 +375,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 4,
     image: './assets/staff/miss-v-gwanya.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center 15%',
   },
   {
     name: 'Mrs Z Mjomle',
@@ -366,7 +383,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 5,
     image: './assets/staff/mrs-z-mjomle.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center 15%',
   },
 ];
 
@@ -392,7 +409,7 @@ const StaffCard = ({ member, activeCategory }: { member: StaffMember; activeCate
 
   return (
     <div
-      className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
+      className="h-full rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
       style={ { background: '#FFFBEF', border: '1px solid #CC0000' } }
     >
       {/* Avatar */}
@@ -454,6 +471,16 @@ export const Staff = () => {
         return rank(a) - rank(b);
       });
     }
+    if (activeCategory === 'Subject Teachers') {
+      return [...list].sort((a, b) => {
+        const rank = (m: StaffMember) => {
+          if (m.categories.includes('School Management')) return 0;
+          if (m.categories.includes('Class Teachers')) return 1;
+          return 2;
+        };
+        return rank(a) - rank(b) || a.name.localeCompare(b.name);
+      });
+    }
     return list;
   }, [activeCategory]);
 
@@ -496,20 +523,20 @@ export const Staff = () => {
         {/* Staff Cards Grid */}
         {activeCategory === 'School Management' ? (
           <div className="flex flex-col items-center gap-5">
-            <div className="w-full max-w-[260px]">
+            <div className="w-full max-w-[260px] h-full">
               <StaffCard member={filtered[0]} activeCategory={activeCategory} />
             </div>
-            <div className="grid grid-cols-2 gap-5 w-full max-w-2xl justify-items-center">
+            <div className="grid grid-cols-2 gap-5 w-full max-w-2xl justify-items-center auto-rows-fr">
               {filtered.slice(1, 3).map((member, index) => (
-                <div key={index} className="w-full max-w-[260px]">
+                <div key={index} className="w-full max-w-[260px] h-full">
                   <StaffCard member={member} activeCategory={activeCategory} />
                 </div>
               ))}
             </div>
             {filtered.length > 3 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 w-full max-w-4xl justify-items-center">
+              <div className="grid grid-cols-2 gap-5 w-full max-w-2xl justify-items-center auto-rows-fr">
                 {filtered.slice(3).map((member, index) => (
-                  <div key={index} className="w-full max-w-[260px]">
+                  <div key={index} className="w-full max-w-[260px] h-full">
                     <StaffCard member={member} activeCategory={activeCategory} />
                   </div>
                 ))}
@@ -517,9 +544,9 @@ export const Staff = () => {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 auto-rows-fr">
             {filtered.map((member, index) => (
-              <div key={index}>
+              <div key={index} className="h-full">
                 <StaffCard member={member} activeCategory={activeCategory} />
               </div>
             ))}
