@@ -221,9 +221,10 @@ const staffData: StaffMember[] = [
   },
   {
     name: 'Ms A Dinga',
-    position: 'Subject Teacher',
-    subject: 'Agricultural Sciences (Grades 10 & 12)',
-    categories: ['Subject Teachers'],
+    position: 'Departmental Head',
+    departmentHead: 'Agric, NS and Life Sciences',
+    subject: 'Agricultural Sciences, Natural Sciences and Life Sciences',
+    categories: ['School Management', 'Subject Teachers'],
     image: './assets/staff/ms-a-dinga.jpg',
     imgPosition: 'center 50%',
   },
@@ -248,7 +249,7 @@ const staffData: StaffMember[] = [
   {
     name: 'Mr [Name to be confirmed]',
     position: 'Departmental Head',
-    departmentHead: 'English FAL',
+    departmentHead: 'Languages',
     subject: 'English FAL (Grades 11 & 12)',
     categories: ['School Management', 'Subject Teachers'],
     image: './assets/staff/mr-name-to-be-confirmed.jpg',
@@ -257,7 +258,7 @@ const staffData: StaffMember[] = [
   {
     name: 'NC Jovula',
     position: 'Departmental Head',
-    departmentHead: 'Geography',
+    departmentHead: 'Humanities FET',
     subject: 'Geography',
     categories: ['School Management', 'Subject Teachers'],
     image: './assets/staff/nc-jovula.jpg',
@@ -266,7 +267,7 @@ const staffData: StaffMember[] = [
   {
     name: 'Ms B Mgilane',
     position: 'Departmental Head',
-    departmentHead: 'History',
+    departmentHead: 'Humanities GET',
     subject: 'History (Grades 11 & 12)',
     categories: ['School Management', 'Subject Teachers'],
     image: './assets/staff/ms-b-mgilane.jpg',
@@ -275,7 +276,7 @@ const staffData: StaffMember[] = [
   {
     name: 'N. Jiba',
     position: 'Departmental Head',
-    departmentHead: 'Commerce Department',
+    departmentHead: 'BCM',
     subject: 'Accounting and Business Studies',
     categories: ['School Management', 'Subject Teachers'],
     image: './assets/staff/n-jiba.jpg',
@@ -283,9 +284,10 @@ const staffData: StaffMember[] = [
   },
   {
     name: 'Mr Mnoneleli Njubane',
-    position: 'Subject Teacher',
-    subject: 'Physical Sciences (Grades 11 & 12)',
-    categories: ['Subject Teachers'],
+    position: 'Departmental Head',
+    departmentHead: 'Maths and Technology',
+    subject: 'Mathematics and Technology',
+    categories: ['School Management', 'Subject Teachers'],
     image: './assets/staff/mr-mnoneleli-njubane.jpg',
     imgPosition: 'center 25%',
   },
