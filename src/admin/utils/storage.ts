@@ -379,11 +379,11 @@ export const setHallOfFame = (items: HallOfFameEntry[]) => setItems('admin_hall_
 // Results by year
 const defaultResults: Record<string, YearResults> = {
   '2025': {
-    overall: 0,
-    bachelor: 0,
-    bachelorRate: 0,
-    distinctions: 0,
-    wrote: 0,
+    overall: 93.7,
+    bachelor: 165,
+    bachelorRate: 58,
+    distinctions: 145,
+    wrote: 285,
     subjects: [],
   },
   '2024': {
