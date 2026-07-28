@@ -86,7 +86,7 @@ export const Achievements = () => {
                   Celebrating excellence
                 </h2>
                 <p className="text-base sm:text-lg text-gray-700 max-w-2xl italic leading-relaxed text-center md:text-left">
-                  "Congratulations to the Class of 2025! 285 learners wrote, achieving a 93.7% pass rate, 165 Bachelor passes (58%) and 145 distinctions."
+                  "Congratulations to the Class of 2025! 285 learners wrote, achieving a 93.7% pass rate, 200 Bachelor passes (70%) and 145 distinctions."
                 </p>
               </div>
             </div>

@@ -25,7 +25,9 @@ School details:
 - Mission: 1) Create an environment conducive for teaching and learning. 2) Build good working relations between teachers, parents and learners. 3) Provide a welcoming atmosphere to all stakeholders visiting the school.
 - School hours: Monday–Friday 07:30–15:30 (office hours)
 - Learners: approximately 1,600+
-- 2025 Matric results: 285 wrote, 93.7% pass rate, 165 Bachelor passes (58%), 145 distinctions
+- 2025 Matric results: 285 wrote, 93.7% pass rate, 200 Bachelor passes (70%), 145 distinctions
+- 2024 Matric results: 308 wrote, 96% pass rate, 209 Bachelor passes (68%), 213 distinctions
+- 2023 Matric results: 266 wrote, 91% pass rate, 165 Bachelor passes (62%), 62 distinctions
 - Grades: Grade 8 to Grade 12 (GET + FET). Five grades in total.
 - Streams: Grades 8–12 each have three streams: A, B and C (e.g. 8A, 8B, 8C through 12A, 12B, 12C).
 - Colours: Primary red #CC0000, white #FFFFFF, gold/yellow #F5C518.
