@@ -321,6 +321,14 @@ const staffData: StaffMember[] = [
     image: './assets/staff/mrs-h-nongogo.jpg',
     imgPosition: 'center 25%',
   },
+  {
+    name: 'Mr S. Mbatha',
+    position: 'Subject Teacher',
+    subject: 'Life Sciences (Grades 8–10), Natural Sciences & Technology (Grades 8 & 9)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mr-s-mbatha.jpg',
+    imgPosition: 'center 25%',
+  },
 
   {
     name: 'Miss Z Gexu',
@@ -399,7 +407,7 @@ const StaffCard = ({ member, activeCategory }: { member: StaffMember; activeCate
 
   return (
     <div
-      className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
+      className="h-full rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
       style={ { background: '#FFFBEF', border: '1px solid #CC0000' } }
     >
       {/* Avatar */}
@@ -461,6 +469,16 @@ export const Staff = () => {
         return rank(a) - rank(b);
       });
     }
+    if (activeCategory === 'Subject Teachers') {
+      return [...list].sort((a, b) => {
+        const rank = (m: StaffMember) => {
+          if (m.categories.includes('School Management')) return 0;
+          if (m.categories.includes('Class Teachers')) return 1;
+          return 2;
+        };
+        return rank(a) - rank(b) || a.name.localeCompare(b.name);
+      });
+    }
     return list;
   }, [activeCategory]);
 
@@ -503,20 +521,20 @@ export const Staff = () => {
         {/* Staff Cards Grid */}
         {activeCategory === 'School Management' ? (
           <div className="flex flex-col items-center gap-5">
-            <div className="w-full max-w-[260px]">
+            <div className="w-full max-w-[260px] h-full">
               <StaffCard member={filtered[0]} activeCategory={activeCategory} />
             </div>
-            <div className="grid grid-cols-2 gap-5 w-full max-w-2xl justify-items-center">
+            <div className="grid grid-cols-2 gap-5 w-full max-w-2xl justify-items-center auto-rows-fr">
               {filtered.slice(1, 3).map((member, index) => (
-                <div key={index} className="w-full max-w-[260px]">
+                <div key={index} className="w-full max-w-[260px] h-full">
                   <StaffCard member={member} activeCategory={activeCategory} />
                 </div>
               ))}
             </div>
             {filtered.length > 3 && (
-              <div className="grid grid-cols-2 gap-5 w-full max-w-2xl justify-items-center">
+              <div className="grid grid-cols-2 gap-5 w-full max-w-2xl justify-items-center auto-rows-fr">
                 {filtered.slice(3).map((member, index) => (
-                  <div key={index} className="w-full max-w-[260px]">
+                  <div key={index} className="w-full max-w-[260px] h-full">
                     <StaffCard member={member} activeCategory={activeCategory} />
                   </div>
                 ))}
@@ -524,9 +542,9 @@ export const Staff = () => {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 auto-rows-fr">
             {filtered.map((member, index) => (
-              <div key={index}>
+              <div key={index} className="h-full">
                 <StaffCard member={member} activeCategory={activeCategory} />
               </div>
             ))}
