@@ -357,7 +357,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 1,
     image: './assets/staff/ms-z-pitoyi.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center 15%',
   },
   {
     name: 'Mr VQwayede',
@@ -365,7 +365,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 2,
     image: './assets/staff/mr-v-qwayede.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center 15%',
   },
   {
     name: 'Miss V Gwanya',
@@ -373,7 +373,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 4,
     image: './assets/staff/miss-v-gwanya.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center 15%',
   },
   {
     name: 'Mrs Z Mjomle',
@@ -381,7 +381,7 @@ const staffData: StaffMember[] = [
     categories: ['Support Staff'],
     supportOrder: 5,
     image: './assets/staff/mrs-z-mjomle.jpg',
-    imgPosition: 'center 50%',
+    imgPosition: 'center 15%',
   },
 ];
 
