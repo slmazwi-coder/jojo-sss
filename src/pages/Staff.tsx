@@ -246,12 +246,12 @@ const staffData: StaffMember[] = [
 
   // ── New Departmental Heads / Subject Teachers (Jul 2026 batch) ─────────────
   {
-    name: 'Mr [Name to be confirmed]',
+    name: 'Mr S Mgedezi',
     position: 'Departmental Head',
     departmentHead: 'English FAL',
     subject: 'English FAL (Grades 11 & 12)',
     categories: ['School Management', 'Subject Teachers'],
-    image: './assets/staff/mr-name-to-be-confirmed.jpg',
+    image: './assets/staff/mr-s-mgedezi.jpg',
     imgPosition: 'center 25%',
   },
   {
@@ -320,6 +320,15 @@ const staffData: StaffMember[] = [
     categories: ['Subject Teachers'],
     image: './assets/staff/mrs-h-nongogo.jpg',
     imgPosition: 'center 25%',
+  },
+
+  {
+    name: 'Miss Z Gexu',
+    position: 'Subject Teacher',
+    subject: 'Life Orientation (Grades 10–12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-z-gexu.jpg',
+    imgPosition: 'center center',
   },
 
   // ── Class Teachers (added Jul 2026) ────────────────────────────────────────
@@ -505,7 +514,7 @@ export const Staff = () => {
               ))}
             </div>
             {filtered.length > 3 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 w-full max-w-4xl justify-items-center">
+              <div className="grid grid-cols-2 gap-5 w-full max-w-2xl justify-items-center">
                 {filtered.slice(3).map((member, index) => (
                   <div key={index} className="w-full max-w-[260px]">
                     <StaffCard member={member} activeCategory={activeCategory} />
