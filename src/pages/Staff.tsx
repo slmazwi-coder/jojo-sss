@@ -10,6 +10,7 @@ interface StaffMember {
   imgPosition?: string;
   classTeacherFor?: string;
   supportOrder?: number;
+  departmentHead?: string;
 }
 
 const streamIndex: Record<string, number> = { A: 0, B: 1, C: 2 };
@@ -243,6 +244,95 @@ const staffData: StaffMember[] = [
     imgPosition: 'center top',
   },
 
+  // ── New Departmental Heads / Subject Teachers (Jul 2026 batch) ─────────────
+  {
+    name: 'Mr [Name to be confirmed]',
+    position: 'Departmental Head',
+    departmentHead: 'English FAL',
+    subject: 'English FAL (Grades 11 & 12)',
+    categories: ['School Management', 'Subject Teachers'],
+    image: './assets/staff/mr-name-to-be-confirmed.jpg',
+    imgPosition: 'center 25%',
+  },
+  {
+    name: 'NC Jovula',
+    position: 'Departmental Head',
+    departmentHead: 'Geography',
+    subject: 'Geography',
+    categories: ['School Management', 'Subject Teachers'],
+    image: './assets/staff/nc-jovula.jpg',
+    imgPosition: 'center 25%',
+  },
+  {
+    name: 'Ms B Mgilane',
+    position: 'Departmental Head',
+    departmentHead: 'History',
+    subject: 'History (Grades 11 & 12)',
+    categories: ['School Management', 'Subject Teachers'],
+    image: './assets/staff/ms-b-mgilane.jpg',
+    imgPosition: 'center center',
+  },
+  {
+    name: 'N. Jiba',
+    position: 'Departmental Head',
+    departmentHead: 'Commerce Department',
+    subject: 'Accounting and Business Studies',
+    categories: ['School Management', 'Subject Teachers'],
+    image: './assets/staff/n-jiba.jpg',
+    imgPosition: 'center 25%',
+  },
+  {
+    name: 'Mr Mnoneleli Njubane',
+    position: 'Subject Teacher',
+    subject: 'Physical Sciences (Grades 11 & 12)',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mr-mnoneleli-njubane.jpg',
+    imgPosition: 'center 25%',
+  },
+  {
+    name: 'P Dumela',
+    position: 'Subject Teacher',
+    subject: 'EMS Grade 9A, Creative Arts Grade 9A, Creative Arts Grade 9B',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/p-dumela.jpg',
+    imgPosition: 'center center',
+  },
+  {
+    name: 'Miss Mpatheni',
+    position: 'Subject Teacher',
+    subject: 'Mathematics and Technology',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/miss-mpatheni.jpg',
+    imgPosition: 'center 25%',
+  },
+  {
+    name: 'Dlembula S.E.',
+    position: 'Subject Teacher',
+    subject: 'Economics Grade 10B, EMS Grade 8A',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/dlembula-se.jpg',
+    imgPosition: 'center 25%',
+  },
+  {
+    name: 'Mrs H. Nongogo',
+    position: 'Subject Teacher',
+    subject: 'IsiXhosa and Social Sciences Grade 8',
+    categories: ['Subject Teachers'],
+    image: './assets/staff/mrs-h-nongogo.jpg',
+    imgPosition: 'center 25%',
+  },
+
+  // ── Class Teachers (added Jul 2026) ────────────────────────────────────────
+  {
+    name: 'Mrs T. Mkubukeli',
+    position: 'Class Teacher — Grade 8B',
+    subject: 'English Grade 10, Life Orientation Grade 10, Creative Arts Grade 8B',
+    categories: ['Class Teachers', 'Subject Teachers'],
+    classTeacherFor: '8B',
+    image: './assets/staff/mrs-t-mkubukeli.jpg',
+    imgPosition: 'center 25%',
+  },
+
   // ── Support Staff ─────────────────────────────────────────────────────────
   {
     name: 'Ms Z.S. Pitoyi',
@@ -280,47 +370,66 @@ const staffData: StaffMember[] = [
 
 const categories = ['School Management', 'Class Teachers', 'Subject Teachers', 'Support Staff'];
 
-const StaffCard = ({ member, activeCategory }: { member: StaffMember; activeCategory: string }) => (
-  <div
-    className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
-    style={ { background: '#FFFBEF', border: '1px solid #CC0000' } }
-  >
-    {/* Avatar */}
+const StaffCard = ({ member, activeCategory }: { member: StaffMember; activeCategory: string }) => {
+  const positionLabel = React.useMemo(() => {
+    if (activeCategory === 'School Management') {
+      return member.departmentHead
+        ? `Departmental Head — ${member.departmentHead}`
+        : member.position;
+    }
+    if (activeCategory === 'Class Teachers') {
+      return member.classTeacherFor
+        ? `Class Teacher — Grade ${member.classTeacherFor}`
+        : member.position;
+    }
+    if (activeCategory === 'Support Staff') {
+      return member.position;
+    }
+    return null;
+  }, [member, activeCategory]);
+
+  return (
     <div
-      className="w-24 h-24 rounded-full flex items-center justify-center mb-4 overflow-hidden"
-      style={ { background: '#FDF9EC', border: '3px solid #CC0000' } }
+      className="rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center p-6 text-center hover:-translate-y-1"
+      style={ { background: '#FFFBEF', border: '1px solid #CC0000' } }
     >
-      {member.image ? (
-        <img
-          src={member.image}
-          alt={member.name}
-          className="w-full h-full object-cover"
-          style={ { objectPosition: member.imgPosition || 'center center' } }
-          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-        />
-      ) : (
-        <User size={40} style={ { color: '#CC0000', opacity: 0.5 } } />
+      {/* Avatar */}
+      <div
+        className="w-24 h-24 rounded-full flex items-center justify-center mb-4 overflow-hidden"
+        style={ { background: '#FDF9EC', border: '3px solid #CC0000' } }
+      >
+        {member.image ? (
+          <img
+            src={member.image}
+            alt={member.name}
+            className="w-full h-full object-cover"
+            style={ { objectPosition: member.imgPosition || 'center center' } }
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+          />
+        ) : (
+          <User size={40} style={ { color: '#CC0000', opacity: 0.5 } } />
+        )}
+      </div>
+
+      <h3 className="text-sm font-bold leading-tight" style={ { color: '#CC0000' } }>
+        {member.name}
+      </h3>
+      {positionLabel && (
+        <p className="text-xs font-semibold mt-1" style={ { color: '#F5C518' } }>
+          {positionLabel}
+        </p>
+      )}
+      {activeCategory === 'Subject Teachers' && member.subject && (
+        <div
+          className="mt-3 w-full text-xs font-medium px-2 py-2 rounded-md text-center leading-tight"
+          style={ { background: '#FDF9EC', color: '#CC0000', border: '2px solid #CC0000' } }
+        >
+          {member.subject}
+        </div>
       )}
     </div>
-
-    <h3 className="text-sm font-bold leading-tight" style={ { color: '#CC0000' } }>
-      {member.name}
-    </h3>
-    {activeCategory !== 'Subject Teachers' && (
-      <p className="text-xs font-semibold mt-1" style={ { color: '#F5C518' } }>
-        {member.position}
-      </p>
-    )}
-    {activeCategory !== 'Class Teachers' && member.subject && (
-      <div
-        className="mt-3 w-full text-xs font-medium px-2 py-2 rounded-md text-center leading-tight"
-        style={ { background: '#FDF9EC', color: '#CC0000', border: '2px solid #CC0000' } }
-      >
-        {member.subject}
-      </div>
-    )}
-  </div>
-);
+  );
+};
 
 export const Staff = () => {
   const [activeCategory, setActiveCategory] = React.useState('School Management');
@@ -331,6 +440,17 @@ export const Staff = () => {
     }
     if (activeCategory === 'Support Staff') {
       return [...list].sort((a, b) => (a.supportOrder ?? 99) - (b.supportOrder ?? 99));
+    }
+    if (activeCategory === 'School Management') {
+      return [...list].sort((a, b) => {
+        const rank = (m: StaffMember) => {
+          if (m.position === 'Principal') return 0;
+          if (m.position?.includes('Deputy Principal')) return 1;
+          if (m.departmentHead) return 2;
+          return 3;
+        };
+        return rank(a) - rank(b);
+      });
     }
     return list;
   }, [activeCategory]);
@@ -378,12 +498,21 @@ export const Staff = () => {
               <StaffCard member={filtered[0]} activeCategory={activeCategory} />
             </div>
             <div className="grid grid-cols-2 gap-5 w-full max-w-2xl justify-items-center">
-              {filtered.slice(1).map((member, index) => (
+              {filtered.slice(1, 3).map((member, index) => (
                 <div key={index} className="w-full max-w-[260px]">
                   <StaffCard member={member} activeCategory={activeCategory} />
                 </div>
               ))}
             </div>
+            {filtered.length > 3 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 w-full max-w-4xl justify-items-center">
+                {filtered.slice(3).map((member, index) => (
+                  <div key={index} className="w-full max-w-[260px]">
+                    <StaffCard member={member} activeCategory={activeCategory} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
