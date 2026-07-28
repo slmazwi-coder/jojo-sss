@@ -51,7 +51,7 @@ const staffData: StaffMember[] = [
 
   // ── Class Teachers (also listed under Subject Teachers) ───────────────────
   {
-    name: 'Mr Mdi A',
+    name: 'Mr Mdingi A',
     position: 'Class Teacher — Grade 10A',
     subject: 'Mathematics — Grade 10A',
     categories: ['Class Teachers', 'Subject Teachers'],
