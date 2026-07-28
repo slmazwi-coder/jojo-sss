@@ -75,7 +75,7 @@ export const Achievements = () => {
             </div>
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-10">
               <div className="w-32 h-32 sm:w-40 sm:h-40 bg-[#FDEEA0] rounded-full flex flex-col items-center justify-center text-[#CC0000] border-8 border-white shadow-lg shrink-0">
-                <span className="text-2xl sm:text-3xl font-black">TBA</span>
+                <span className="text-2xl sm:text-3xl font-black">93.7%</span>
                 <span className="text-sm font-bold uppercase tracking-tighter italic">Pass Rate</span>
               </div>
               <div>
@@ -86,7 +86,7 @@ export const Achievements = () => {
                   Celebrating excellence
                 </h2>
                 <p className="text-base sm:text-lg text-gray-700 max-w-2xl italic leading-relaxed text-center md:text-left">
-                  "Jojo SSS continues to focus on steady improvement, learner support, and high academic standards. Matric results will be updated here once released."
+                  "Congratulations to the Class of 2025! 285 learners wrote, achieving a 93.7% pass rate, 165 Bachelor passes (58%) and 145 distinctions."
                 </p>
               </div>
             </div>
