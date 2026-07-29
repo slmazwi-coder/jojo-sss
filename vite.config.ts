@@ -9,8 +9,8 @@ export default defineConfig(({mode}) => {
     plugins: [react(), tailwindcss()],
     base: './',
     define: {
-      __GEMINI_API_KEY__: JSON.stringify(env.GEMINI_API_KEY || ''),
-      __VULAVULA_API_KEY__: JSON.stringify(env.VULAVULA_API_KEY || ''),
+      __GEMINI_API_KEY__: JSON.stringify(process.env.GEMINI_API_KEY || env.GEMINI_API_KEY || ''),
+      __VULAVULA_API_KEY__: JSON.stringify(process.env.VULAVULA_API_KEY || env.VULAVULA_API_KEY || ''),
     },
     resolve: {
       alias: {
