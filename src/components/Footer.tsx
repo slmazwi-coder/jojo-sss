@@ -47,7 +47,7 @@ export const Footer = () => {
             </div>
 
             <div className="flex gap-3 mt-4">
-              <a href="https://www.facebook.com/JojoSeniorSecondarySchool/" target="_blank" rel="noreferrer"
+              <a href="https://www.facebook.com/p/Jojo-senior-secondary-school-61565202684856/" target="_blank" rel="noreferrer"
                 className="p-2 rounded-full transition-colors"
                 style={ { background: 'rgba(245,197,24,0.15)', color: '#F5C518' } }
                 aria-label="Facebook">
