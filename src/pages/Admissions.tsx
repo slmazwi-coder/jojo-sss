@@ -316,23 +316,37 @@ export const Admissions = () => {
         )}
 
         {/* Download form notice */}
-        <div className="mb-6 bg-[#FDF9EC] border border-[#CC0000]/20 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <div className="font-bold text-gray-900 flex items-center gap-2">
-              <FileText size={18} className="text-[#CC0000]" /> Prefer a paper form?
+        {ADMISSIONS_CLOSED ? (
+          <div className="mb-6 bg-gray-100 border border-gray-200 rounded-2xl p-5 flex items-center gap-4">
+            <div className="p-3 rounded-2xl bg-white border border-gray-200 text-gray-500 shrink-0">
+              <Lock size={24} />
             </div>
-            <div className="text-sm text-gray-600">
-              Download the application form, complete it by hand and submit it to the school office with the required documents.
+            <div>
+              <div className="font-bold text-gray-900">Application forms are locked</div>
+              <div className="text-sm text-gray-600">
+                The printable application form is not available while admissions are closed. Please contact the school office for future intake information.
+              </div>
             </div>
           </div>
-          <a
-            href="/assets/documents/application_form.pdf"
-            download
-            className="inline-flex items-center justify-center gap-2 shrink-0 bg-[#CC0000] text-[#F5C518] px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#990000] transition-colors"
-          >
-            <Download size={18} /> Download Form
-          </a>
-        </div>
+        ) : (
+          <div className="mb-6 bg-[#FDF9EC] border border-[#CC0000]/20 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <div className="font-bold text-gray-900 flex items-center gap-2">
+                <FileText size={18} className="text-[#CC0000]" /> Prefer a paper form?
+              </div>
+              <div className="text-sm text-gray-600">
+                Download the application form, complete it by hand and submit it to the school office with the required documents.
+              </div>
+            </div>
+            <a
+              href="/assets/documents/application_form.pdf"
+              download
+              className="inline-flex items-center justify-center gap-2 shrink-0 bg-[#CC0000] text-[#F5C518] px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#990000] transition-colors"
+            >
+              <Download size={18} /> Download Form
+            </a>
+          </div>
+        )}
 
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
 

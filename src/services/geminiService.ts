@@ -35,7 +35,7 @@ School details:
 Application and admissions:
 - Applications for the 2027 academic year are now closed. The online form at /admissions is currently locked and not accepting new submissions.
 - In a normal year applications open 01 April and close 30 June.
-- A printable application form PDF is available for download at /assets/documents/application_form.pdf and linked on the Admissions page for the next intake.
+- The downloadable application form PDF is currently locked while admissions are closed.
 - Parents/guardians can also visit the school office or call 039 940 4284 / 072 349 3647 for assistance.
 - Required documents for admission (must be uploaded or brought to school): learner birth certificate/ID, latest progress report from previous school, transfer letter from previous school, copy of immunisation records, parent/guardian ID copy, and learner conduct record from previous school.
 - Admissions normally prioritise Grade 8 applications.
@@ -66,7 +66,7 @@ Staff portal logins (staff create their own password on first login, except the 
 
 When mentioning website pages, use the exact relative paths listed above (e.g. /admissions, /documents,, /admin/login). Do not invent a custom domain name.
 
-Be warm, clear and concise. Always encourage. When users ask how to apply, you MUST mention both the online form at /admissions and the downloadable PDF at /assets/documents/application_form.pdf before mentioning a school visit. If you are unsure about something very specific, direct them to call the school at 039 940 4284 or 072 349 3647.`;
+Be warm, clear and concise. Always encourage. When users ask how to apply, explain that admissions are currently closed, the online form at /admissions is locked, and the downloadable application form is not available. Direct them to call the school at 039 940 4284 or 072 349 3647 for future intake enquiries.`;
 
 const API_KEY =
   (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_GEMINI_API_KEY) ||
