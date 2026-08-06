@@ -48,7 +48,7 @@ export const About = () => {
               </p>
               <p>
                 The school offers Grades 8 to 12 with three streams per grade (A, B and C) and
-                46 dedicated educators. Our FET streams include Science, Business/Commerce (BCM)
+                48 dedicated educators. Our FET streams include Science, Business/Commerce (BCM)
                 and Humanities.
               </p>
               <p className="text-[#CC0000] font-semibold">
@@ -161,7 +161,7 @@ export const About = () => {
                   </p>
                   <p>
                     At Jojo SSS we believe every learner has the potential to reach for the sky.
-                    Our dedicated team of 46 educators works tirelessly to nurture talent, foster
+                    Our dedicated team of 48 educators works tirelessly to nurture talent, foster
                     creativity and build responsible citizens.
                   </p>
                   <p>

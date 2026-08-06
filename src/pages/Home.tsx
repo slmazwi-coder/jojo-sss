@@ -4,7 +4,7 @@ import { Award, TrendingUp, Users, Megaphone, ArrowRight } from 'lucide-react';
 
 const stats = [
   { label: 'Learners Enrolled', value: '1,600+', icon: Users },
-  { label: 'Dedicated Educators', value: '46', icon: Award },
+  { label: 'Dedicated Educators', value: '48', icon: Award },
   { label: 'Grades Offered', value: '8 - 12', icon: TrendingUp },
 ];
 
