@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Mic, Sigma, Brain, Globe, PenTool } from 'lucide-react';
+import { BookOpen, Mic, Sigma, Brain, Globe, PenTool, Music, Clapperboard } from 'lucide-react';
 
 const activities = [
   {
@@ -10,7 +10,7 @@ const activities = [
   {
     name: 'Debate',
     icon: Mic,
-    description: 'Structured debating that develops critical thinking, research, and public speaking.',
+    description: 'Structured debating, prepared speeches and poetry that develop critical thinking and public speaking.',
   },
   {
     name: 'Maths Olympiad',
@@ -31,6 +31,16 @@ const activities = [
     name: 'Geography & Environment',
     icon: Globe,
     description: 'Environmental awareness, map skills, and geography enrichment projects.',
+  },
+  {
+    name: 'Music & Choir',
+    icon: Music,
+    description: 'Solo mezzo and mixed choir (African & Western) performances at CMC level.',
+  },
+  {
+    name: 'Drama & Public Speaking',
+    icon: Clapperboard,
+    description: 'Drama and public-speaking activities that build confidence and performance skills.',
   },
 ];
 

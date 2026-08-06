@@ -33,12 +33,12 @@ School details:
 - Colours: Primary red #CC0000, white #FFFFFF, gold/yellow #F5C518.
 
 Application and admissions:
-- Applications open 01 April and close 30 June each year.
-- General school applications can be submitted online at /admissions. The online form has three steps: Learner & Medical, Siblings, and Parent/Documents.
-- A printable application form PDF is available for download at /assets/documents/application_form.pdf and linked on the Admissions page.
+- Applications for the 2027 academic year are now closed. The online form at /admissions is currently locked and not accepting new submissions.
+- In a normal year applications open 01 April and close 30 June.
+- A printable application form PDF is available for download at /assets/documents/application_form.pdf and linked on the Admissions page for the next intake.
 - Parents/guardians can also visit the school office or call 039 940 4284 / 072 349 3647 for assistance.
 - Required documents for admission (must be uploaded or brought to school): learner birth certificate/ID, latest progress report from previous school, transfer letter from previous school, copy of immunisation records, parent/guardian ID copy, and learner conduct record from previous school.
-- Admissions currently prioritise Grade 8 applications.
+- Admissions normally prioritise Grade 8 applications.
 - The school is a Quintile 2, no-fee school.
 
 Academic streams and subjects:

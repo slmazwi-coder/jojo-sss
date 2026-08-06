@@ -294,18 +294,26 @@ export function calculateAverageMark(subjectMarks: SubjectMark[]): number {
 const defaultNews: NewsItem[] = [
   {
     id: '1',
-    title: '2027 Admissions Open',
-    date: '01 Apr 2026',
+    title: '2027 Admissions Closed',
+    date: '06 Aug 2026',
     content:
-      'Applications for Grade 8 admission for the 2027 academic year are now open. Apply online or download the application form from the Admissions page.',
+      'Applications for Grade 8 admission for the 2027 academic year are now closed. The online application form is locked and no longer accepts submissions. Please contact the school office for future intake enquiries.',
     image: '',
   },
   {
     id: '2',
-    title: 'Term 1 Parents Meeting',
-    date: '15 Apr 2026',
+    title: 'Annual Alfred Nzo West English Language Festival',
+    date: '10 Aug 2026',
     content:
-      'Parents and guardians are invited to a Term 1 feedback meeting. Time and venue will be confirmed by the school.',
+      'The Alfred Nzo West District English Language Festival will be held on 10 August 2026 at 8 am at Umzimvubu Hall, Mount Ayliff (Emazesibeni). Learners and educators will participate in prepared speeches, debate, panel discussions and poetry performances.',
+    image: '',
+  },
+  {
+    id: '3',
+    title: 'International Literacy Day Competition Build-up',
+    date: '27 Aug 2026',
+    content:
+      'Umzimvubu Municipality Libraries invites Jojo SSS learners to the International Literacy Day build-up event on 27 August 2026 at 10:00 am at KwaBhaca Town Hall. Activities include prepared speech, word scramble, rai-rai, word chain and community book club.',
     image: '',
   },
 ];

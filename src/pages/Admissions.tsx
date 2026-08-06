@@ -9,6 +9,7 @@ import {
   ChevronLeft,
   AlertCircle,
   Download,
+  Lock,
 } from 'lucide-react';
 import {
   generateId,
@@ -95,6 +96,8 @@ const StepBadge = ({
 );
 
 // ─── Main component ───────────────────────────────────────────────────────────
+
+const ADMISSIONS_CLOSED = true;
 
 export const Admissions = () => {
   const [step,       setStep]       = useState<1 | 2 | 3>(1);
@@ -214,6 +217,10 @@ export const Admissions = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (ADMISSIONS_CLOSED) {
+      setError('Admissions are currently closed. We are no longer accepting applications.');
+      return;
+    }
     if (!validateStep()) return;
     setSubmitting(true);
     try {
@@ -290,6 +297,21 @@ export const Admissions = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="section-title">General Application for Admission</h1>
 
+        {/* Admissions closed notice */}
+        {ADMISSIONS_CLOSED && (
+          <div className="mb-6 bg-[#CC0000] border border-[#CC0000] rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center gap-4 text-white shadow-lg">
+            <div className="p-3 rounded-2xl bg-white/20 shrink-0">
+              <Lock size={24} className="text-white" />
+            </div>
+            <div>
+              <div className="font-bold text-lg">Admissions are closed</div>
+              <div className="text-sm text-white/90">
+                Applications for the 2027 academic year are now closed. The online application form is locked and no longer accepts submissions. Please contact the school office for enquiries about future admissions.
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Download form notice */}
         <div className="mb-6 bg-[#FDF9EC] border border-[#CC0000]/20 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -344,7 +366,8 @@ export const Admissions = () => {
 
           {/* Form body */}
           <form onSubmit={handleSubmit}>
-            <AnimatePresence mode="wait">
+            <fieldset disabled={ADMISSIONS_CLOSED} className="border-0 p-0 m-0 min-w-0">
+              <AnimatePresence mode="wait">
               <motion.div
                 key={step}
                 initial={{ opacity: 0, x: 30 }}
@@ -367,7 +390,9 @@ export const Admissions = () => {
                             <option value="">Select grade</option>
                             {['8','9','10','11','12'].map(g => <option key={g} value={g}>Grade {g}</option>)}
                           </select>
-                          <p className="text-[10px] text-white/70 mt-1">Admissions currently prioritise Grade 8 applications.</p>
+                          <p className="text-[10px] text-gray-500 mt-1">
+                            {ADMISSIONS_CLOSED ? 'Admissions are currently closed.' : 'Admissions currently prioritise Grade 8 applications.'}
+                          </p>
                         </Field>
 
                         <Field label="Year">
@@ -928,6 +953,7 @@ export const Admissions = () => {
 
               </motion.div>
             </AnimatePresence>
+            </fieldset>
           </form>
         </div>
 

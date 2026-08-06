@@ -1,21 +1,36 @@
 import React from 'react';
-import { Trophy, CalendarDays, Target, Users, Flag } from 'lucide-react';
+import { Trophy, CalendarDays, Target, Users, Flag, Medal, Award } from 'lucide-react';
 
 const sports = [
   {
+    name: 'Rugby',
+    description: 'Boys and girls rugby teams competing at CMC, District and Provincial levels.',
+    icon: Medal,
+  },
+  {
     name: 'Soccer',
-    description: 'Training and matches for boys and girls teams across age groups.',
+    description: 'Boys and girls soccer with U15, U17 and U19 teams, including police tournament and Kay Molope fixtures.',
     icon: Target,
   },
   {
     name: 'Netball',
-    description: 'Competitive netball teams with structured training and league participation.',
+    description: 'U13, U14, U15 and U17 netball teams competing at CMC and District levels.',
     icon: Users,
+  },
+  {
+    name: 'Volleyball',
+    description: 'Girls volleyball U15 team that has won at CMC level.',
+    icon: Trophy,
+  },
+  {
+    name: 'Softball',
+    description: 'Boys softball U15 and U17 teams competing and winning at CMC level.',
+    icon: Award,
   },
   {
     name: 'Athletics',
     description: 'Track and field events to develop speed, strength, and endurance.',
-    icon: Trophy,
+    icon: Flag,
   },
 ];
 
@@ -36,15 +51,24 @@ type Result = {
 };
 
 const fixtures: Fixture[] = [
-  { date: 'TBA', sport: 'Soccer', opponent: 'TBA', venue: 'TBA', time: 'TBA' },
-  { date: 'TBA', sport: 'Netball', opponent: 'TBA', venue: 'TBA', time: 'TBA' },
-  { date: 'TBA', sport: 'Athletics', opponent: 'TBA', venue: 'TBA', time: 'TBA' },
+  { date: '07 Aug 2026', sport: 'Soccer U19', opponent: 'Motsa Mlungaleli SSS', venue: 'Kay Molope fixture', time: 'TBA' },
+  { date: '15 Aug 2026', sport: 'Netball U18', opponent: 'Tykenzima H. School', venue: 'TBA', time: 'TBA' },
+  { date: '22 Aug 2026', sport: 'Netball U19', opponent: 'TBA', venue: 'TBA', time: 'TBA' },
 ];
 
 const results: Result[] = [
-  { date: 'TBA', sport: 'Soccer', opponent: 'TBA', venue: 'TBA', result: 'TBA' },
-  { date: 'TBA', sport: 'Netball', opponent: 'TBA', venue: 'TBA', result: 'TBA' },
-  { date: 'TBA', sport: 'Athletics', opponent: 'TBA', venue: 'TBA', result: 'TBA' },
+  { date: '17 Apr 2026', sport: 'Rugby Girls', opponent: 'CMC level', venue: '-', result: 'Won' },
+  { date: '15 May 2026', sport: 'Rugby Girls', opponent: 'District level', venue: '-', result: 'Won' },
+  { date: '29 May 2026', sport: 'Rugby Boys', opponent: 'Provincial level', venue: '-', result: 'Won' },
+  { date: '2026', sport: 'Rugby Boys U15', opponent: 'Nyoka / Qhawe Festival, Mthatha', venue: 'Mthatha', result: 'Won tournament; Player of the tournament: Mbabane Lathitha' },
+  { date: '2026', sport: 'Netball U13', opponent: 'CMC level', venue: '-', result: 'Won' },
+  { date: '2026', sport: 'Netball U14, U15 & U17', opponent: 'District level', venue: '-', result: 'Won' },
+  { date: '2026', sport: 'Volleyball Girls U15', opponent: 'CMC level', venue: '-', result: 'Won' },
+  { date: '2026', sport: 'Soccer U15 Girls', opponent: 'District level', venue: '-', result: 'Won' },
+  { date: '2026', sport: 'Soccer U15 Boys', opponent: 'District level', venue: '-', result: 'Won' },
+  { date: '2026', sport: 'Soccer U17', opponent: 'Police tournament', venue: '-', result: 'Won' },
+  { date: '2026', sport: 'Softball Boys U17', opponent: 'CMC level', venue: '-', result: 'Won' },
+  { date: 'Feb 2026', sport: 'Netball & Soccer', opponent: 'SA Tournament', venue: '-', result: 'Won kit and ball; trophy soccer and netball' },
 ];
 
 export const Sport = () => {
