@@ -337,7 +337,7 @@ const defaultAbout: AboutInfo = {
   historyParagraphs: [
     'Jojo Senior Secondary School is a public no-fee school located in the Dundee Area of Mount Ayliff, Eastern Cape. The school falls under the Alfred Nzo West Education District and serves the local community with dedication and pride.',
     'Guided by the motto "The Sky Is The Limit", Jojo SSS is committed to excellence in teaching and learning, building strong working relationships among teachers, parents and learners, and providing a welcoming atmosphere to all stakeholders.',
-    'The school offers Grades 8 to 12 with three streams per grade (A, B and C). With 46 educators, Jojo SSS provides a comprehensive curriculum including Science, Business/Commerce and Humanities streams in the FET phase.',
+    'The school offers Grades 8 to 12 with three streams per grade (A, B and C). With 48 educators, Jojo SSS provides a comprehensive curriculum including Science, Business/Commerce and Humanities streams in the FET phase.',
   ],
   principalName: 'Mr W.T. Mnganyana',
   principalTitle: 'Principal',

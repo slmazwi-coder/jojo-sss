@@ -93,7 +93,7 @@ const staffData: StaffMember[] = [
     categories: ['Class Teachers', 'Subject Teachers'],
     classTeacherFor: '12C',
     image: './assets/staff/miss-a-nqatsha.jpg',
-    imgPosition: 'center 1%',
+    imgPosition: 'center 25%',
   },
   {
     name: 'Mr M Nozulela',
@@ -112,6 +112,15 @@ const staffData: StaffMember[] = [
     classTeacherFor: '9B',
     image: './assets/staff/ms-g-jojo.jpg',
     imgPosition: 'center 50%',
+  },
+  {
+    name: 'Mrs N Kafu',
+    position: 'Class Teacher — Grade 8A',
+    subject: 'English Grade 8, Life Orientation Grade 11',
+    categories: ['Class Teachers', 'Subject Teachers'],
+    classTeacherFor: '8A',
+    image: './assets/staff/mrs-n-kafu.jpg',
+    imgPosition: 'center 30%',
   },
 
   // ── Subject Teachers ──────────────────────────────────────────────────────
@@ -281,7 +290,7 @@ const staffData: StaffMember[] = [
   {
     name: 'Mr S Mgedezi',
     position: 'Departmental Head',
-    departmentHead: 'Languages',
+    departmentHead: 'Languages (English)',
     subject: 'English FAL (Grades 11 & 12)',
     categories: ['School Management', 'Subject Teachers'],
     image: './assets/staff/mr-s-mgedezi.jpg',
@@ -371,6 +380,15 @@ const staffData: StaffMember[] = [
     categories: ['Subject Teachers'],
     image: './assets/staff/miss-z-gexu.jpg',
     imgPosition: 'center center',
+  },
+  {
+    name: 'Miss Dandala RN',
+    position: 'Departmental Head',
+    departmentHead: 'Languages (IsiXhosa)',
+    subject: 'IsiXhosa HL (Grades 10A & 10B)',
+    categories: ['School Management', 'Subject Teachers'],
+    image: './assets/staff/miss-dandala-rn.jpg',
+    imgPosition: 'center 25%',
   },
 
   // ── Class Teachers (added Jul 2026) ────────────────────────────────────────
