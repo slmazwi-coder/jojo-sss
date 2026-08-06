@@ -208,7 +208,10 @@ export const Admissions = () => {
     return true;
   };
 
-  const goNext = () => { if (validateStep()) setStep(s => (s < 3 ? (s + 1) as 1|2|3 : s)); };
+  const goNext = () => {
+    if (ADMISSIONS_CLOSED) { setError('Admissions are currently closed.'); return; }
+    if (validateStep()) setStep(s => (s < 3 ? (s + 1) as 1|2|3 : s));
+  };
   const goBack = () => { setError(''); setStep(s => (s > 1 ? (s - 1) as 1|2|3 : s)); };
 
   const handleFileChange = (key: string, file: File | null) => {
@@ -932,14 +935,15 @@ export const Admissions = () => {
                     <button
                       type="button"
                       onClick={goNext}
-                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#C8A400] text-white text-sm font-bold hover:bg-[#B89200]/90 transition shadow"
+                      disabled={ADMISSIONS_CLOSED}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#C8A400] text-white text-sm font-bold hover:bg-[#B89200]/90 disabled:opacity-60 disabled:cursor-not-allowed transition shadow"
                     >
                       Next <ChevronRight size={16} />
                     </button>
                   ) : (
                     <button
                       type="submit"
-                      disabled={submitting}
+                      disabled={submitting || ADMISSIONS_CLOSED}
                       className="inline-flex items-center gap-2 px-7 py-2.5 rounded-xl bg-[#C8A400] text-white text-sm font-bold hover:bg-[#B89200]/90 disabled:opacity-60 disabled:cursor-not-allowed transition shadow"
                     >
                       {submitting ? (
