@@ -201,6 +201,15 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
           to   { opacity: 1; transform: translateY(0) scale(1); }
         }
         .mh-chat-window { animation: mh-chat-in 0.2s cubic-bezier(0.34, 1.1, 0.64, 1) both; }
+        .shield-fab {
+          clip-path: polygon(
+            50% 0%, 64% 4%, 76% 11%, 88% 23%, 100% 38%,
+            100% 55%, 92% 70%, 80% 84%, 65% 95%, 50% 100%,
+            35% 95%, 20% 84%, 8% 70%, 0% 55%, 0% 38%,
+            12% 23%, 24% 11%, 36% 4%
+          );
+          filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
+        }
       `}</style>
 
       {/* ── Chat window ── */}
@@ -379,23 +388,23 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
       <button
         onClick={() => setOpen((v) => !v)}
         className="fixed z-50 bottom-4 right-3 sm:bottom-6 sm:right-6
-          w-14 h-14 rounded-full shadow-xl
-          bg-[#CC0000] hover:bg-[#990000]/90
-          text-white flex items-center justify-center
+          w-14 h-14 shield-fab
+          bg-[#CC0000] hover:bg-[#990000]
+          flex items-center justify-center
           transition-all duration-200 hover:scale-105 active:scale-95"
         aria-label={open ? 'Close chatbot' : 'Open chatbot'}
       >
         <div className="relative flex items-center justify-center">
           {open ? (
-            <X size={22} />
+            <X size={22} className="text-white" />
           ) : (
             <>
               <img
                 src="/jojo_logo.png"
                 alt="Open Jojo Assistant"
-                className="w-9 h-9 object-contain rounded-full bg-white p-0.5"
+                className="w-9 h-9 object-contain bg-white p-1"
               />
-              <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-white" />
+              <span className="absolute top-0.5 right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-white" />
             </>
           )}
         </div>
