@@ -34,7 +34,7 @@ export const Footer = () => {
               <div className="h-12 w-12 shrink-0 rounded-xl overflow-hidden shadow-lg"
                 style={ { background: '#F5C518', border: '2px solid #F5C518' } }>
                 <img src="/jojo_logo.png" alt="Jojo SSS logo"
-                  className="h-full w-full object-cover" />
+                  className="h-full w-full object-contain" />
               </div>
               <div>
                 <h3 className="text-base font-bold leading-tight" style={ { color: '#F5C518' } }>

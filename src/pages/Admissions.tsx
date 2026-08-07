@@ -9,6 +9,7 @@ import {
   ChevronLeft,
   AlertCircle,
   Download,
+  Lock,
 } from 'lucide-react';
 import {
   generateId,
@@ -95,6 +96,8 @@ const StepBadge = ({
 );
 
 // ─── Main component ───────────────────────────────────────────────────────────
+
+const ADMISSIONS_CLOSED = true;
 
 export const Admissions = () => {
   const [step,       setStep]       = useState<1 | 2 | 3>(1);
@@ -205,7 +208,10 @@ export const Admissions = () => {
     return true;
   };
 
-  const goNext = () => { if (validateStep()) setStep(s => (s < 3 ? (s + 1) as 1|2|3 : s)); };
+  const goNext = () => {
+    if (ADMISSIONS_CLOSED) { setError('Admissions are currently closed.'); return; }
+    if (validateStep()) setStep(s => (s < 3 ? (s + 1) as 1|2|3 : s));
+  };
   const goBack = () => { setError(''); setStep(s => (s > 1 ? (s - 1) as 1|2|3 : s)); };
 
   const handleFileChange = (key: string, file: File | null) => {
@@ -214,6 +220,10 @@ export const Admissions = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (ADMISSIONS_CLOSED) {
+      setError('Admissions are currently closed. We are no longer accepting applications.');
+      return;
+    }
     if (!validateStep()) return;
     setSubmitting(true);
     try {
@@ -290,24 +300,53 @@ export const Admissions = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="section-title">General Application for Admission</h1>
 
-        {/* Download form notice */}
-        <div className="mb-6 bg-[#FDF9EC] border border-[#CC0000]/20 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <div className="font-bold text-gray-900 flex items-center gap-2">
-              <FileText size={18} className="text-[#CC0000]" /> Prefer a paper form?
+        {/* Admissions closed notice */}
+        {ADMISSIONS_CLOSED && (
+          <div className="mb-6 bg-[#CC0000] border border-[#CC0000] rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center gap-4 text-white shadow-lg">
+            <div className="p-3 rounded-2xl bg-white/20 shrink-0">
+              <Lock size={24} className="text-white" />
             </div>
-            <div className="text-sm text-gray-600">
-              Download the application form, complete it by hand and submit it to the school office with the required documents.
+            <div>
+              <div className="font-bold text-lg">Admissions are closed</div>
+              <div className="text-sm text-white/90">
+                Applications for the 2027 academic year are now closed. The online application form is locked and no longer accepts submissions. Please contact the school office for enquiries about future admissions.
+              </div>
             </div>
           </div>
-          <a
-            href="/assets/documents/application_form.pdf"
-            download
-            className="inline-flex items-center justify-center gap-2 shrink-0 bg-[#CC0000] text-[#F5C518] px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#990000] transition-colors"
-          >
-            <Download size={18} /> Download Form
-          </a>
-        </div>
+        )}
+
+        {/* Download form notice */}
+        {ADMISSIONS_CLOSED ? (
+          <div className="mb-6 bg-gray-100 border border-gray-200 rounded-2xl p-5 flex items-center gap-4">
+            <div className="p-3 rounded-2xl bg-white border border-gray-200 text-gray-500 shrink-0">
+              <Lock size={24} />
+            </div>
+            <div>
+              <div className="font-bold text-gray-900">Application forms are locked</div>
+              <div className="text-sm text-gray-600">
+                The printable application form is not available while admissions are closed. Please contact the school office for future intake information.
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="mb-6 bg-[#FDF9EC] border border-[#CC0000]/20 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <div className="font-bold text-gray-900 flex items-center gap-2">
+                <FileText size={18} className="text-[#CC0000]" /> Prefer a paper form?
+              </div>
+              <div className="text-sm text-gray-600">
+                Download the application form, complete it by hand and submit it to the school office with the required documents.
+              </div>
+            </div>
+            <a
+              href="/assets/documents/application_form.pdf"
+              download
+              className="inline-flex items-center justify-center gap-2 shrink-0 bg-[#CC0000] text-[#F5C518] px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#990000] transition-colors"
+            >
+              <Download size={18} /> Download Form
+            </a>
+          </div>
+        )}
 
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
 
@@ -344,7 +383,8 @@ export const Admissions = () => {
 
           {/* Form body */}
           <form onSubmit={handleSubmit}>
-            <AnimatePresence mode="wait">
+            <fieldset disabled={ADMISSIONS_CLOSED} className="border-0 p-0 m-0 min-w-0">
+              <AnimatePresence mode="wait">
               <motion.div
                 key={step}
                 initial={{ opacity: 0, x: 30 }}
@@ -367,7 +407,9 @@ export const Admissions = () => {
                             <option value="">Select grade</option>
                             {['8','9','10','11','12'].map(g => <option key={g} value={g}>Grade {g}</option>)}
                           </select>
-                          <p className="text-[10px] text-white/70 mt-1">Admissions currently prioritise Grade 8 applications.</p>
+                          <p className="text-[10px] text-gray-500 mt-1">
+                            {ADMISSIONS_CLOSED ? 'Admissions are currently closed.' : 'Admissions currently prioritise Grade 8 applications.'}
+                          </p>
                         </Field>
 
                         <Field label="Year">
@@ -907,14 +949,15 @@ export const Admissions = () => {
                     <button
                       type="button"
                       onClick={goNext}
-                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#C8A400] text-white text-sm font-bold hover:bg-[#B89200]/90 transition shadow"
+                      disabled={ADMISSIONS_CLOSED}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#C8A400] text-white text-sm font-bold hover:bg-[#B89200]/90 disabled:opacity-60 disabled:cursor-not-allowed transition shadow"
                     >
                       Next <ChevronRight size={16} />
                     </button>
                   ) : (
                     <button
                       type="submit"
-                      disabled={submitting}
+                      disabled={submitting || ADMISSIONS_CLOSED}
                       className="inline-flex items-center gap-2 px-7 py-2.5 rounded-xl bg-[#C8A400] text-white text-sm font-bold hover:bg-[#B89200]/90 disabled:opacity-60 disabled:cursor-not-allowed transition shadow"
                     >
                       {submitting ? (
@@ -928,6 +971,7 @@ export const Admissions = () => {
 
               </motion.div>
             </AnimatePresence>
+            </fieldset>
           </form>
         </div>
 

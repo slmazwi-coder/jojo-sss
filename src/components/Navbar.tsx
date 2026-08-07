@@ -9,6 +9,7 @@ const navLinks = [
   { name: 'Staff', path: '/staff' },
   { name: 'Documents', path: '/documents' },
   { name: 'Achievements', path: '/achievements' },
+  { name: 'News', path: '/news' },
   { name: 'Sport', path: '/sport' },
   { name: 'Activities', path: '/activities' },
   { name: 'Admissions', path: '/admissions' },
@@ -33,7 +34,7 @@ export const Navbar = () => {
                 <img
                   src="/jojo_logo.png"
                   alt="Jojo SSS logo"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain"
                 />
               </div>
               <div className="min-w-0">

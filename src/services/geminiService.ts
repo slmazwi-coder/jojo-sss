@@ -17,7 +17,7 @@ School details:
 - Subject teachers: Miss O Nongogo (Life Science, Physical Sciences, Natural Sciences), Miss Bangani A. (IsiXhosa HL and Geography), Ms S. Sukazi (Mathematical Literacy and Business Studies), Miss N.M. Gaulana (Business Studies Grades 11 & 12), Miss M.P Zulu (English FAL Grades 11 & 12), Miss Nokhwali (IsiXhosa), Miss P Sonqishe (Tourism), Miss F.S.P Qwabe (Tourism Grade 12), A. Nogula (Mathematical Literacy Grades 10 & 12), Mr Mambi Zuko (Accounting Grades 10, 11 & 12), Mr M Cele (English FAL Grades 12B & 11C), Mr M. Pepu (Agricultural Sciences Grade 11, Natural Sciences Grades 8 & 9), Ms O Magewushe (Mathematics Grades 11 & 12), Ms A Dinga (Agricultural Sciences, Natural Sciences and Life Sciences), Mr Z Mkoti (Business Studies Grade 10C, Life Orientation Grades 8A & 8B), Mrs N Sokanyile (IsiXhosa Grade 9), Mr M. Ngqolosi (English and Social Sciences), Miss A. Nyakatha (IsiXhosa HL Grades 8 & 10), Miss T. Mpompi (Mathematics), Sikete N (Tourism Grade 10), Mr B. Mamfengu (Physical Sciences Grades 10 & 12), Mr R. K Qangule (Mathematics), Mr Mnoneleli Njubane (Mathematics and Technology), P Dumela (EMS, Creative Arts), Miss Mpatheni (Mathematics and Technology), Dlembula S.E. (Economics, EMS), Mrs H. Nongogo (IsiXhosa and Social Sciences), Mr S. Mbatha (Life Sciences Grades 8–10, Natural Sciences & Technology Grades 8 & 9), Miss Z Gexu (Life Orientation Grades 10–12), Miss Dandala RN (IsiXhosa HL Grades 10A & 10B), Mrs N Kafu (English Grade 8, Life Orientation Grade 11), Ms N Reid-Magongo (IsiXhosa; Class teacher 11C)
 - Support staff: Ms Z.S. Pitoyi (Admin Clerk), Mr VQwayede (Admin Clerk), Miss V Gwanya (Cleaner), Mrs Z Mjomle (Cleaner)
 - Total educators: 48
-- Email: jojos.s.school@gmail.com; admissions: admissions@jojosss.co.za; general: info@jojosss.co.za
+- Primary email: principal@jojosss.co.za
 - EMIS Number: 200500338
 - Quintile / fee status: Quintile 2, No-Fee school
 - Motto: "The Sky Is The Limit"
@@ -33,12 +33,12 @@ School details:
 - Colours: Primary red #CC0000, white #FFFFFF, gold/yellow #F5C518.
 
 Application and admissions:
-- Applications open 01 April and close 30 June each year.
-- General school applications can be submitted online at /admissions. The online form has three steps: Learner & Medical, Siblings, and Parent/Documents.
-- A printable application form PDF is available for download at /assets/documents/application_form.pdf and linked on the Admissions page.
+- Applications for the 2027 academic year are now closed. The online form at /admissions is currently locked and not accepting new submissions.
+- In a normal year applications open 01 April and close 30 June.
+- The downloadable application form PDF is currently locked while admissions are closed.
 - Parents/guardians can also visit the school office or call 039 940 4284 / 072 349 3647 for assistance.
 - Required documents for admission (must be uploaded or brought to school): learner birth certificate/ID, latest progress report from previous school, transfer letter from previous school, copy of immunisation records, parent/guardian ID copy, and learner conduct record from previous school.
-- Admissions currently prioritise Grade 8 applications.
+- Admissions normally prioritise Grade 8 applications.
 - The school is a Quintile 2, no-fee school.
 
 Academic streams and subjects:
@@ -66,7 +66,7 @@ Staff portal logins (staff create their own password on first login, except the 
 
 When mentioning website pages, use the exact relative paths listed above (e.g. /admissions, /documents,, /admin/login). Do not invent a custom domain name.
 
-Be warm, clear and concise. Always encourage. When users ask how to apply, you MUST mention both the online form at /admissions and the downloadable PDF at /assets/documents/application_form.pdf before mentioning a school visit. If you are unsure about something very specific, direct them to call the school at 039 940 4284 or 072 349 3647.`;
+Be warm, clear and concise. Always encourage. When users ask how to apply, explain that admissions are currently closed, the online form at /admissions is locked, and the downloadable application form is not available. Direct them to call the school at 039 940 4284 or 072 349 3647 for future intake enquiries.`;
 
 const API_KEY =
   (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_GEMINI_API_KEY) ||

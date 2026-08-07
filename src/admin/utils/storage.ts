@@ -14,6 +14,7 @@ export interface NewsItem {
   title: string;
   content: string;
   image: string;
+  poster?: string;
   date: string;
 }
 
@@ -294,19 +295,29 @@ export function calculateAverageMark(subjectMarks: SubjectMark[]): number {
 const defaultNews: NewsItem[] = [
   {
     id: '1',
-    title: '2027 Admissions Open',
-    date: '01 Apr 2026',
+    title: '2027 Admissions Closed',
+    date: '06 Aug 2026',
     content:
-      'Applications for Grade 8 admission for the 2027 academic year are now open. Apply online or download the application form from the Admissions page.',
+      'Applications for Grade 8 admission for the 2027 academic year are now closed. The online application form is locked and no longer accepts submissions. Please contact the school office for future intake enquiries.',
     image: '',
   },
   {
     id: '2',
-    title: 'Term 1 Parents Meeting',
-    date: '15 Apr 2026',
+    title: 'Annual Alfred Nzo West English Language Festival',
+    date: '10 Aug 2026',
     content:
-      'Parents and guardians are invited to a Term 1 feedback meeting. Time and venue will be confirmed by the school.',
-    image: '',
+      'The Alfred Nzo West District English Language Festival will be held on 10 August 2026 at 8 am at Umzimvubu Hall, Mount Ayliff (Emazesibeni). Learners and educators will participate in prepared speeches, debate, panel discussions and poetry performances. The festival theme is “From words to worlds: Empowering voices through Global Communication” and is hosted by the Alfred Nzo West District in partnership with the Eastern Cape Department of Education.',
+    image: '/assets/posters/english_language_festival.jpg',
+    poster: '/assets/posters/english_language_festival.jpg',
+  },
+  {
+    id: '3',
+    title: 'International Literacy Day Competition Build-up',
+    date: '27 Aug 2026',
+    content:
+      'Umzimvubu Municipality Libraries invites Jojo SSS learners to the International Literacy Day build-up event on 27 August 2026 at 10:00 am at KwaBhaca Town Hall, in Ntabankulu Local Municipality. International Literacy Day will be celebrated nationally during 08 September 2026 under the theme “Literacy for people, the planet and prosperity”. Main activities include prepared speech using the ILD theme, word scramble, rai-rai, word chain, community book club and mini library for the blind. The district event will be held on 8 September 2026 at Ntabankulu Town Hall.',
+    image: '/assets/posters/international_literacy_day.jpg',
+    poster: '/assets/posters/international_literacy_day.jpg',
   },
 ];
 export const getNews = () => (getItems<NewsItem>('admin_news').length ? getItems<NewsItem>('admin_news') : defaultNews);
@@ -324,7 +335,7 @@ export const setApplications = (items: Application[]) => setItems('admin_applica
 const defaultContact: ContactInfo = {
   address: 'Dundee Area, Mount Ayliff, Eastern Cape 4735\nP.O. Box 58, Mount Ayliff, 4735',
   phone: '039 940 4284 / 072 349 3647',
-  email: 'jojos.s.school@gmail.com',
+  email: 'principal@jojosss.co.za',
   monThu: '07:30 - 15:30',
   friday: '07:30 - 15:30',
   weekend: 'Closed',
