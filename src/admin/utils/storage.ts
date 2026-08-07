@@ -332,7 +332,7 @@ export const setApplications = (items: Application[]) => setItems('admin_applica
 const defaultContact: ContactInfo = {
   address: 'Dundee Area, Mount Ayliff, Eastern Cape 4735\nP.O. Box 58, Mount Ayliff, 4735',
   phone: '039 940 4284 / 072 349 3647',
-  email: 'jojos.s.school@gmail.com',
+  email: 'principal@jojosss.co.za',
   monThu: '07:30 - 15:30',
   friday: '07:30 - 15:30',
   weekend: 'Closed',

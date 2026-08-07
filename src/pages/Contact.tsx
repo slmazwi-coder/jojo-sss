@@ -43,8 +43,9 @@ export const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900">Email</h3>
-                  <p className="text-gray-600 break-words">{info.email}</p>
-                  <p className="text-xs text-gray-500 break-words">admissions@jojosss.co.za</p>
+                  <a href={`mailto:${info.email}`} className="text-gray-600 break-words hover:text-[#CC0000] hover:underline">
+                    {info.email}
+                  </a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
