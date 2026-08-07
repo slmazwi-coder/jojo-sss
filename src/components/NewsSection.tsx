@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Bell, Calendar, Info } from 'lucide-react';
 import { getNews, type NewsItem } from '../admin/utils/storage';
 
@@ -16,7 +17,7 @@ export const NewsSection = () => {
           <h2 className="text-3xl font-bold text-[#CC0000] flex items-center gap-2">
             <Bell className="text-yellow-500" /> News & Notices
           </h2>
-          <button className="text-[#CC0000] font-semibold hover:underline">View All</button>
+          <Link to="/news" className="text-[#CC0000] font-semibold hover:underline">View All</Link>
         </div>
 
         {notices.length === 0 ? (
@@ -36,9 +37,12 @@ export const NewsSection = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-gray-800">{notice.title}</h3>
                 <p className="text-gray-600 line-clamp-3 mb-4 flex-grow">{notice.content}</p>
-                <button className="text-[#CC0000] font-medium flex items-center gap-1 hover:gap-2 transition-all">
+                <Link
+                  to={`/news?id=${notice.id}`}
+                  className="text-[#CC0000] font-medium flex items-center gap-1 hover:gap-2 transition-all"
+                >
                   Read More <Info size={16} />
-                </button>
+                </Link>
               </div>
             ))}
           </div>

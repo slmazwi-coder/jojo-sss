@@ -14,6 +14,7 @@ export interface NewsItem {
   title: string;
   content: string;
   image: string;
+  poster?: string;
   date: string;
 }
 
@@ -305,16 +306,18 @@ const defaultNews: NewsItem[] = [
     title: 'Annual Alfred Nzo West English Language Festival',
     date: '10 Aug 2026',
     content:
-      'The Alfred Nzo West District English Language Festival will be held on 10 August 2026 at 8 am at Umzimvubu Hall, Mount Ayliff (Emazesibeni). Learners and educators will participate in prepared speeches, debate, panel discussions and poetry performances.',
-    image: '',
+      'The Alfred Nzo West District English Language Festival will be held on 10 August 2026 at 8 am at Umzimvubu Hall, Mount Ayliff (Emazesibeni). Learners and educators will participate in prepared speeches, debate, panel discussions and poetry performances. The festival theme is “From words to worlds: Empowering voices through Global Communication” and is hosted by the Alfred Nzo West District in partnership with the Eastern Cape Department of Education.',
+    image: '/assets/posters/english_language_festival.jpg',
+    poster: '/assets/posters/english_language_festival.jpg',
   },
   {
     id: '3',
     title: 'International Literacy Day Competition Build-up',
     date: '27 Aug 2026',
     content:
-      'Umzimvubu Municipality Libraries invites Jojo SSS learners to the International Literacy Day build-up event on 27 August 2026 at 10:00 am at KwaBhaca Town Hall. Activities include prepared speech, word scramble, rai-rai, word chain and community book club.',
-    image: '',
+      'Umzimvubu Municipality Libraries invites Jojo SSS learners to the International Literacy Day build-up event on 27 August 2026 at 10:00 am at KwaBhaca Town Hall, in Ntabankulu Local Municipality. International Literacy Day will be celebrated nationally during 08 September 2026 under the theme “Literacy for people, the planet and prosperity”. Main activities include prepared speech using the ILD theme, word scramble, rai-rai, word chain, community book club and mini library for the blind. The district event will be held on 8 September 2026 at Ntabankulu Town Hall.',
+    image: '/assets/posters/international_literacy_day.jpg',
+    poster: '/assets/posters/international_literacy_day.jpg',
   },
 ];
 export const getNews = () => (getItems<NewsItem>('admin_news').length ? getItems<NewsItem>('admin_news') : defaultNews);
