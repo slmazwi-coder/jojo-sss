@@ -30,7 +30,7 @@ export const Navbar = () => {
 
             {/* Logo + Name */}
             <Link to="/" className="flex items-center gap-3 min-w-0 flex-1">
-              <div className="h-11 w-11 shrink-0 rounded-lg bg-white flex items-center justify-center overflow-hidden shadow-md p-1" style={ { border: '4px solid #F5C518' } }>
+              <div className="h-11 w-11 shrink-0 rounded-lg bg-white flex items-center justify-center overflow-hidden shadow-md" style={ { border: '2px solid #F5C518' } }>
                 <img
                   src="/jojo_logo.png"
                   alt="Jojo SSS logo"

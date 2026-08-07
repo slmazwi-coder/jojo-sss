@@ -75,7 +75,7 @@ export const AdminLayout = () => {
                 <img
                   src="/jojo_logo.png"
                   alt=""
-                  className="w-8 h-8 object-contain rounded-full bg-white p-1 border-2 border-[#F5C518]"
+                  className="w-8 h-8 object-contain rounded-full bg-white p-1"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}

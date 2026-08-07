@@ -219,7 +219,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-[#F5C518] text-[#CC0000] shrink-0">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-9 h-9 rounded-full bg-white border-2 border-[#CC0000] flex items-center justify-center shrink-0 overflow-hidden p-0.5">
+              <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden p-0.5">
                 <img src="/jojo_logo.png" alt="Jojo SSS" className="w-full h-full object-contain" />
               </div>
               <div className="min-w-0">
@@ -285,7 +285,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                 className={`flex items-end gap-1.5 ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
               >
                 {m.role === 'bot' && (
-                  <div className="w-6 h-6 rounded-full bg-white border border-[#CC0000] flex items-center justify-center shrink-0 mb-0.5 overflow-hidden p-0.5">
+                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0 mb-0.5 overflow-hidden p-0.5">
                     <img src="/jojo_logo.png" alt="" className="w-full h-full object-contain" />
                   </div>
                 )}
@@ -309,7 +309,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
             {/* Typing indicator */}
             {isTyping && (
               <div className="flex items-end gap-1.5">
-                <div className="w-6 h-6 rounded-full bg-white border border-[#CC0000] flex items-center justify-center shrink-0 overflow-hidden p-0.5">
+                <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden p-0.5">
                   <img src="/jojo_logo.png" alt="" className="w-full h-full object-contain" />
                 </div>
                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex gap-1 items-center">
@@ -393,7 +393,7 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
               <img
                 src="/jojo_logo.png"
                 alt="Open Jojo Assistant"
-                className="w-9 h-9 object-contain rounded-full bg-white p-0.5 border-2 border-white"
+                className="w-9 h-9 object-contain rounded-full bg-white p-0.5"
               />
               <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-white" />
             </>
