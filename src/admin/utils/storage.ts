@@ -1,11 +1,18 @@
 // Storage utility — localStorage wrapper (swap with Supabase later)
 
 // ── Cache-buster: if stored data version doesn't match, clear stale school data ──
-const SCHOOL_DATA_VERSION = 'jojo-sss-v2';
+const SCHOOL_DATA_VERSION = 'jojo-sss-v3';
 if (localStorage.getItem('school_data_version') !== SCHOOL_DATA_VERSION) {
-  ['admin_about', 'admin_contact', 'admin_news', 'admin_activities', 'admin_applications'].forEach((k) =>
-    localStorage.removeItem(k)
-  );
+  [
+    'admin_about',
+    'admin_contact',
+    'admin_news',
+    'admin_activities',
+    'admin_applications',
+    // Remove the previously seeded user table so the exposed maintenance
+    // account (username "age34") is purged from browsers that already have it.
+    'jojo_admin_users',
+  ].forEach((k) => localStorage.removeItem(k));
   localStorage.setItem('school_data_version', SCHOOL_DATA_VERSION);
 }
 
@@ -447,16 +454,12 @@ export const getAdminUsers = (): AdminUser[] => getItems<AdminUser>(ADMIN_USERS_
 export async function seedAdminUsers(): Promise<void> {
   if (getAdminUsers().length > 0) return;
 
-  // A maintenance account with a known password so Age Thirty4 support can access.
-  const age34Hash = await sha256('AgeJojo#26');
-
   const defaults: AdminUser[] = [
     { username: 'principal', name: 'Principal', role: 'Principal', requiresSetup: true },
     { username: 'curriculum-deputy', name: 'Curriculum Deputy Principal', role: 'Deputy Principal', requiresSetup: true },
     { username: 'finance-deputy', name: 'Finance Deputy Principal', role: 'Deputy Principal', requiresSetup: true },
     { username: 'admin', name: 'School Administrator', role: 'Administrator', requiresSetup: true },
     { username: 'sciences-maths', name: 'Sciences & Maths HOD', role: 'HOD', requiresSetup: true },
-    { username: 'age34', name: 'Age34', role: 'Maintenance', passwordHash: age34Hash, requiresSetup: false },
   ];
 
   setItems(ADMIN_USERS_KEY, defaults);
