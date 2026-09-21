@@ -60,9 +60,8 @@ Website features and pages:
 - Student Portal (/student/login and /student): learners/parents sign in to view documents.
 - Staff Portal (/admin/login and /admin): staff log in with a username and password to manage website content and applications.
 
-Staff portal logins (staff create their own password on first login, except the maintenance account):
-- Usernames: principal, curriculum-deputy, finance-deputy, admin, sciences-maths, age34
-- Age34 maintenance password: AgeJojo#26
+Staff portal logins (staff create their own password on first login):
+- Staff access the portal at /admin/login with their individual username and password.
 
 When mentioning website pages, use the exact relative paths listed above (e.g. /admissions, /documents,, /admin/login). Do not invent a custom domain name.
 
