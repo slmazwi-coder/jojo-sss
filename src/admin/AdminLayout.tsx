@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { logout, getCurrentAdmin, seedAdminUsers } from './utils/storage';
+import { logout, useAuth } from './utils/auth';
 import {
   Newspaper,
   Info,
@@ -32,20 +32,10 @@ const adminTabs = [
 export const AdminLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const currentUser = getCurrentAdmin();
+  const { user: currentUser } = useAuth();
 
-  React.useEffect(() => {
-    let mounted = true;
-    (async () => {
-      if (mounted) await seedAdminUsers();
-    })();
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/admin/login');
   };
 
