@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { logout, useAuth } from './utils/auth';
+import { canAccessSection, type AdminSectionKey } from './utils/roles';
 import {
   Newspaper,
   Info,
@@ -15,24 +16,35 @@ import {
   ArrowLeft,
   FolderUp,
   GraduationCap,
+  UserCog,
 } from 'lucide-react';
 
-const adminTabs = [
-  { path: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { path: '/admin/news', label: 'News', icon: Newspaper },
-  { path: '/admin/about', label: 'About', icon: Info },
-  { path: '/admin/achievements', label: 'Achievements', icon: Trophy },
-  { path: '/admin/documents', label: 'Documents', icon: FileText },
-  { path: '/admin/extra-curricular', label: 'Sport & Activities', icon: Activity },
-  { path: '/admin/applications', label: 'Applications', icon: Users },
-  { path: '/admin/student-documents', label: 'Student Docs', icon: FolderUp },
-  { path: '/admin/contact', label: 'Contact', icon: Phone },
+type AdminTab = {
+  path: string;
+  label: string;
+  icon: React.ComponentType<{ size?: number | string }>;
+  section: AdminSectionKey;
+};
+
+const adminTabs: AdminTab[] = [
+  { path: '/admin', label: 'Dashboard', icon: LayoutDashboard, section: 'dashboard' },
+  { path: '/admin/news', label: 'News', icon: Newspaper, section: 'news' },
+  { path: '/admin/about', label: 'About', icon: Info, section: 'about' },
+  { path: '/admin/achievements', label: 'Achievements', icon: Trophy, section: 'achievements' },
+  { path: '/admin/documents', label: 'Documents', icon: FileText, section: 'documents' },
+  { path: '/admin/extra-curricular', label: 'Sport & Activities', icon: Activity, section: 'extra-curricular' },
+  { path: '/admin/applications', label: 'Applications', icon: Users, section: 'applications' },
+  { path: '/admin/student-documents', label: 'Student Docs', icon: FolderUp, section: 'student-documents' },
+  { path: '/admin/contact', label: 'Contact', icon: Phone, section: 'contact' },
+  { path: '/admin/staff', label: 'Staff', icon: UserCog, section: 'staff' },
 ];
 
 export const AdminLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user: currentUser } = useAuth();
+
+  const visibleTabs = adminTabs.filter((tab) => canAccessSection(currentUser?.role, tab.section));
 
   const handleLogout = async () => {
     await logout();
@@ -85,7 +97,7 @@ export const AdminLayout = () => {
             </div>
 
             <div className="hidden md:flex items-center gap-1">
-              {adminTabs.map((tab) => {
+              {visibleTabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = location.pathname === tab.path;
                 return (
@@ -115,7 +127,7 @@ export const AdminLayout = () => {
         </div>
 
         <div className="md:hidden overflow-x-auto px-2 pb-2 flex gap-1">
-          {adminTabs.map((tab) => {
+          {visibleTabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = location.pathname === tab.path;
             return (

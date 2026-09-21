@@ -525,3 +525,36 @@ export async function setResultsByYear(year: string, data: YearResults): Promise
   if (error) fail('save results', error);
 }
 
+// ── Staff profiles ────────────────────────────────────────────────────────────
+
+export type StaffProfile = {
+  id: string;
+  username: string;
+  fullName: string;
+  role: string;
+};
+
+function fromStaffRow(row: Record<string, unknown>): StaffProfile {
+  return {
+    id: String(row.id ?? ''),
+    username: String(row.username ?? ''),
+    fullName: String(row.name ?? ''),
+    role: String(row.role ?? 'Unassigned'),
+  };
+}
+
+export async function getStaffProfiles(): Promise<StaffProfile[]> {
+  const { data, error } = await supabase
+    .from('staff_profiles')
+    .select('id, username, name, role')
+    .order('name', { ascending: true });
+  if (error) fail('load the staff list', error);
+  return (data || []).map(fromStaffRow);
+}
+
+/** Role changes are accepted by the database only for Principal/Administrator. */
+export async function setStaffRole(id: string, role: string): Promise<void> {
+  const { error } = await supabase.from('staff_profiles').update({ role }).eq('id', id);
+  if (error) fail('update the staff role', error);
+}
+

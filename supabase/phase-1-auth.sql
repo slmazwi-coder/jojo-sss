@@ -50,6 +50,6 @@ create policy "staff read own profile"
 -- insert into public.staff_profiles (id, username, name, role)
 -- values ('00000000-0000-0000-0000-000000000000', 'principal', 'Principal', 'Principal');
 
--- Note: role-based access control on the admin routes is Phase 3. Until then the
--- portal only distinguishes "signed in" from "not signed in" and the `role`
--- column above is display-only.
+-- Note: this file only creates the profile table so accounts can carry a role.
+-- The `role` values below are display-only until Phase 3 runs; Phase 3 makes the
+-- column authoritative and gates the content policies on it.

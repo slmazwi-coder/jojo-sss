@@ -30,6 +30,7 @@ import { ExtraCurricularEditor } from './admin/editors/ExtraCurricularEditor';
 import { ApplicationsEditor } from './admin/editors/ApplicationsEditor';
 import { ContactEditor } from './admin/editors/ContactEditor';
 import { StudentDocsEditor } from './admin/editors/StudentDocsEditor';
+import { StaffManager } from './admin/StaffManager';
 
 const HomePage = () => (
   <>
@@ -70,14 +71,15 @@ export default function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
           <Route index element={<AdminDashboard />} />
-          <Route path="news" element={<NewsEditor />} />
-          <Route path="about" element={<AboutEditor />} />
-          <Route path="achievements" element={<AchievementsEditor />} />
-          <Route path="documents" element={<DocumentsEditor />} />
-          <Route path="extra-curricular" element={<ExtraCurricularEditor />} />
-          <Route path="applications" element={<ApplicationsEditor />} />
-          <Route path="student-documents" element={<StudentDocsEditor />} />
-          <Route path="contact" element={<ContactEditor />} />
+          <Route path="news" element={<ProtectedRoute section="news"><NewsEditor /></ProtectedRoute>} />
+          <Route path="about" element={<ProtectedRoute section="about"><AboutEditor /></ProtectedRoute>} />
+          <Route path="achievements" element={<ProtectedRoute section="achievements"><AchievementsEditor /></ProtectedRoute>} />
+          <Route path="documents" element={<ProtectedRoute section="documents"><DocumentsEditor /></ProtectedRoute>} />
+          <Route path="extra-curricular" element={<ProtectedRoute section="extra-curricular"><ExtraCurricularEditor /></ProtectedRoute>} />
+          <Route path="applications" element={<ProtectedRoute section="applications"><ApplicationsEditor /></ProtectedRoute>} />
+          <Route path="student-documents" element={<ProtectedRoute section="student-documents"><StudentDocsEditor /></ProtectedRoute>} />
+          <Route path="contact" element={<ProtectedRoute section="contact"><ContactEditor /></ProtectedRoute>} />
+          <Route path="staff" element={<ProtectedRoute section="staff"><StaffManager /></ProtectedRoute>} />
         </Route>
       </Routes>
 
