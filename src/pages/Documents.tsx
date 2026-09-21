@@ -13,17 +13,18 @@ export const Documents = () => {
   const { data: allDocs } = useAsyncData<DocumentItem[]>(getDocuments, []);
 
   const handleDownload = (doc: DocumentItem) => {
-    try {
-      const link = document.createElement('a');
-      link.href = doc.fileData;
-      link.download = doc.fileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (e) {
-      console.error("Download failed", e);
-      alert("Failed to download file. It might be corrupt or missing.");
+    if (!doc.fileUrl) {
+      alert('This document is not available yet. Please try again later.');
+      return;
     }
+    const link = document.createElement('a');
+    link.href = doc.fileUrl;
+    link.download = doc.fileName;
+    link.target = '_blank';
+    link.rel = 'noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const filteredDocs = allDocs.filter(doc => 

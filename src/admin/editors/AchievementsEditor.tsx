@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { getHallOfFame, setHallOfFame, deleteHallOfFame, generateId, type HallOfFameEntry } from '../utils/storage';
+import { getHallOfFame, setHallOfFame, deleteHallOfFame, generateId, uploadFile, publicFileUrl, type HallOfFameEntry } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
 import { Plus, Trash2, Save, Trophy, X, ImageIcon, Pencil, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 
@@ -72,14 +72,19 @@ export const AchievementsEditor = () => {
     }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !editing) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setEditing({ ...editing, image: reader.result as string });
-    };
-    reader.readAsDataURL(file);
+    setBusy(true);
+    try {
+      const path = await uploadFile('public-media', file, 'achievements');
+      setEditing({ ...editing, image: publicFileUrl('public-media', path) });
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not upload the image.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (

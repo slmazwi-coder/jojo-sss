@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { getDocuments, setDocuments, deleteDocument, generateId, type DocumentItem } from '../utils/storage';
+import { getDocuments, setDocuments, deleteDocument, generateId, uploadFile, deleteFile, publicFileUrl, type DocumentItem } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
 import { Plus, Trash2, Download, FileText, X, Upload, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 
@@ -13,7 +13,7 @@ export const DocumentsEditor = () => {
   const [filterGrade, setFilterGrade] = useState('');
   const [filterSubject, setFilterSubject] = useState('');
   const [showUpload, setShowUpload] = useState(false);
-  const [newDoc, setNewDoc] = useState({ grade: grades[0], subject: subjects[0], fileName: '', fileData: '' });
+  const [newDoc, setNewDoc] = useState<{ grade: string; subject: string; fileName: string; file: File | null }>({ grade: grades[0], subject: subjects[0], fileName: '', file: null });
 
   const [isScanning, setIsScanning] = useState(false);
 
@@ -36,15 +36,11 @@ export const DocumentsEditor = () => {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setNewDoc({ ...newDoc, fileName: file.name, fileData: reader.result as string });
-    };
-    reader.readAsDataURL(file);
+    setNewDoc((prev) => ({ ...prev, fileName: file.name, file }));
   };
 
   const addDocument = async () => {
-    if (!newDoc.fileData || !newDoc.fileName) return;
+    if (!newDoc.file || !newDoc.fileName) return;
 
     setIsScanning(true);
     let result;
@@ -63,22 +59,23 @@ export const DocumentsEditor = () => {
       return;
     }
 
-    const doc: DocumentItem = {
-      id: generateId(),
-      name: newDoc.fileName.replace(/\.[^/.]+$/, ''),
-      grade: newDoc.grade,
-      subject: newDoc.subject,
-      fileData: newDoc.fileData,
-      fileName: newDoc.fileName,
-      uploadDate: new Date().toISOString().split('T')[0],
-    };
     setError('');
     setBusy(true);
     try {
+      const path = await uploadFile('documents', newDoc.file, newDoc.grade);
+      const doc: DocumentItem = {
+        id: generateId(),
+        name: newDoc.fileName.replace(/\.[^/.]+$/, ''),
+        grade: newDoc.grade,
+        subject: newDoc.subject,
+        fileUrl: publicFileUrl('documents', path),
+        fileName: newDoc.fileName,
+        uploadDate: new Date().toISOString().split('T')[0],
+      };
       await setDocuments([doc]);
       await load();
       setShowUpload(false);
-      setNewDoc({ grade: grades[0], subject: subjects[0], fileName: '', fileData: '' });
+      setNewDoc({ grade: grades[0], subject: subjects[0], fileName: '', file: null });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not save the document.');
     } finally {
@@ -90,7 +87,13 @@ export const DocumentsEditor = () => {
     if (!confirm('Delete this document?')) return;
     setBusy(true);
     try {
+      const doc = items.find((d) => d.id === id);
       await deleteDocument(id);
+      if (doc?.fileUrl) {
+        // The stored URL ends with the object path within the bucket.
+        const path = decodeURIComponent(doc.fileUrl.split('/documents/').pop() || '');
+        if (path) await deleteFile('documents', path);
+      }
       await load();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not delete the document.');
@@ -100,9 +103,15 @@ export const DocumentsEditor = () => {
   };
 
   const download = (doc: DocumentItem) => {
+    if (!doc.fileUrl) {
+      setError('This document was uploaded before file storage was enabled. Please upload it again.');
+      return;
+    }
     const link = document.createElement('a');
-    link.href = doc.fileData;
+    link.href = doc.fileUrl;
     link.download = doc.fileName;
+    link.target = '_blank';
+    link.rel = 'noreferrer';
     link.click();
   };
 
@@ -151,7 +160,7 @@ export const DocumentsEditor = () => {
           <div className="flex items-center gap-4">
             <button 
               onClick={addDocument} 
-              disabled={!newDoc.fileData || isScanning || busy} 
+              disabled={!newDoc.file || isScanning || busy} 
               className="bg-[#C8A400] text-white px-6 py-2 rounded-xl font-medium hover:bg-[#540D1C] disabled:opacity-50"
             >
               {isScanning ? (

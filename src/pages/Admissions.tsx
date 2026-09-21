@@ -13,6 +13,8 @@ import {
 import {
   generateId,
   submitApplication,
+  uploadFile,
+  deleteFile,
   type Application,
   type UploadedFile,
 } from '../admin/utils/storage';
@@ -34,15 +36,6 @@ const uploadFields: UploadField[] = [
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
-}
-
-async function fileToDataUrl(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload  = () => resolve(String(reader.result));
-    reader.onerror = () => reject(new Error('Failed to read file'));
-    reader.readAsDataURL(file);
-  });
 }
 
 // ─── Small reusable UI pieces ─────────────────────────────────────────────────
@@ -214,14 +207,17 @@ export const Admissions = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateStep()) return;
+    const uploads: UploadedFile[] = [];
+    let recorded = false;
     setSubmitting(true);
     try {
-      const uploads: UploadedFile[] = [];
       for (const field of uploadFields) {
         const file = files[field.key];
         if (!file) continue;
-        const dataUrl = await fileToDataUrl(file);
-        uploads.push({ key: field.key, label: field.label, fileName: file.name, mimeType: file.type || 'application/octet-stream', dataUrl });
+        // Files go into a private bucket; the application row stores only the
+        // object path, and staff read them through short-lived signed URLs.
+        const path = await uploadFile('application-files', file, `pending/${todayISO()}`);
+        uploads.push({ key: field.key, label: field.label, fileName: file.name, mimeType: file.type || 'application/octet-stream', path });
       }
       const app: Application = {
         id: generateId(),
@@ -249,6 +245,7 @@ export const Admissions = () => {
         submittedDate: todayISO(),
       };
       const studentNumber = await submitApplication(app);
+      recorded = true;
       setStudentNumber(studentNumber);
       setSubmitted(true);
     } catch (err) {
@@ -258,6 +255,11 @@ export const Admissions = () => {
           : 'Something went wrong while submitting. Please try again.'
       );
     } finally {
+      if (!recorded && uploads.length > 0) {
+        // The application row was never written, so reclaim the uploaded files
+        // rather than leaving them orphaned in the bucket.
+        await Promise.all(uploads.map((u) => deleteFile('application-files', u.path)));
+      }
       setSubmitting(false);
     }
   };

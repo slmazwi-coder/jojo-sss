@@ -6,9 +6,8 @@
 //
 // Access rules live in supabase/phase-2-content.sql: publicly readable content
 // allows anonymous SELECT, while writes require an authenticated staff session.
-//
-// Note: image and file payloads are still stored inline (base64). Moving them
-// to Supabase Storage is Phase 4.
+// File payloads live in Supabase Storage (phase-4-storage.sql) rather than
+// inline as base64; see uploadFile/getSignedFileUrl below.
 
 import { supabase } from '../../services/supabase';
 
@@ -25,7 +24,8 @@ export interface DocumentItem {
   name: string;
   grade: string;
   subject: string;
-  fileData: string; // base64 for demo
+  /** Public URL of the stored file. Empty for documents created before Phase 4. */
+  fileUrl: string;
   fileName: string;
   uploadDate: string;
 }
@@ -35,7 +35,8 @@ export type UploadedFile = {
   label: string;
   fileName: string;
   mimeType: string;
-  dataUrl: string; // base64
+  /** Object path in the private `application-files` bucket. */
+  path: string;
 };
 
 export type SubjectMark = {
@@ -269,6 +270,52 @@ export function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 }
 
+// ── File storage ──────────────────────────────────────────────────────────────
+// Supabase Storage buckets, set up in supabase/phase-4-storage.sql.
+
+export type StorageBucket = 'public-media' | 'documents' | 'student-documents' | 'application-files';
+
+/** Strips characters that would let a filename escape its folder. */
+function safeFileName(name: string): string {
+  return name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(-120);
+}
+
+/** Uploads a file and returns its object path within the bucket. */
+export async function uploadFile(bucket: StorageBucket, file: File, folder = ''): Promise<string> {
+  const path = `${folder ? `${folder}/` : ''}${generateId()}-${safeFileName(file.name)}`;
+  const { error } = await supabase.storage.from(bucket).upload(path, file, {
+    cacheControl: '3600',
+    upsert: false,
+    contentType: file.type || undefined,
+  });
+  if (error) fail('upload the file', error);
+  return path;
+}
+
+/** Public URL for an object in a public bucket. */
+export function publicFileUrl(bucket: StorageBucket, path: string): string {
+  return supabase.storage.from(bucket).getPublicUrl(path).data.publicUrl;
+}
+
+/** Private buckets are read through short-lived signed URLs, never direct links.
+ *  Requires the caller to hold the role the bucket policy asks for. */
+export async function getSignedFileUrl(bucket: StorageBucket, path: string, expiresIn = 300): Promise<string | null> {
+  if (!path) return null;
+  const { data, error } = await supabase.storage.from(bucket).createSignedUrl(path, expiresIn);
+  if (error || !data) return null;
+  return data.signedUrl;
+}
+
+/** Best-effort removal; a missing object should not block deleting its record. */
+export async function deleteFile(bucket: StorageBucket, path: string): Promise<void> {
+  if (!path) return;
+  const { error } = await supabase.storage.from(bucket).remove([path]);
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.warn(`Could not remove ${bucket}/${path}:`, error.message);
+  }
+}
+
 /**
  * The public admissions form does not allocate numbers or write rows directly;
  * it calls the submit_application RPC, which does both atomically. Returns the
@@ -313,7 +360,7 @@ function toDocumentRow(doc: DocumentItem) {
     name: doc.name,
     grade: doc.grade,
     subject: doc.subject,
-    file_data: doc.fileData,
+    file_url: doc.fileUrl,
     file_name: doc.fileName,
     upload_date: doc.uploadDate,
   };
@@ -325,7 +372,7 @@ function fromDocumentRow(row: Record<string, unknown>): DocumentItem {
     name: String(row.name ?? ''),
     grade: String(row.grade ?? ''),
     subject: String(row.subject ?? ''),
-    fileData: String(row.file_data ?? ''),
+    fileUrl: String(row.file_url ?? ''),
     fileName: String(row.file_name ?? ''),
     uploadDate: String(row.upload_date ?? ''),
   };

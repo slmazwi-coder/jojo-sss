@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getNews, setNews, deleteNews, generateId, type NewsItem } from '../utils/storage';
+import { getNews, setNews, deleteNews, generateId, uploadFile, publicFileUrl, type NewsItem } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
 import { Plus, Pencil, Trash2, Save, X, ImageIcon, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 
@@ -72,14 +72,19 @@ export const NewsEditor = () => {
     }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !editing) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setEditing({ ...editing, image: reader.result as string });
-    };
-    reader.readAsDataURL(file);
+    setBusy(true);
+    try {
+      const path = await uploadFile('public-media', file, 'news');
+      setEditing({ ...editing, image: publicFileUrl('public-media', path) });
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not upload the image.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (

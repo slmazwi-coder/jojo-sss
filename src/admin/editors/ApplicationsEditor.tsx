@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { getApplications, setApplications, calculateAverageMark, type Application } from '../utils/storage';
+import { getApplications, setApplications, calculateAverageMark, getSignedFileUrl, type Application } from '../utils/storage';
 import { generateApplicationPDF } from '../utils/generatePDF';
 import { Download, ChevronDown, Search, User, FileDown, ArrowUpDown, FileText, AlertCircle, Loader2 } from 'lucide-react';
 
@@ -10,10 +10,19 @@ const statusColors: Record<string, string> = {
   Rejected: 'bg-red-600',
 };
 
-function downloadDataUrl(dataUrl: string, fileName: string) {
+/** Applicant files live in a private bucket, so a fresh signed URL is minted
+ *  on click rather than stored. */
+async function downloadUpload(path: string, fileName: string, onError: (message: string) => void) {
+  const url = await getSignedFileUrl('application-files', path);
+  if (!url) {
+    onError('Could not create a download link for this file.');
+    return;
+  }
   const a = document.createElement('a');
-  a.href = dataUrl;
+  a.href = url;
   a.download = fileName;
+  a.target = '_blank';
+  a.rel = 'noreferrer';
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -350,7 +359,7 @@ export const ApplicationsEditor = () => {
                                 <div className="text-xs text-gray-400 truncate">{u.fileName}</div>
                               </div>
                               <button
-                                onClick={() => downloadDataUrl(u.dataUrl, u.fileName)}
+                                onClick={() => downloadUpload(u.path, u.fileName, setError)}
                                 className="shrink-0 inline-flex items-center gap-2 text-sm font-bold bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg"
                               >
                                 <Download size={14} /> Download
