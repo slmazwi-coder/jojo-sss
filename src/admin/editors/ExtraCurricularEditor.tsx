@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { getActivities, setActivities, generateId, type Activity } from '../utils/storage';
+import { getActivities, setActivities, generateId, uploadFile, publicFileUrl, type Activity } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
 import { Plus, Trash2, Save, X, ImageIcon, Pencil, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 
@@ -76,14 +76,19 @@ export const ExtraCurricularEditor = () => {
     }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !editing) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setEditing({ ...editing, image: reader.result as string });
-    };
-    reader.readAsDataURL(file);
+    setBusy(true);
+    try {
+      const path = await uploadFile('public-media', file, 'activities');
+      setEditing({ ...editing, image: publicFileUrl('public-media', path) });
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not upload the image.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
