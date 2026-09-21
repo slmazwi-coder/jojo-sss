@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Bell, Calendar, Info } from 'lucide-react';
 import { getNews, type NewsItem } from '../admin/utils/storage';
+import { useAsyncData } from '../lib/useAsyncData';
 
 export const NewsSection = () => {
-  const [notices, setNotices] = useState<NewsItem[]>(getNews());
-
-  useEffect(() => {
-    setNotices(getNews());
-  }, []);
+  const { data: notices } = useAsyncData<NewsItem[]>(getNews, []);
 
   return (
     <section className="py-16 bg-white">

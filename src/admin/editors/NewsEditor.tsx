@@ -1,46 +1,75 @@
-import React, { useState, useEffect } from 'react';
-import { getNews, setNews, generateId, type NewsItem } from '../utils/storage';
+import React, { useState, useEffect, useCallback } from 'react';
+import { getNews, setNews, deleteNews, generateId, type NewsItem } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
-import { Plus, Pencil, Trash2, Save, X, ImageIcon, ShieldCheck, Loader2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Save, X, ImageIcon, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 
 export const NewsEditor = () => {
   const [items, setItems] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
   const [editing, setEditing] = useState<NewsItem | null>(null);
   const [isNew, setIsNew] = useState(false);
 
   const [isScanning, setIsScanning] = useState(false);
 
-  useEffect(() => { setItems(getNews()); }, []);
+  const load = useCallback(async () => {
+    try {
+      setItems(await getNews());
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not load news.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
 
   const save = async () => {
     if (!editing) return;
-    
+
     setIsScanning(true);
-    const result = await runFullDefenseScan(editing, 'news');
+    let result;
+    try {
+      result = await runFullDefenseScan(editing, 'news');
+    } catch {
+      setIsScanning(false);
+      setError('Could not run the content scan.');
+      return;
+    }
     setIsScanning(false);
 
     if (!result.safe) {
-      alert(`🛡️ AMD ALERT: ${result.reason}`);
+      setError(result.reason);
       return;
     }
 
-    let updated: NewsItem[];
-    if (isNew) {
-      updated = [editing, ...items];
-    } else {
-      updated = items.map(i => i.id === editing.id ? editing : i);
+    setError('');
+    setBusy(true);
+    try {
+      await setNews([editing]);
+      await load();
+      setEditing(null);
+      setIsNew(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not save the article.');
+    } finally {
+      setBusy(false);
     }
-    setNews(updated);
-    setItems(updated);
-    setEditing(null);
-    setIsNew(false);
   };
 
-  const remove = (id: string) => {
+  const remove = async (id: string) => {
     if (!confirm('Delete this news article?')) return;
-    const updated = items.filter(i => i.id !== id);
-    setNews(updated);
-    setItems(updated);
+    setBusy(true);
+    try {
+      await deleteNews(id);
+      await load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not delete the article.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +96,13 @@ export const NewsEditor = () => {
           <Plus size={18} /> Add Article
         </button>
       </div>
+
+      {error && (
+        <div className="mb-6 flex items-start gap-3 bg-red-900/30 border border-red-700 rounded-xl p-4 text-sm text-red-200">
+          <AlertCircle size={18} className="shrink-0 mt-0.5" />
+          <span>{error}</span>
+        </div>
+      )}
 
       {/* Edit Modal */}
       {editing && (

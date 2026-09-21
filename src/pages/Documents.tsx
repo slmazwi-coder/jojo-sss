@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { FileText, Download, Search, Folder } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { getDocuments, type DocumentItem } from '../admin/utils/storage';
+import { useAsyncData } from '../lib/useAsyncData';
 
 const grades = ['Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
 
 export const Documents = () => {
   const [selectedGrade, setSelectedGrade] = useState('Grade 12');
   const [searchQuery, setSearchQuery] = useState('');
-  const [allDocs, setAllDocs] = useState<DocumentItem[]>(getDocuments());
-
-  useEffect(() => {
-    setAllDocs(getDocuments());
-  }, []);
+  const { data: allDocs } = useAsyncData<DocumentItem[]>(getDocuments, []);
 
   const handleDownload = (doc: DocumentItem) => {
     try {
@@ -31,7 +28,7 @@ export const Documents = () => {
 
   const filteredDocs = allDocs.filter(doc => 
     doc.grade === selectedGrade && 
-    doc.title.toLowerCase().includes(searchQuery.toLowerCase())
+    doc.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -105,7 +102,7 @@ export const Documents = () => {
                     <FileText size={24} />
                   </div>
                   <div className="flex-grow">
-                    <h3 className="font-bold text-gray-800 mb-1">{doc.title}</h3>
+                    <h3 className="font-bold text-gray-800 mb-1">{doc.name}</h3>
                     <p className="text-sm text-gray-500 mb-4">Resource • {doc.grade}</p>
                     <button 
                       onClick={() => handleDownload(doc)}

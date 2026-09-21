@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Image as ImageIcon } from 'lucide-react';
 import { getAbout, type AboutInfo } from '../admin/utils/storage';
+import { useAsyncData } from '../lib/useAsyncData';
+
+const emptyAbout: AboutInfo = {
+  historyParagraphs: [],
+  principalName: '',
+  principalTitle: '',
+  principalMessage: [],
+};
 
 export const About = () => {
-  const [data, setData] = useState<AboutInfo>(getAbout());
+  const { data } = useAsyncData<AboutInfo>(getAbout, emptyAbout);
   const [campusFailed, setCampusFailed] = useState(false);
   const [principalFailed, setPrincipalFailed] = useState(false);
 
   const campusImageUrl = '/assets/about/jojocampus.jpg';
   const principalImageUrl = '/assets/staff/mr-mganyana.jpg';
-
-  useEffect(() => {
-    setData(getAbout());
-  }, []);
 
   return (
     <div className="py-12 sm:py-16 bg-white">
@@ -37,24 +41,9 @@ export const About = () => {
               <h2 className="text-2xl font-bold text-[#CC0000]">Our School</h2>
             </div>
             <div className="space-y-4 text-gray-600 leading-relaxed text-base">
-              <p>
-                Jojo Senior Secondary School (Jojo SSS) is a public no-fee school located in
-                the Dundee Area of Mount Ayliff, Eastern Cape. The school serves the local
-                community within the Alfred Nzo West Education District.
-              </p>
-              <p>
-                Under the inspiring motto "The Sky Is The Limit", Jojo SSS has built a proud
-                community of learners and a strong culture of unity and academic ambition.
-              </p>
-              <p>
-                The school offers Grades 8 to 12 with three streams per grade (A, B and C) and
-                48 dedicated educators. Our FET streams include Science, Business/Commerce (BCM)
-                and Humanities.
-              </p>
-              <p className="text-[#CC0000] font-semibold">
-                "We are committed to excellence in everything we do as the school that will
-                enable our learners to become responsible citizens."
-              </p>
+              {data.historyParagraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </div>
           </motion.div>
 
@@ -136,10 +125,10 @@ export const About = () => {
 
                 {/* Name & Title */}
                 <h3 className="text-lg font-bold text-white text-center leading-tight">
-                  Mr W.T. Mnganyana
+                  {data.principalName}
                 </h3>
                 <p className="text-[#F5C518] text-sm font-semibold mt-1 text-center">
-                  Principal
+                  {data.principalTitle}
                 </p>
                 <p className="text-white/80 text-xs mt-1 text-center">063 088 4862</p>
 
@@ -155,20 +144,9 @@ export const About = () => {
                 </div>
 
                 <div className="space-y-4 text-gray-700 text-base sm:text-lg leading-relaxed">
-                  <p>
-                    Welcome to Jojo Senior Secondary School. We are committed to excellence
-                    in everything we do so that our learners become responsible citizens.
-                  </p>
-                  <p>
-                    At Jojo SSS we believe every learner has the potential to reach for the sky.
-                    Our dedicated team of 48 educators works tirelessly to nurture talent, foster
-                    creativity and build responsible citizens.
-                  </p>
-                  <p>
-                    We strive to create an environment conducive to teaching and learning, to
-                    build good working relations between teachers, parents and learners, and to
-                    provide a welcoming atmosphere to all stakeholders visiting the school.
-                  </p>
+                  {data.principalMessage.map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                  ))}
                 </div>
 
                 {/* Closing quote mark — decorative only */}

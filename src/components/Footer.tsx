@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook } from 'lucide-react';
-import { getContact, type ContactInfo } from '../admin/utils/storage';
+import { getContact } from '../admin/utils/storage';
+import { useAsyncData } from '../lib/useAsyncData';
 
 const TikTokIcon = (props: { size?: number; className?: string }) => {
   const size = props.size ?? 20;
@@ -14,13 +15,14 @@ const TikTokIcon = (props: { size?: number; className?: string }) => {
 };
 
 export const Footer = () => {
-  const [info, setInfo] = useState<ContactInfo>(getContact());
-
-  useEffect(() => {
-    const onStorage = () => setInfo(getContact());
-    window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
-  }, []);
+  const { data: info } = useAsyncData(getContact, {
+    address: '',
+    phone: '',
+    email: '',
+    monThu: '',
+    friday: '',
+    weekend: '',
+  });
 
   return (
     <footer className="pt-12 pb-8 w-full" style={ { background: '#CC0000', borderTop: '4px solid #F5C518' } }>

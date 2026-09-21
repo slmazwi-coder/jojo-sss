@@ -1,28 +1,59 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getContact, setContact, type ContactInfo } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
-import { Save, ShieldCheck, Loader2 } from 'lucide-react';
+import { Save, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
+
+const emptyContact: ContactInfo = { address: '', phone: '', email: '', monThu: '', friday: '', weekend: '' };
 
 export const ContactEditor = () => {
-  const [info, setInfo] = useState<ContactInfo>(getContact());
+  const [info, setInfo] = useState<ContactInfo>(emptyContact);
+  const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState('');
 
   const [isScanning, setIsScanning] = useState(false);
 
+  useEffect(() => {
+    getContact()
+      .then(setInfo)
+      .catch((err: unknown) => setError(err instanceof Error ? err.message : 'Could not load contact details.'))
+      .finally(() => setLoading(false));
+  }, []);
+
   const save = async () => {
     setIsScanning(true);
-    const result = await runFullDefenseScan(info, 'contact');
+    let result;
+    try {
+      result = await runFullDefenseScan(info, 'contact');
+    } catch {
+      setIsScanning(false);
+      setError('Could not run the content scan.');
+      return;
+    }
     setIsScanning(false);
 
     if (!result.safe) {
-      alert(`🛡️ AMD ALERT: ${result.reason}`);
+      setError(result.reason);
       return;
     }
 
-    setContact(info);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    setError('');
+    try {
+      await setContact(info);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not save.');
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center gap-2 text-gray-400 text-sm">
+        <Loader2 size={16} className="animate-spin" /> Loading contact details…
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -45,6 +76,13 @@ export const ContactEditor = () => {
           </div>
         </div>
       </div>
+
+      {error && (
+        <div className="mb-6 flex items-start gap-3 bg-red-900/30 border border-red-700 rounded-xl p-4 text-sm text-red-200">
+          <AlertCircle size={18} className="shrink-0 mt-0.5" />
+          <span>{error}</span>
+        </div>
+      )}
 
       <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6 space-y-5">
         <div>

@@ -1,22 +1,16 @@
-// Storage utility — localStorage wrapper (swap with Supabase later)
+// Content storage backed by Supabase.
+//
+// This module is the single source of truth for the public website and the
+// staff portal. Reads and writes go to Postgres, so content is shared across
+// devices and users instead of living in one browser's localStorage.
+//
+// Access rules live in supabase/phase-2-content.sql: publicly readable content
+// allows anonymous SELECT, while writes require an authenticated staff session.
+//
+// Note: image and file payloads are still stored inline (base64). Moving them
+// to Supabase Storage is Phase 4.
 
-// ── Cache-buster: if stored data version doesn't match, clear stale school data ──
-const SCHOOL_DATA_VERSION = 'jojo-sss-v4';
-if (localStorage.getItem('school_data_version') !== SCHOOL_DATA_VERSION) {
-  [
-    'admin_about',
-    'admin_contact',
-    'admin_news',
-    'admin_activities',
-    'admin_applications',
-    // Legacy client-side auth artifacts. The user table held password hashes
-    // and the "current user" key was a spoofable session marker. Authentication
-    // now lives in Supabase, so both are purged.
-    'jojo_admin_users',
-    'jojo_admin_current_user',
-  ].forEach((k) => localStorage.removeItem(k));
-  localStorage.setItem('school_data_version', SCHOOL_DATA_VERSION);
-}
+import { supabase } from '../../services/supabase';
 
 export interface NewsItem {
   id: string;
@@ -250,47 +244,40 @@ export interface YearResults {
   subjects: { subject: string; rate: number }[];
 }
 
-function getItems<T>(key: string): T[] {
-  try {
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : [];
-  } catch {
-    return [];
+/** Shared error type so callers can surface a consistent message. */
+export class StorageError extends Error {
+  constructor(message: string, public readonly cause?: unknown) {
+    super(message);
+    this.name = 'StorageError';
   }
 }
 
-function setItems<T>(key: string, items: T[]): void {
-  localStorage.setItem(key, JSON.stringify(items));
+function fail(action: string, error: { message?: string } | null): never {
+  // eslint-disable-next-line no-console
+  console.error(`Storage ${action} failed:`, error);
+  throw new StorageError(`Could not ${action}. Please check your connection and try again.`, error);
 }
 
-function getObject<T>(key: string, fallback: T): T {
-  try {
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-function setObject<T>(key: string, obj: T): void {
-  localStorage.setItem(key, JSON.stringify(obj));
+/** Rows carry Supabase bookkeeping columns; callers only want the domain shape. */
+function stripMeta<T>(row: Record<string, unknown>, drop: string[]): T {
+  const copy: Record<string, unknown> = { ...row };
+  drop.forEach((k) => delete copy[k]);
+  return copy as T;
 }
 
 export function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 }
 
-function padNumber(num: number, length: number) {
-  return num.toString().padStart(length, '0');
-}
-
-export function generateStudentNumber(year: string): string {
-  // Example: 2027-000001
-  const key = `admin_student_counter_${year}`;
-  const current = Number(localStorage.getItem(key) || '0');
-  const next = current + 1;
-  localStorage.setItem(key, String(next));
-  return `${year}-${padNumber(next, 6)}`;
+/**
+ * The public admissions form does not allocate numbers or write rows directly;
+ * it calls the submit_application RPC, which does both atomically. Returns the
+ * allocated student number.
+ */
+export async function submitApplication(app: Application): Promise<string> {
+  const { data, error } = await supabase.rpc('submit_application', { p_data: app });
+  if (error) fail('submit the application', error);
+  return data as string;
 }
 
 export function calculateAverageMark(subjectMarks: SubjectMark[]): number {
@@ -299,120 +286,242 @@ export function calculateAverageMark(subjectMarks: SubjectMark[]): number {
   return Math.round((total / subjectMarks.length) * 10) / 10;
 }
 
-// News
-const defaultNews: NewsItem[] = [
-  {
-    id: '1',
-    title: '2027 Admissions Open',
-    date: '01 Apr 2026',
-    content:
-      'Applications for Grade 8 admission for the 2027 academic year are now open. Apply online or download the application form from the Admissions page.',
-    image: '',
-  },
-  {
-    id: '2',
-    title: 'Term 1 Parents Meeting',
-    date: '15 Apr 2026',
-    content:
-      'Parents and guardians are invited to a Term 1 feedback meeting. Time and venue will be confirmed by the school.',
-    image: '',
-  },
-];
-export const getNews = () => (getItems<NewsItem>('admin_news').length ? getItems<NewsItem>('admin_news') : defaultNews);
-export const setNews = (items: NewsItem[]) => setItems('admin_news', items);
+// ── News ──────────────────────────────────────────────────────────────────────
 
-// Documents
-export const getDocuments = () => getItems<DocumentItem>('admin_documents');
-export const setDocuments = (items: DocumentItem[]) => setItems('admin_documents', items);
+export async function getNews(): Promise<NewsItem[]> {
+  const { data, error } = await supabase.from('news').select('*').order('date', { ascending: false });
+  if (error) fail('load news', error);
+  return (data || []).map((row) => stripMeta<NewsItem>(row, ['created_at', 'updated_at']));
+}
 
-// Applications
-export const getApplications = () => getItems<Application>('admin_applications');
-export const setApplications = (items: Application[]) => setItems('admin_applications', items);
+export async function setNews(items: NewsItem[]): Promise<void> {
+  const { error } = await supabase.from('news').upsert(items, { onConflict: 'id' });
+  if (error) fail('save news', error);
+}
 
-// Contact
-const defaultContact: ContactInfo = {
-  address: 'Dundee Area, Mount Ayliff, Eastern Cape 4735\nP.O. Box 58, Mount Ayliff, 4735',
-  phone: '039 940 4284 / 072 349 3647',
-  email: 'jojos.s.school@gmail.com',
-  monThu: '07:30 - 15:30',
-  friday: '07:30 - 15:30',
-  weekend: 'Closed',
+export async function deleteNews(id: string): Promise<void> {
+  const { error } = await supabase.from('news').delete().eq('id', id);
+  if (error) fail('delete news', error);
+}
+
+// ── Documents ─────────────────────────────────────────────────────────────────
+
+/** Snake_case columns ↔ camelCase DocumentItem fields. */
+function toDocumentRow(doc: DocumentItem) {
+  return {
+    id: doc.id,
+    name: doc.name,
+    grade: doc.grade,
+    subject: doc.subject,
+    file_data: doc.fileData,
+    file_name: doc.fileName,
+    upload_date: doc.uploadDate,
+  };
+}
+
+function fromDocumentRow(row: Record<string, unknown>): DocumentItem {
+  return {
+    id: String(row.id ?? ''),
+    name: String(row.name ?? ''),
+    grade: String(row.grade ?? ''),
+    subject: String(row.subject ?? ''),
+    fileData: String(row.file_data ?? ''),
+    fileName: String(row.file_name ?? ''),
+    uploadDate: String(row.upload_date ?? ''),
+  };
+}
+
+export async function getDocuments(): Promise<DocumentItem[]> {
+  const { data, error } = await supabase.from('documents').select('*').order('upload_date', { ascending: false });
+  if (error) fail('load documents', error);
+  return (data || []).map(fromDocumentRow);
+}
+
+export async function setDocuments(items: DocumentItem[]): Promise<void> {
+  const { error } = await supabase.from('documents').upsert(items.map(toDocumentRow), { onConflict: 'id' });
+  if (error) fail('save documents', error);
+}
+
+export async function deleteDocument(id: string): Promise<void> {
+  const { error } = await supabase.from('documents').delete().eq('id', id);
+  if (error) fail('delete document', error);
+}
+
+// ── Applications ──────────────────────────────────────────────────────────────
+
+type ApplicationRow = { data: Application } & Record<string, unknown>;
+
+function toApplicationRow(app: Application): ApplicationRow {
+  return {
+    id: app.id,
+    student_number: app.studentNumber,
+    first_name: app.firstName,
+    last_name: app.lastName,
+    grade: app.grade,
+    status: app.status,
+    submitted_date: app.submittedDate,
+    data: app,
+  };
+}
+
+function fromApplicationRow(row: { data: unknown }): Application {
+  return row.data as Application;
+}
+
+export async function getApplications(): Promise<Application[]> {
+  const { data, error } = await supabase
+    .from('applications')
+    .select('data')
+    .order('submitted_date', { ascending: false });
+  if (error) fail('load applications', error);
+  return (data || []).map(fromApplicationRow);
+}
+
+export async function setApplications(items: Application[]): Promise<void> {
+  const { error } = await supabase.from('applications').upsert(items.map(toApplicationRow), { onConflict: 'id' });
+  if (error) fail('save applications', error);
+}
+
+export async function deleteApplication(id: string): Promise<void> {
+  const { error } = await supabase.from('applications').delete().eq('id', id);
+  if (error) fail('delete the application', error);
+}
+
+export type ApplicationStatus = {
+  student_number: string;
+  first_name: string;
+  last_name: string;
+  grade: string;
+  status: string;
+  submitted_date: string;
 };
-export const getContact = () => getObject<ContactInfo>('admin_contact', defaultContact);
-export const setContact = (info: ContactInfo) => setObject('admin_contact', info);
 
-// About
-const defaultAbout: AboutInfo = {
-  historyParagraphs: [
-    'Jojo Senior Secondary School is a public no-fee school located in the Dundee Area of Mount Ayliff, Eastern Cape. The school falls under the Alfred Nzo West Education District and serves the local community with dedication and pride.',
-    'Guided by the motto "The Sky Is The Limit", Jojo SSS is committed to excellence in teaching and learning, building strong working relationships among teachers, parents and learners, and providing a welcoming atmosphere to all stakeholders.',
-    'The school offers Grades 8 to 12 with three streams per grade (A, B and C). With 48 educators, Jojo SSS provides a comprehensive curriculum including Science, Business/Commerce and Humanities streams in the FET phase.',
-  ],
-  principalName: 'Mr W.T. Mnganyana',
-  principalTitle: 'Principal',
-  principalMessage: [
-    'Welcome to Jojo Senior Secondary School. We are committed to excellence in everything we do so that our learners become responsible citizens.',
-    'We strive to create an environment that is conducive for teaching and learning, to build good working relations between teachers, parents and learners, and to provide a welcoming atmosphere to all stakeholders visiting the school.',
-    'Together we reach for the sky.',
-  ],
-};
-export const getAbout = () => getObject<AboutInfo>('admin_about', defaultAbout);
-export const setAbout = (info: AboutInfo) => setObject('admin_about', info);
+/** Status-only lookup for the public chatbot. Anonymous users cannot read the
+ *  applications table, so this calls a narrow RPC that returns just the status. */
+export async function lookupApplicationStatus(params: {
+  studentNumber?: string;
+  firstName?: string;
+  lastName?: string;
+  dob?: string;
+}): Promise<ApplicationStatus | null> {
+  const { data, error } = await supabase.rpc('application_status', {
+    p_student_number: params.studentNumber ?? null,
+    p_first_name: params.firstName ?? null,
+    p_last_name: params.lastName ?? null,
+    p_dob: params.dob ?? null,
+  });
+  if (error) fail('look up the application', error);
+  const rows = (data || []) as ApplicationStatus[];
+  return rows.length > 0 ? rows[0] : null;
+}
 
-// Activities
-const defaultActivities: Activity[] = [
-  { id: '1', name: 'Soccer', category: 'Sport', description: 'Training and competition at school and district level.', image: '' },
-  { id: '2', name: 'Netball', category: 'Sport', description: 'Competitive teams across age groups.', image: '' },
-  { id: '3', name: 'Athletics', category: 'Sport', description: 'Track and field development and competition.', image: '' },
-  { id: '4', name: 'Debating', category: 'Academic', description: 'Building critical thinking and communication skills.', image: '' },
-  { id: '5', name: 'Choir', category: 'Culture', description: 'Music and performance for school events and competitions.', image: '' },
-];
-export const getActivities = () =>
-  getItems<Activity>('admin_activities').length ? getItems<Activity>('admin_activities') : defaultActivities;
-export const setActivities = (items: Activity[]) => setItems('admin_activities', items);
+// ── Contact ───────────────────────────────────────────────────────────────────
 
-// Achievers by year
-export const getAchieversByYear = (year: string) => getItems<AchieverEntry>(`admin_achievers_${year}`);
-export const setAchieversByYear = (year: string, items: AchieverEntry[]) => setItems(`admin_achievers_${year}`, items);
+export async function getContact(): Promise<ContactInfo> {
+  const { data, error } = await supabase.from('contact').select('data').eq('id', 'contact').maybeSingle();
+  if (error) fail('load contact details', error);
+  if (!data) return { address: '', phone: '', email: '', monThu: '', friday: '', weekend: '' };
+  return data.data as ContactInfo;
+}
 
-// Hall of Fame
-const defaultHall: HallOfFameEntry[] = [
-  { id: '1', name: 'Mrhwebi Esam', title: 'Top Achiever', year: '2025', desc: '', image: '/assets/achievements/mrhwebi-esam.jpg' },
-  { id: '2', name: 'Dlungwana Kungawo', title: 'Top Achiever', year: '2024', desc: '', image: '/assets/achievements/dlungwana-kungawo.jpg' },
-  { id: '3', name: 'Mhloleli Mbali', title: 'Top Achiever', year: '2023', desc: '', image: '/assets/achievements/mhloleli-mbali.jpg' },
-  { id: '4', name: 'Gwanya Mcoseleli', title: 'Top Achiever', year: '2023', desc: '', image: '/assets/achievements/gwanya-mcoseleli.jpg' },
-];
-export const getHallOfFame = () =>
-  getItems<HallOfFameEntry>('admin_hall_of_fame').length ? getItems<HallOfFameEntry>('admin_hall_of_fame') : defaultHall;
-export const setHallOfFame = (items: HallOfFameEntry[]) => setItems('admin_hall_of_fame', items);
+export async function setContact(info: ContactInfo): Promise<void> {
+  const { error } = await supabase.from('contact').upsert({ id: 'contact', data: info }, { onConflict: 'id' });
+  if (error) fail('save contact details', error);
+}
 
-// Results by year
-const defaultResults: Record<string, YearResults> = {
-  '2025': {
-    overall: 93.7,
-    bachelor: 200,
-    bachelorRate: 70,
-    distinctions: 145,
-    wrote: 285,
-    subjects: [],
-  },
-  '2024': {
-    overall: 96,
-    bachelor: 209,
-    bachelorRate: 68,
-    distinctions: 213,
-    wrote: 308,
-    subjects: [],
-  },
-  '2023': {
-    overall: 91,
-    bachelor: 165,
-    bachelorRate: 62,
-    distinctions: 62,
-    wrote: 266,
-    subjects: [],
-  },
-};
-export const getResultsByYear = (year: string) =>
-  getObject<YearResults | null>(`admin_results_${year}`, defaultResults[year] || null);
-export const setResultsByYear = (year: string, data: YearResults) => setObject(`admin_results_${year}`, data);
+// ── About ─────────────────────────────────────────────────────────────────────
+
+export async function getAbout(): Promise<AboutInfo> {
+  const { data, error } = await supabase.from('about').select('data').eq('id', 'about').maybeSingle();
+  if (error) fail('load the about page', error);
+  if (!data) {
+    return { historyParagraphs: [], principalName: '', principalTitle: '', principalMessage: [] };
+  }
+  return data.data as AboutInfo;
+}
+
+export async function setAbout(info: AboutInfo): Promise<void> {
+  const { error } = await supabase.from('about').upsert({ id: 'about', data: info }, { onConflict: 'id' });
+  if (error) fail('save the about page', error);
+}
+
+// ── Activities ────────────────────────────────────────────────────────────────
+
+export async function getActivities(): Promise<Activity[]> {
+  const { data, error } = await supabase.from('activities').select('*').order('sort_order', { ascending: true });
+  if (error) fail('load activities', error);
+  return (data || []).map((row) => stripMeta<Activity>(row, ['updated_at', 'sort_order']));
+}
+
+export async function setActivities(items: Activity[]): Promise<void> {
+  const rows = items.map((item, index) => ({ ...item, sort_order: index }));
+  const { error } = await supabase.from('activities').upsert(rows, { onConflict: 'id' });
+  if (error) fail('save activities', error);
+}
+
+// ── Achievers by year ─────────────────────────────────────────────────────────
+
+export async function getAchieversByYear(year: string): Promise<AchieverEntry[]> {
+  const { data, error } = await supabase.from('achievers').select('*').eq('year', year);
+  if (error) fail('load achievers', error);
+  return (data || []).map((row) => stripMeta<AchieverEntry>(row, ['updated_at', 'year']));
+}
+
+export async function setAchieversByYear(year: string, items: AchieverEntry[]): Promise<void> {
+  const { error: deleteError } = await supabase.from('achievers').delete().eq('year', year);
+  if (deleteError) fail('save achievers', deleteError);
+
+  if (items.length === 0) return;
+  const rows = items.map((item) => ({ ...item, year }));
+  const { error } = await supabase.from('achievers').insert(rows);
+  if (error) fail('save achievers', error);
+}
+
+// ── Hall of Fame ──────────────────────────────────────────────────────────────
+
+/** `desc` in the domain type maps to the `description` column. */
+function toHallRow(entry: HallOfFameEntry) {
+  const { desc, ...rest } = entry;
+  return { ...rest, description: desc };
+}
+
+function fromHallRow(row: Record<string, unknown>): HallOfFameEntry {
+  return {
+    id: String(row.id ?? ''),
+    name: String(row.name ?? ''),
+    title: String(row.title ?? ''),
+    year: String(row.year ?? ''),
+    desc: String(row.description ?? ''),
+    image: String(row.image ?? ''),
+  };
+}
+
+export async function getHallOfFame(): Promise<HallOfFameEntry[]> {
+  const { data, error } = await supabase.from('hall_of_fame').select('*');
+  if (error) fail('load the hall of fame', error);
+  return (data || []).map(fromHallRow);
+}
+
+export async function setHallOfFame(items: HallOfFameEntry[]): Promise<void> {
+  const { error } = await supabase.from('hall_of_fame').upsert(items.map(toHallRow), { onConflict: 'id' });
+  if (error) fail('save the hall of fame', error);
+}
+
+export async function deleteHallOfFame(id: string): Promise<void> {
+  const { error } = await supabase.from('hall_of_fame').delete().eq('id', id);
+  if (error) fail('delete the entry', error);
+}
+
+// ── Results by year ───────────────────────────────────────────────────────────
+
+export async function getResultsByYear(year: string): Promise<YearResults | null> {
+  const { data, error } = await supabase.from('results_by_year').select('data').eq('year', year).maybeSingle();
+  if (error) fail('load results', error);
+  return data ? (data.data as YearResults) : null;
+}
+
+export async function setResultsByYear(year: string, data: YearResults): Promise<void> {
+  const { error } = await supabase.from('results_by_year').upsert({ year, data }, { onConflict: 'year' });
+  if (error) fail('save results', error);
+}
+

@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
-import { getContact, type ContactInfo } from '../admin/utils/storage';
+import { getContact } from '../admin/utils/storage';
+import { useAsyncData } from '../lib/useAsyncData';
 
 export const Contact = () => {
-  const [info, setInfo] = useState<ContactInfo>(getContact());
-
-  useEffect(() => {
-    setInfo(getContact());
-  }, []);
+  const { data: info } = useAsyncData(getContact, {
+    address: '',
+    phone: '',
+    email: '',
+    monThu: '',
+    friday: '',
+    weekend: '',
+  });
 
   return (
     <div className="py-12 sm:py-16 bg-white">

@@ -12,9 +12,7 @@ import {
 } from 'lucide-react';
 import {
   generateId,
-  generateStudentNumber,
-  getApplications,
-  setApplications,
+  submitApplication,
   type Application,
   type UploadedFile,
 } from '../admin/utils/storage';
@@ -99,6 +97,7 @@ const StepBadge = ({
 export const Admissions = () => {
   const [step,       setStep]       = useState<1 | 2 | 3>(1);
   const [submitted,  setSubmitted]  = useState(false);
+  const [studentNumber, setStudentNumber] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error,      setError]      = useState('');
   const [disclaimer, setDisclaimer] = useState(false);
@@ -224,7 +223,6 @@ export const Admissions = () => {
         const dataUrl = await fileToDataUrl(file);
         uploads.push({ key: field.key, label: field.label, fileName: file.name, mimeType: file.type || 'application/octet-stream', dataUrl });
       }
-      const studentNumber = generateStudentNumber(learner.year);
       const app: Application = {
         id: generateId(),
         firstName:          learner.firstName.trim(),
@@ -233,7 +231,7 @@ export const Admissions = () => {
         gender:             learner.gender,
         grade:              learner.grade,
         year:               learner.year,
-        studentNumber,
+        studentNumber:      '',
         guardianName:       `${parent1.firstName} ${parent1.surname}`.trim(),
         guardianRelationship: parent1.relationshipToLearner || '',
         guardianPhone:      otherContact.cellNumber || learner.emergencyTelephone || '',
@@ -250,10 +248,15 @@ export const Admissions = () => {
         status:       'Pending',
         submittedDate: todayISO(),
       };
-      setApplications([app, ...getApplications()]);
+      const studentNumber = await submitApplication(app);
+      setStudentNumber(studentNumber);
       setSubmitted(true);
-    } catch {
-      setError('Something went wrong while submitting. Please try again.');
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Something went wrong while submitting. Please try again.'
+      );
     } finally {
       setSubmitting(false);
     }
@@ -274,9 +277,18 @@ export const Admissions = () => {
             <CheckCircle size={48} />
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Application Submitted!</h2>
-          <p className="text-gray-600 mb-8">
+          <p className="text-gray-600 mb-4">
             Thank you for applying to Jojo Senior Secondary School. We have received your application and will be in contact shortly.
           </p>
+          {studentNumber && (
+            <div className="mb-8 p-4 bg-gray-50 border border-gray-200 rounded-xl">
+              <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Your student number</p>
+              <p className="text-xl font-bold text-[#CC0000] tracking-wide">{studentNumber}</p>
+              <p className="text-xs text-gray-500 mt-2">
+                Keep this number — you can use it to check your application status.
+              </p>
+            </div>
+          )}
           <a href="/" className="btn-primary w-full inline-block">Back to Home</a>
         </motion.div>
       </div>
@@ -932,7 +944,8 @@ export const Admissions = () => {
         </div>
 
         <p className="text-xs text-gray-400 mt-4 text-center">
-          Applications and uploads are saved in the school's browser storage. For a live deployment, connect the staff portal to a database.
+          Application details are sent securely to the school. If a document upload fails,
+          please contact the school office to submit it directly.
         </p>
       </div>
     </div>

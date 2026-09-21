@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 import { Trophy, Music, Users, Star, Dumbbell, Target, BookOpen, Mic } from 'lucide-react';
 import { getActivities, type Activity } from '../admin/utils/storage';
+import { useAsyncData } from '../lib/useAsyncData';
 
 const sportsPrograms = [
   { 
@@ -89,11 +90,7 @@ const ProgramCard: React.FC<{ prog: any }> = ({ prog }) => (
 );
 
 export const ExtraCurricular = () => {
-  const [activities, setActivities] = useState<Activity[]>(getActivities());
-
-  useEffect(() => {
-    setActivities(getActivities());
-  }, []);
+  const { data: activities } = useAsyncData<Activity[]>(getActivities, []);
 
   const sportsPrograms = activities.filter(a => a.category === 'Sport');
   const academicPrograms = activities.filter(a => a.category === 'Academic');
