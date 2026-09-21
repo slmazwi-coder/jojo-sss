@@ -1,20 +1,18 @@
 import * as React from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 import { isSupabaseConfigured, supabase } from '../../services/supabase';
+import { STAFF_ROLES, type StaffRole } from './roles';
 
 // Staff authentication is enforced by Supabase Auth (server-side). The browser
 // holds only a session token; it never holds a password hash or a user table.
 //
-// Phase 1 note: role information is read from a `staff_profiles` table when it
-// exists, and falls back to user metadata otherwise. Phase 3 promotes this to a
-// dedicated profiles table with role-based access control on the routes.
+// The staff role is read from the `staff_profiles` table (Phase 3). It is
+// deliberately *not* read from user metadata: metadata is writable by the user
+// themselves, so treating it as an authorization input let any account promote
+// itself to Principal. The table is the only source, and the database enforces
+// the same rules independently.
 
-export type StaffRole =
-  | 'Principal'
-  | 'Deputy Principal'
-  | 'Administrator'
-  | 'HOD'
-  | 'Maintenance';
+export { STAFF_ROLES, type StaffRole };
 
 export type AdminUser = {
   id: string;
@@ -40,17 +38,40 @@ export function toStaffEmail(usernameOrEmail: string): string {
   return value.includes('@') ? value : `${value}@${STAFF_EMAIL_DOMAIN}`;
 }
 
-function toAdminUser(user: User | null | undefined): AdminUser {
+/** Builds an AdminUser from the auth session plus the profile row. `role` comes
+ *  from the database; a missing profile means the account is not yet a staff
+ *  member and gets the least-privileged `Unassigned` role. */
+function toAdminUser(user: User | null | undefined, profile?: StaffProfileRow | null): AdminUser {
   if (!user) {
-    return { id: '', username: '', name: 'Staff', role: 'Staff', requiresSetup: false };
+    return { id: '', username: '', name: 'Staff', role: 'Unassigned', requiresSetup: false };
   }
   const meta = (user.user_metadata || {}) as Record<string, unknown>;
-  const username = typeof meta.username === 'string' ? meta.username : (user.email || '').split('@')[0];
-  const name = typeof meta.name === 'string' ? meta.name : username || 'Staff';
-  const role = typeof meta.role === 'string' ? meta.role : 'Staff';
+  const username =
+    profile?.username ||
+    (typeof meta.username === 'string' ? meta.username : (user.email || '').split('@')[0]);
+  const name = profile?.name || (typeof meta.name === 'string' ? meta.name : username) || 'Staff';
+  const role = typeof profile?.role === 'string' ? profile.role : 'Unassigned';
   const requiresSetup = meta.requires_setup === true;
 
   return { id: user.id, username, name, role, requiresSetup };
+}
+
+type StaffProfileRow = { username: string | null; name: string | null; role: string | null };
+
+/** Loads the caller's own staff profile. Returns null when no row exists. */
+async function loadProfile(userId: string): Promise<StaffProfileRow | null> {
+  const { data, error } = await supabase
+    .from('staff_profiles')
+    .select('username, name, role')
+    .eq('id', userId)
+    .maybeSingle();
+  if (error || !data) return null;
+  return data as StaffProfileRow;
+}
+
+async function resolveAdminUser(user: User | null | undefined): Promise<AdminUser | null> {
+  if (!user) return null;
+  return toAdminUser(user, await loadProfile(user.id));
 }
 
 function readableError(error: { message?: string } | null): string {
@@ -78,17 +99,19 @@ export async function getSession(): Promise<Session | null> {
 
 export async function getCurrentAdmin(): Promise<AdminUser | null> {
   const session = await getSession();
-  return session ? toAdminUser(session.user) : null;
+  return resolveAdminUser(session?.user);
 }
 
 export async function isAuthenticated(): Promise<boolean> {
   return (await getSession()) !== null;
 }
 
+/** Emits the current user whenever the session changes. The callback is async
+ *  because the role has to be fetched from the profiles table on each change. */
 export function onAuthStateChange(callback: (user: AdminUser | null) => void): () => void {
   if (!isSupabaseConfigured) return () => {};
   const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-    callback(session ? toAdminUser(session.user) : null);
+    resolveAdminUser(session?.user).then(callback);
   });
   return () => data.subscription.unsubscribe();
 }
@@ -106,7 +129,9 @@ export async function login(username: string, password: string): Promise<AuthRes
 
   if (error) return { success: false, error: readableError(error) };
 
-  const user = toAdminUser(data.user);
+  const user = await resolveAdminUser(data.user);
+  if (!user) return { success: false, error: 'Could not load your staff profile.' };
+
   return { success: true, user, requiresSetup: user.requiresSetup };
 }
 
@@ -151,7 +176,7 @@ export async function logout(): Promise<void> {
   await supabase.auth.signOut();
 }
 
-export { toAdminUser, readableError };
+export { readableError };
 
 /** React helper: subscribes to auth state and exposes a `loading` flag while
  *  the initial session is being restored, so guards don't redirect too early. */
