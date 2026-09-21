@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MessageCircle, X, Send, Globe, ChevronDown, Sparkles } from 'lucide-react';
-import { getApplications, type Application } from '../admin/utils/storage';
+import { lookupApplicationStatus } from '../admin/utils/storage';
 import { generateChatResponse } from '../services/geminiService';
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -70,16 +70,14 @@ function parseStatusQuery(input: string): StatusQuery | null {
   return null;
 }
 
-function findApplication(apps: Application[], q: StatusQuery) {
-  if (q.kind === 'studentNumber') {
-    return apps.find((a) => normalize(a.studentNumber) === normalize(q.studentNumber));
-  }
-  return apps.find(
-    (a) =>
-      normalize(a.firstName) === normalize(q.firstName) &&
-      normalize(a.lastName) === normalize(q.lastName) &&
-      normalize(a.dob) === normalize(q.dob)
+/** Looks up an application's status through the narrow server-side RPC. */
+async function lookupStatus(q: StatusQuery) {
+  const row = await lookupApplicationStatus(
+    q.kind === 'studentNumber'
+      ? { studentNumber: q.studentNumber }
+      : { firstName: q.firstName, lastName: q.lastName, dob: q.dob }
   );
+  return row;
 }
 
 // ── Main ChatbotWidget ───────────────────────────────────────────────────────
@@ -131,14 +129,6 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
     return () => document.removeEventListener('mousedown', onClickOutside);
   }, [showLangMenu]);
 
-  const apps = useMemo(() => {
-    try {
-      return getApplications();
-    } catch {
-      return [];
-    }
-  }, [open]);
-
   const showQuickQuestions = messages.length <= 1 && !isTyping;
 
   async function send(textOverride?: string) {
@@ -151,13 +141,13 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
     setIsTyping(true);
 
     try {
-      // 1. Local application status lookup
+      // 1. Application status lookup (server-side, status fields only)
       const statusQ = parseStatusQuery(text);
       if (statusQ) {
-        const app = findApplication(apps, statusQ);
+        const app = await lookupStatus(statusQ);
         const replyText = app
-          ? `I found the application for ${app.firstName} ${app.lastName} (Student number: ${app.studentNumber}). Status: ${app.status}.${
-              app.submittedDate ? ` Submitted: ${formatDate(app.submittedDate)}.` : ''
+          ? `I found the application for ${app.first_name} ${app.last_name} (Student number: ${app.student_number}). Status: ${app.status}.${
+              app.submitted_date ? ` Submitted: ${formatDate(app.submitted_date)}.` : ''
             }`
           : 'I could not find a matching application. Please double-check the student number or learner name and date of birth.';
         setMessages((prev) => [...prev, { id: uid(), role: 'bot', text: replyText, createdAt: Date.now() }]);

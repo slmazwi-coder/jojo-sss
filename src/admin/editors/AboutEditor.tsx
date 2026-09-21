@@ -1,27 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAbout, setAbout, type AboutInfo } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
-import { Save, Plus, Trash2, ShieldCheck, Loader2 } from 'lucide-react';
+import { Save, Plus, Trash2, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
+
+const emptyAbout: AboutInfo = {
+  historyParagraphs: [],
+  principalName: '',
+  principalTitle: '',
+  principalMessage: [],
+};
 
 export const AboutEditor = () => {
-  const [info, setInfo] = useState<AboutInfo>(getAbout());
+  const [info, setInfo] = useState<AboutInfo>(emptyAbout);
+  const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState('');
 
   const [isScanning, setIsScanning] = useState(false);
 
+  useEffect(() => {
+    getAbout()
+      .then(setInfo)
+      .catch((err: unknown) => setError(err instanceof Error ? err.message : 'Could not load the about page.'))
+      .finally(() => setLoading(false));
+  }, []);
+
   const save = async () => {
     setIsScanning(true);
-    const result = await runFullDefenseScan(info, 'about');
+    let result;
+    try {
+      result = await runFullDefenseScan(info, 'about');
+    } catch {
+      setIsScanning(false);
+      setError('Could not run the content scan.');
+      return;
+    }
     setIsScanning(false);
 
     if (!result.safe) {
-      alert(`🛡️ AMD ALERT: ${result.reason}`);
+      setError(result.reason);
       return;
     }
 
-    setAbout(info);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    setError('');
+    try {
+      await setAbout(info);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not save.');
+    }
   };
 
   const updateParagraph = (index: number, value: string) => {
@@ -43,6 +71,14 @@ export const AboutEditor = () => {
     updated[index] = value;
     setInfo({ ...info, principalMessage: updated });
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center gap-2 text-gray-400 text-sm">
+        <Loader2 size={16} className="animate-spin" /> Loading the about page…
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -69,6 +105,13 @@ export const AboutEditor = () => {
           </div>
         </div>
       </div>
+
+      {error && (
+        <div className="mb-6 flex items-start gap-3 bg-red-900/30 border border-red-700 rounded-xl p-4 text-sm text-red-200">
+          <AlertCircle size={18} className="shrink-0 mt-0.5" />
+          <span>{error}</span>
+        </div>
+      )}
 
       {/* History */}
       <section className="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">

@@ -1,19 +1,32 @@
-import React, { useState } from 'react';
-import { getDocuments, setDocuments, generateId, type DocumentItem } from '../utils/storage';
+import React, { useCallback, useEffect, useState } from 'react';
+import { getDocuments, setDocuments, deleteDocument, generateId, type DocumentItem } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
-import { Plus, Trash2, Download, FileText, X, Upload, ShieldCheck, Loader2 } from 'lucide-react';
+import { Plus, Trash2, Download, FileText, X, Upload, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 
 const grades = ['Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
 const subjects = ['Mathematics', 'English', 'IsiXhosa', 'Physical Sciences', 'Life Sciences', 'Accounting', 'Business Studies', 'Economics', 'Geography', 'History', 'Agriculture', 'Other'];
 
 export const DocumentsEditor = () => {
-  const [items, setItems] = useState<DocumentItem[]>(getDocuments());
+  const [items, setItems] = useState<DocumentItem[]>([]);
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
   const [filterGrade, setFilterGrade] = useState('');
   const [filterSubject, setFilterSubject] = useState('');
   const [showUpload, setShowUpload] = useState(false);
   const [newDoc, setNewDoc] = useState({ grade: grades[0], subject: subjects[0], fileName: '', fileData: '' });
 
   const [isScanning, setIsScanning] = useState(false);
+
+  const load = useCallback(async () => {
+    try {
+      setItems(await getDocuments());
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not load documents.');
+    }
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
 
   const filtered = items.filter(i =>
     (!filterGrade || i.grade === filterGrade) &&
@@ -34,12 +47,19 @@ export const DocumentsEditor = () => {
     if (!newDoc.fileData || !newDoc.fileName) return;
 
     setIsScanning(true);
-    // Scan both name and content (name is used for context check)
-    const result = await runFullDefenseScan({ ...newDoc, name: newDoc.fileName }, 'documents');
+    let result;
+    try {
+      // Scan both name and content (name is used for context check)
+      result = await runFullDefenseScan({ ...newDoc, name: newDoc.fileName }, 'documents');
+    } catch {
+      setIsScanning(false);
+      setError('Could not run the content scan.');
+      return;
+    }
     setIsScanning(false);
 
     if (!result.safe) {
-      alert(`🛡️ AMD ALERT: ${result.reason}`);
+      setError(result.reason);
       return;
     }
 
@@ -52,18 +72,31 @@ export const DocumentsEditor = () => {
       fileName: newDoc.fileName,
       uploadDate: new Date().toISOString().split('T')[0],
     };
-    const updated = [doc, ...items];
-    setDocuments(updated);
-    setItems(updated);
-    setShowUpload(false);
-    setNewDoc({ grade: grades[0], subject: subjects[0], fileName: '', fileData: '' });
+    setError('');
+    setBusy(true);
+    try {
+      await setDocuments([doc]);
+      await load();
+      setShowUpload(false);
+      setNewDoc({ grade: grades[0], subject: subjects[0], fileName: '', fileData: '' });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not save the document.');
+    } finally {
+      setBusy(false);
+    }
   };
 
-  const remove = (id: string) => {
+  const remove = async (id: string) => {
     if (!confirm('Delete this document?')) return;
-    const updated = items.filter(i => i.id !== id);
-    setDocuments(updated);
-    setItems(updated);
+    setBusy(true);
+    try {
+      await deleteDocument(id);
+      await load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not delete the document.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   const download = (doc: DocumentItem) => {
@@ -75,6 +108,12 @@ export const DocumentsEditor = () => {
 
   return (
     <div>
+      {error && (
+        <div className="mb-6 flex items-start gap-3 bg-red-900/30 border border-red-700 rounded-xl p-4 text-sm text-red-200">
+          <AlertCircle size={18} className="shrink-0 mt-0.5" />
+          <span>{error}</span>
+        </div>
+      )}
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-bold">Document Management</h1>
         <button onClick={() => setShowUpload(!showUpload)} className="flex items-center gap-2 bg-[#C8A400] text-white px-4 py-2 rounded-xl font-medium hover:bg-[#540D1C]">
@@ -112,7 +151,7 @@ export const DocumentsEditor = () => {
           <div className="flex items-center gap-4">
             <button 
               onClick={addDocument} 
-              disabled={!newDoc.fileData || isScanning} 
+              disabled={!newDoc.fileData || isScanning || busy} 
               className="bg-[#C8A400] text-white px-6 py-2 rounded-xl font-medium hover:bg-[#540D1C] disabled:opacity-50"
             >
               {isScanning ? (

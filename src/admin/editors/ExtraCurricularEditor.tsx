@@ -1,47 +1,79 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getActivities, setActivities, generateId, type Activity } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
-import { Plus, Trash2, Save, X, ImageIcon, Pencil, ShieldCheck, Loader2 } from 'lucide-react';
+import { Plus, Trash2, Save, X, ImageIcon, Pencil, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 
 // These categories should match how the public website groups programs.
 const categories = ['Sport', 'Academic', 'Culture'];
 
 export const ExtraCurricularEditor = () => {
-  const [items, setItems] = useState<Activity[]>(getActivities());
+  const [items, setItems] = useState<Activity[]>([]);
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
   const [editing, setEditing] = useState<Activity | null>(null);
   const [isNew, setIsNew] = useState(false);
 
   const [isScanning, setIsScanning] = useState(false);
 
+  const load = useCallback(async () => {
+    try {
+      setItems(await getActivities());
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not load activities.');
+    }
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
   const save = async () => {
     if (!editing) return;
 
     setIsScanning(true);
-    const result = await runFullDefenseScan(editing, 'extracurricular');
+    let result;
+    try {
+      result = await runFullDefenseScan(editing, 'extracurricular');
+    } catch {
+      setIsScanning(false);
+      setError('Could not run the content scan.');
+      return;
+    }
     setIsScanning(false);
 
     if (!result.safe) {
-      alert(`🛡️ AMD ALERT: ${result.reason}`);
+      setError(result.reason);
       return;
     }
 
-    let updated: Activity[];
-    if (isNew) {
-      updated = [...items, editing];
-    } else {
-      updated = items.map((i) => (i.id === editing.id ? editing : i));
+    setError('');
+    setBusy(true);
+    try {
+      // Rewrite the whole list so ordering stays consistent across devices.
+      const updated = isNew
+        ? [...items, editing]
+        : items.map((i) => (i.id === editing.id ? editing : i));
+      await setActivities(updated);
+      await load();
+      setEditing(null);
+      setIsNew(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not save the item.');
+    } finally {
+      setBusy(false);
     }
-    setActivities(updated);
-    setItems(updated);
-    setEditing(null);
-    setIsNew(false);
   };
 
-  const remove = (id: string) => {
+  const remove = async (id: string) => {
     if (!confirm('Remove this item?')) return;
-    const updated = items.filter((i) => i.id !== id);
-    setActivities(updated);
-    setItems(updated);
+    setBusy(true);
+    try {
+      await setActivities(items.filter((i) => i.id !== id));
+      await load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not remove the item.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,6 +106,13 @@ export const ExtraCurricularEditor = () => {
           <Plus size={18} /> Add item
         </button>
       </div>
+
+      {error && (
+        <div className="mb-6 flex items-start gap-3 bg-red-900/30 border border-red-700 rounded-xl p-4 text-sm text-red-200">
+          <AlertCircle size={18} className="shrink-0 mt-0.5" />
+          <span>{error}</span>
+        </div>
+      )}
 
       {editing && (
         <div className="bg-gray-800 border border-gray-600 rounded-2xl p-6 mb-8">
@@ -128,7 +167,7 @@ export const ExtraCurricularEditor = () => {
             <div className="pt-4 border-t border-gray-700 flex flex-wrap items-center justify-between gap-4">
               <button
                 onClick={save}
-                disabled={isScanning}
+                disabled={isScanning || busy}
                 className="flex items-center gap-2 bg-[#C8A400] text-white px-6 py-2 rounded-xl font-medium hover:bg-[#540D1C] disabled:opacity-50"
               >
                 {isScanning ? (

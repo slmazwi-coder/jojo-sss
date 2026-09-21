@@ -1,47 +1,75 @@
-import React, { useState, useEffect } from 'react';
-import { getHallOfFame, setHallOfFame, generateId, type HallOfFameEntry } from '../utils/storage';
+import React, { useCallback, useEffect, useState } from 'react';
+import { getHallOfFame, setHallOfFame, deleteHallOfFame, generateId, type HallOfFameEntry } from '../utils/storage';
 import { runFullDefenseScan } from '../utils/defense';
-import { Plus, Trash2, Save, Trophy, X, ImageIcon, Pencil, ShieldCheck, Loader2 } from 'lucide-react';
+import { Plus, Trash2, Save, Trophy, X, ImageIcon, Pencil, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 
 export const AchievementsEditor = () => {
-  const [hall, setHall] = useState<HallOfFameEntry[]>(getHallOfFame());
+  const [hall, setHall] = useState<HallOfFameEntry[]>([]);
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
   const [editing, setEditing] = useState<HallOfFameEntry | null>(null);
   const [isNew, setIsNew] = useState(false);
   const [saved, setSaved] = useState(false);
 
   const [isScanning, setIsScanning] = useState(false);
 
+  const load = useCallback(async () => {
+    try {
+      setHall(await getHallOfFame());
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not load the hall of fame.');
+    }
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
   const saveHall = async () => {
     if (!editing) return;
 
     setIsScanning(true);
-    const result = await runFullDefenseScan(editing, 'achievements');
+    let result;
+    try {
+      result = await runFullDefenseScan(editing, 'achievements');
+    } catch {
+      setIsScanning(false);
+      setError('Could not run the content scan.');
+      return;
+    }
     setIsScanning(false);
 
     if (!result.safe) {
-      alert(`🛡️ AMD ALERT: ${result.reason}`);
+      setError(result.reason);
       return;
     }
 
-    let updated: HallOfFameEntry[];
-    if (isNew) {
-      updated = [...hall, editing];
-    } else {
-      updated = hall.map(h => h.id === editing.id ? editing : h);
+    setError('');
+    setBusy(true);
+    try {
+      await setHallOfFame([editing]);
+      await load();
+      setEditing(null);
+      setIsNew(false);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not save the entry.');
+    } finally {
+      setBusy(false);
     }
-    setHallOfFame(updated);
-    setHall(updated);
-    setEditing(null);
-    setIsNew(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
   };
 
-  const removeHall = (id: string) => {
+  const removeHall = async (id: string) => {
     if (!confirm('Remove this Hall of Fame entry?')) return;
-    const updated = hall.filter(h => h.id !== id);
-    setHallOfFame(updated);
-    setHall(updated);
+    setBusy(true);
+    try {
+      await deleteHallOfFame(id);
+      await load();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not remove the entry.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +85,13 @@ export const AchievementsEditor = () => {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-8">Achievements Editor</h1>
+
+      {error && (
+        <div className="mb-6 flex items-start gap-3 bg-red-900/30 border border-red-700 rounded-xl p-4 text-sm text-red-200">
+          <AlertCircle size={18} className="shrink-0 mt-0.5" />
+          <span>{error}</span>
+        </div>
+      )}
 
       {/* Hall of Fame */}
       <section className="bg-gray-800 border border-gray-700 rounded-2xl p-6 mb-6">
@@ -130,7 +165,7 @@ export const AchievementsEditor = () => {
       </section>
 
       <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6">
-        <p className="text-gray-400 text-sm">💡 To edit yearly results data and subject pass rates, update the code in <code className="text-[#CC0000]">Achievements.tsx</code> directly until Supabase is connected.</p>
+        <p className="text-gray-400 text-sm">💡 To edit yearly results data and subject pass rates, update the code in <code className="text-[#CC0000]">Achievements.tsx</code> directly for now.</p>
       </div>
     </div>
   );

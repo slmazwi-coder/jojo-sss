@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Trophy, Star, TrendingUp, BarChart3, Medal, Calendar, Award, Image as ImageIcon } from 'lucide-react';
 import { getHallOfFame, getResultsByYear, type HallOfFameEntry, type YearResults } from '../admin/utils/storage';
+import { useAsyncData } from '../lib/useAsyncData';
 
 // Put your achiever images in:
 // public/assets/achievements/
@@ -41,16 +42,13 @@ const StudentAvatar = ({ image, name, year }: { image: string; name: string; yea
 export const Achievements = () => {
   const [activeResultsYear, setActiveResultsYear] = useState<'2025' | '2024' | '2023'>('2025');
   const [activeAchieversYear, setActiveAchieversYear] = useState<string>('2025');
-  const [hallOfFame, setHallOfFame] = useState<HallOfFameEntry[]>(getHallOfFame());
-  const [currentResults, setCurrentResults] = useState<YearResults | null>(getResultsByYear(activeResultsYear));
 
-  useEffect(() => {
-    setHallOfFame(getHallOfFame());
-  }, []);
-
-  useEffect(() => {
-    setCurrentResults(getResultsByYear(activeResultsYear));
-  }, [activeResultsYear]);
+  const { data: hallOfFame } = useAsyncData<HallOfFameEntry[]>(getHallOfFame, []);
+  const { data: currentResults } = useAsyncData<YearResults | null>(
+    () => getResultsByYear(activeResultsYear),
+    null,
+    [activeResultsYear]
+  );
 
   const achieversByYear: Record<string, HallOfFameEntry[]> = {};
   hallOfFame.forEach((entry) => {

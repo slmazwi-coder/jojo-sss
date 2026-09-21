@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { getApplications, setApplications, calculateAverageMark, type Application } from '../utils/storage';
 import { generateApplicationPDF } from '../utils/generatePDF';
-import { Download, ChevronDown, Search, User, FileDown, ArrowUpDown, FileText } from 'lucide-react';
+import { Download, ChevronDown, Search, User, FileDown, ArrowUpDown, FileText, AlertCircle, Loader2 } from 'lucide-react';
 
 const statusColors: Record<string, string> = {
   Pending: 'bg-yellow-600',
@@ -30,7 +30,10 @@ function toCSVRow(values: (string | number)[]) {
 }
 
 export const ApplicationsEditor = () => {
-  const [apps, setApps] = useState<Application[]>(getApplications());
+  const [apps, setApps] = useState<Application[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
@@ -38,6 +41,19 @@ export const ApplicationsEditor = () => {
 
   const [sortKey, setSortKey] = useState<'date' | 'averageMark' | 'name'>('date');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
+
+  const load = useCallback(async () => {
+    try {
+      setApps(await getApplications());
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not load applications.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
 
   const filtered = useMemo(() => {
     const list = apps.filter(
@@ -56,13 +72,20 @@ export const ApplicationsEditor = () => {
     });
   }, [apps, statusFilter, typeFilter, search, sortKey, sortDir]);
 
-  const updateStatus = (id: string, status: Application['status']) => {
-    const updated = apps.map((a) => (a.id === id ? { ...a, status } : a));
-    setApplications(updated);
-    setApps(updated);
+  const updateStatus = async (id: string, status: Application['status']) => {
+    const target = apps.find((a) => a.id === id);
+    if (!target) return;
+    setApps(apps.map((a) => (a.id === id ? { ...a, status } : a)));
+    try {
+      await setApplications([{ ...target, status }]);
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not update the status.');
+      await load();
+    }
   };
 
-  const updateMarks = (id: string, marksText: string) => {
+  const updateMarks = async (id: string, marksText: string) => {
     // Input format: Subject:Mark per line. Example: English:65
     const parsed = marksText
       .split('\n')
@@ -78,10 +101,17 @@ export const ApplicationsEditor = () => {
       .filter(Boolean) as { subject: string; mark: number }[];
 
     const avg = calculateAverageMark(parsed);
+    const target = apps.find((a) => a.id === id);
+    if (!target) return;
 
-    const updated = apps.map((a) => (a.id === id ? { ...a, subjectMarks: parsed, averageMark: avg } : a));
-    setApplications(updated);
-    setApps(updated);
+    setApps(apps.map((a) => (a.id === id ? { ...a, subjectMarks: parsed, averageMark: avg } : a)));
+    try {
+      await setApplications([{ ...target, subjectMarks: parsed, averageMark: avg }]);
+      setError('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not save the marks.');
+      await load();
+    }
   };
 
   const exportCSV = () => {
@@ -136,8 +166,23 @@ export const ApplicationsEditor = () => {
     URL.revokeObjectURL(url);
   };
 
+  if (loading) {
+    return (
+      <div className="flex items-center gap-2 text-gray-400 text-sm">
+        <Loader2 size={16} className="animate-spin" /> Loading applications…
+      </div>
+    );
+  }
+
   return (
     <div>
+      {error && (
+        <div className="mb-6 flex items-start gap-3 bg-red-900/30 border border-red-700 rounded-xl p-4 text-sm text-red-200">
+          <AlertCircle size={18} className="shrink-0 mt-0.5" />
+          <div className="flex-1"><span>{error}</span></div>
+          <button onClick={load} className="underline font-bold shrink-0">Retry</button>
+        </div>
+      )}
       <div className="flex items-center justify-between mb-8 gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-bold">Student Applications</h1>
