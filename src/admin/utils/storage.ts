@@ -1,7 +1,7 @@
 // Storage utility — localStorage wrapper (swap with Supabase later)
 
 // ── Cache-buster: if stored data version doesn't match, clear stale school data ──
-const SCHOOL_DATA_VERSION = 'jojo-sss-v3';
+const SCHOOL_DATA_VERSION = 'jojo-sss-v4';
 if (localStorage.getItem('school_data_version') !== SCHOOL_DATA_VERSION) {
   [
     'admin_about',
@@ -9,9 +9,11 @@ if (localStorage.getItem('school_data_version') !== SCHOOL_DATA_VERSION) {
     'admin_news',
     'admin_activities',
     'admin_applications',
-    // Remove the previously seeded user table so the exposed maintenance
-    // account (username "age34") is purged from browsers that already have it.
+    // Legacy client-side auth artifacts. The user table held password hashes
+    // and the "current user" key was a spoofable session marker. Authentication
+    // now lives in Supabase, so both are purged.
     'jojo_admin_users',
+    'jojo_admin_current_user',
   ].forEach((k) => localStorage.removeItem(k));
   localStorage.setItem('school_data_version', SCHOOL_DATA_VERSION);
 }
@@ -414,98 +416,3 @@ const defaultResults: Record<string, YearResults> = {
 export const getResultsByYear = (year: string) =>
   getObject<YearResults | null>(`admin_results_${year}`, defaultResults[year] || null);
 export const setResultsByYear = (year: string, data: YearResults) => setObject(`admin_results_${year}`, data);
-
-// ── Shared hashing helper ──────────────────────────────────────────────────────
-
-async function sha256(input: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(input);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
-}
-
-// ── Admin User Management ──────────────────────────────────────────────────────
-
-export type AdminUser = {
-  username: string;
-  name: string;
-  role: string;
-  passwordHash?: string;
-  requiresSetup: boolean;
-};
-
-const ADMIN_USERS_KEY = 'jojo_admin_users';
-const ADMIN_CURRENT_KEY = 'jojo_admin_current_user';
-
-export const getAdminUsers = (): AdminUser[] => getItems<AdminUser>(ADMIN_USERS_KEY);
-
-export async function seedAdminUsers(): Promise<void> {
-  if (getAdminUsers().length > 0) return;
-
-  const defaults: AdminUser[] = [
-    { username: 'principal', name: 'Principal', role: 'Principal', requiresSetup: true },
-    { username: 'curriculum-deputy', name: 'Curriculum Deputy Principal', role: 'Deputy Principal', requiresSetup: true },
-    { username: 'finance-deputy', name: 'Finance Deputy Principal', role: 'Deputy Principal', requiresSetup: true },
-    { username: 'admin', name: 'School Administrator', role: 'Administrator', requiresSetup: true },
-    { username: 'sciences-maths', name: 'Sciences & Maths HOD', role: 'HOD', requiresSetup: true },
-  ];
-
-  setItems(ADMIN_USERS_KEY, defaults);
-}
-
-export const getCurrentAdmin = (): AdminUser | null => {
-  try {
-    const raw = localStorage.getItem(ADMIN_CURRENT_KEY);
-    return raw ? JSON.parse(raw) : null;
-  } catch {
-    return null;
-  }
-};
-
-export const setCurrentAdmin = (user: AdminUser | null): void => {
-  if (user) {
-    localStorage.setItem(ADMIN_CURRENT_KEY, JSON.stringify(user));
-  } else {
-    localStorage.removeItem(ADMIN_CURRENT_KEY);
-  }
-};
-
-export const isAuthenticated = (): boolean => !!getCurrentAdmin();
-
-export const logout = (): void => {
-  localStorage.removeItem(ADMIN_CURRENT_KEY);
-};
-
-export async function login(
-  username: string,
-  password: string
-): Promise<{ success: boolean; requiresSetup?: boolean; user?: AdminUser }> {
-  await seedAdminUsers();
-  const users = getAdminUsers();
-  const user = users.find((u) => u.username === username);
-  if (!user) return { success: false };
-
-  if (user.requiresSetup && !user.passwordHash) {
-    return { success: false, requiresSetup: true, user };
-  }
-
-  if (!user.passwordHash) return { success: false };
-
-  const hash = await sha256(password);
-  if (hash === user.passwordHash) {
-    setCurrentAdmin(user);
-    return { success: true, user };
-  }
-
-  return { success: false };
-}
-
-export async function setAdminPassword(username: string, password: string): Promise<void> {
-  const users = getAdminUsers();
-  const idx = users.findIndex((u) => u.username === username);
-  if (idx === -1) return;
-  const hash = await sha256(password);
-  users[idx] = { ...users[idx], passwordHash: hash, requiresSetup: false };
-  setItems(ADMIN_USERS_KEY, users);
-}
