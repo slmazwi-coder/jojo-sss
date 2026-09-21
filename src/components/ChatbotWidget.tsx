@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { MessageCircle, X, Send, Globe, ChevronDown, Sparkles } from 'lucide-react';
+import { X, Send, Globe, ChevronDown } from 'lucide-react';
 import { getApplications, type Application } from '../admin/utils/storage';
 import { generateChatResponse } from '../services/geminiService';
 
@@ -219,8 +219,8 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-[#F5C518] text-[#CC0000] shrink-0">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-9 h-9 rounded-full bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
-                <Sparkles size={16} />
+              <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden p-0.5">
+                <img src="/jojo_logo.png" alt="Jojo SSS" className="w-full h-full object-contain" />
               </div>
               <div className="min-w-0">
                 <div className="font-bold text-sm leading-tight truncate">Jojo Assistant</div>
@@ -285,8 +285,8 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
                 className={`flex items-end gap-1.5 ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
               >
                 {m.role === 'bot' && (
-                  <div className="w-6 h-6 rounded-full bg-[#F5C518] flex items-center justify-center shrink-0 mb-0.5 text-[#CC0000]">
-                    <Sparkles size={11} className="text-white" />
+                  <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0 mb-0.5 overflow-hidden p-0.5">
+                    <img src="/jojo_logo.png" alt="" className="w-full h-full object-contain" />
                   </div>
                 )}
                 <div
@@ -309,8 +309,8 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
             {/* Typing indicator */}
             {isTyping && (
               <div className="flex items-end gap-1.5">
-                <div className="w-6 h-6 rounded-full bg-[#CC0000] flex items-center justify-center shrink-0">
-                  <Sparkles size={11} className="text-white" />
+                <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden p-0.5">
+                  <img src="/jojo_logo.png" alt="" className="w-full h-full object-contain" />
                 </div>
                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex gap-1 items-center">
                   <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
@@ -385,12 +385,16 @@ export function ChatbotWidget(props: { defaultOpen?: boolean }) {
           transition-all duration-200 hover:scale-105 active:scale-95"
         aria-label={open ? 'Close chatbot' : 'Open chatbot'}
       >
-        <div className="relative">
+        <div className="relative flex items-center justify-center">
           {open ? (
             <X size={22} />
           ) : (
             <>
-              <MessageCircle size={22} />
+              <img
+                src="/jojo_logo.png"
+                alt="Open Jojo Assistant"
+                className="w-9 h-9 object-contain rounded-full bg-white p-0.5"
+              />
               <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-white" />
             </>
           )}

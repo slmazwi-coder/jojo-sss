@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Award, TrendingUp, Users, Megaphone, ArrowRight } from 'lucide-react';
+import { Award, TrendingUp, Users, Megaphone, ArrowRight, Calendar } from 'lucide-react';
 
 const stats = [
   { label: 'Learners Enrolled', value: '1,600+', icon: Users },
@@ -26,33 +26,33 @@ export const Home = () => {
                     2027
                   </span>
                 </div>
-                <h3 className="text-xl font-extrabold text-gray-900 mt-2">2027 Admissions are open</h3>
+                <h3 className="text-xl font-extrabold text-gray-900 mt-2">2027 Admissions are closed</h3>
                 <p className="text-gray-700 mt-1">
-                  Grade 8 applications for the <span className="font-bold">2027</span> academic year are open. Apply online or download the form.
+                  Applications for the 2027 academic year are now closed. The online application form has been locked and is no longer accepting submissions.
                 </p>
-                <a href="/admissions" className="mt-4 inline-flex items-center gap-2 text-[#CC0000] font-bold">
-                  Apply now <ArrowRight size={18} />
+                <a href="/contact" className="mt-4 inline-flex items-center gap-2 text-[#CC0000] font-bold">
+                  Contact school <ArrowRight size={18} />
                 </a>
               </div>
             </div>
 
-            <div className="rounded-3xl border border-gray-200 bg-gray-50 p-6 sm:p-7 flex gap-4 items-start">
-              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-[#CC0000] shrink-0">
-                <Megaphone size={22} />
+            <div className="rounded-3xl border border-[#C8A400] bg-[#FFFDF5] p-6 sm:p-7 flex gap-4 items-start">
+              <div className="p-3 rounded-2xl bg-white border border-[#C8A400] text-[#CC0000] shrink-0">
+                <Calendar size={22} />
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <div className="text-sm font-black uppercase tracking-widest text-[#CC0000]">Info</div>
-                  <span className="px-2 py-1 rounded-full text-xs font-bold bg-white border border-gray-200 text-gray-700">
-                    School
+                  <div className="text-sm font-black uppercase tracking-widest text-[#CC0000]">Upcoming events</div>
+                  <span className="px-2 py-1 rounded-full text-xs font-bold bg-white border border-[#C8A400] text-gray-700">
+                    Calendar
                   </span>
                 </div>
-                <h3 className="text-xl font-extrabold text-gray-900 mt-2">No-fee school in Mount Ayliff</h3>
+                <h3 className="text-xl font-extrabold text-gray-900 mt-2">English & Literacy events</h3>
                 <p className="text-gray-700 mt-1">
-                  Jojo SSS is a Quintile 2 no-fee school offering Grades 8–12 in Dundee Area, Mount Ayliff.
+                  Annual Alfred Nzo West English Language Festival on 10 Aug 2026. International Literacy Day build-up event on 27 Aug 2026 at KwaBhaca Town Hall.
                 </p>
-                <a href="/contact" className="mt-4 inline-flex items-center gap-2 text-[#CC0000] font-bold">
-                  Contact school <ArrowRight size={18} />
+                <a href="/activities" className="mt-4 inline-flex items-center gap-2 text-[#CC0000] font-bold">
+                  View activities <ArrowRight size={18} />
                 </a>
               </div>
             </div>

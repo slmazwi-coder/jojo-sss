@@ -80,7 +80,7 @@ export const Hero = () => {
           <img
             src="./jojo_logo.png"
             alt="Jojo SSS crest"
-            className="w-20 h-20 md:w-24 md:h-24 rounded-2xl object-cover shadow-2xl mx-auto bg-white"
+            className="w-20 h-20 md:w-24 md:h-24 rounded-2xl object-contain shadow-2xl mx-auto bg-white"
             style={ { border: '3px solid #F5C518' } }
             onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
           />

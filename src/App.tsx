@@ -14,6 +14,7 @@ import { Sport } from './pages/Sport';
 import { Activities } from './pages/Activities';
 import { Admissions } from './pages/Admissions';
 import { Contact } from './pages/Contact';
+import { News } from './pages/News';
 import { StudentLogin } from './pages/StudentLogin';
 import { StudentPortal } from './pages/StudentPortal';
 
@@ -61,6 +62,7 @@ export default function App() {
         <Route path="/activities" element={<PageShell><Activities /></PageShell>} />
         <Route path="/admissions" element={<PageShell><Admissions /></PageShell>} />
         <Route path="/contact" element={<PageShell><Contact /></PageShell>} />
+        <Route path="/news" element={<PageShell><News /></PageShell>} />
 
         {/* Student portal routes */}
         <Route path="/student/login" element={<StudentLogin />} />
